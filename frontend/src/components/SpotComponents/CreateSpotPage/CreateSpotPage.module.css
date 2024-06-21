@@ -1,0 +1,10 @@
+.create_spot_page {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  margin-bottom: 200px;
+  .create_spot_container {
+    width: 50%;
+  }
+}
