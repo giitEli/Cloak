@@ -1,9 +1,7 @@
-import { useSelector } from "react-redux";
 import { csrfFetch } from "./csrf";
 
 const GET_GENERAL_SPOT_DATA = "spots/GET_GENERAL_SPOT_DATA";
 const GET_SPECIFIC_SPOT_DATA = "spots/GET_SPECIFIC_SPOT_DATA";
-const CREATE_SPOT = "spots/CREATE_SPOT";
 
 ///////////////////////////////////////////////////////////
 

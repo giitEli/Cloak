@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateSpotThunk } from "../../../store/spots";
 import { createSpotThunk } from "../../../store/spots";
 import validateForm from "./ValidateForm";
