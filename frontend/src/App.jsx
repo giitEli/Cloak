@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
+import StocksDisplay from "./components/StocksDisplay";
+import Search from "./components/Search";
 import * as sessionActions from "./store/session";
 
 function Layout() {
@@ -28,7 +30,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>DEPLOYED!!!</h1>,
+        element: <StocksDisplay />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
     ],
   },
