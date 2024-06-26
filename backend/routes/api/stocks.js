@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const searchStock = require("../../utils/searchStock");
 const { Stock } = require("../../db/models");
 require("dotenv").config();
 const API_KEY = process.env.API_KEY;
@@ -16,24 +17,14 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:symbol", async (req, res, next) => {
   const { symbol } = req.params;
-  const url_symbol = `&symbol=${symbol}`;
-  const profile_url = url_start + "stocks" + url_api + url_symbol + url_country;
 
-  const raw_profile = await fetch(profile_url);
-  const response = await raw_profile.json();
-  const { name, country } = response.data[0];
+  const stockData = await searchStock(symbol);
 
-  const price_url = url_start + "price" + url_api + url_symbol;
-  const raw_price = await fetch(price_url);
-  const response_price = await raw_price.json();
-  const current_price = response_price.price;
+  if (!stockData) {
+    res.status(404).json({ status: "failure" });
+  }
 
-  const new_stock = await Stock.create({
-    symbol,
-    name,
-    current_price: Number(current_price),
-    country,
-  });
+  const new_stock = await Stock.create(stockData);
 
   res.status(201).json({ data: new_stock, status: "success" });
 });

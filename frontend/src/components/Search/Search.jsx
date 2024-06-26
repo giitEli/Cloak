@@ -14,7 +14,7 @@ const Search = () => {
   return (
     <form onSubmit={submit}>
       <label>
-        Search Field
+        Symbol Search
         <input
           type="text"
           value={symbol}

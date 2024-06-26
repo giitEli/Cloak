@@ -61,11 +61,11 @@ const stocksReducer = (state = initialState, action) => {
     }
     case STOCK_SEARCH: {
       const id = action.payload.id;
-      const state_copy = {
-        all_stocks: { ...state.allStocks },
+      const stateCopy = {
+        allStocks: { ...state.allStocks },
       };
-      state_copy.all_stocks[id] = action.payload;
-      return state_copy;
+      stateCopy.allStocks[id] = action.payload;
+      return stateCopy;
     }
     default:
       return state;
