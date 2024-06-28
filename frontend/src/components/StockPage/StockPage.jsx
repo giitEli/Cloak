@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Stock from "../StocksDisplay/Stock";
+// import Stock from "../StocksDisplay/Stock";
 import { useEffect } from "react";
 import { getAllStocksThunk, getStockGraphDataThunk } from "../../store/stocks";
 import StockChart from "./StockChart";

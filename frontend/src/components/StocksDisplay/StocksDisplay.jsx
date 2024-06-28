@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllStocksThunk } from "../../store/stocks";
-import s from "./StocksDisplay.module.css";
+// import s from "./StocksDisplay.module.css";
 import Stock from "./Stock";
 import { searchStockThunk } from "../../store/stocks";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 ////////////////////////////////////////////////////////////////////
 
@@ -24,7 +24,7 @@ const filterStocks = (stocks, string) => {
 ////////////////////////////////////////////////////////////////////
 
 const StocksDisplay = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const stocks = useSelector((state) => state.stocks.allStocks);
   const [filter, setFilter] = useState("");
