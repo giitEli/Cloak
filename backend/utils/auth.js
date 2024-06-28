@@ -65,7 +65,9 @@ const restoreUser = (req, res, next) => {
 
 const requireAuth = function (req, res, next) {
   if (req.user) return next();
-  res.status(401).json({ message: "Authentication required" });
+  res
+    .status(401)
+    .json({ message: "Authentication required", status: "failure" });
 };
 
 module.exports = { setTokenCookie, restoreUser, requireAuth };

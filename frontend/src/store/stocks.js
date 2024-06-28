@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const STOCK_SEARCH = "stocks/search";
 const GET_ALL_STOCKS = "stocks/getAllStocks";
+const GET_GRAPH_DATA = "stocks/getGraphData";
 
 ///////////////////////////////////////////////////////////
 
@@ -16,6 +17,13 @@ const addStock = (stock) => {
   return {
     type: STOCK_SEARCH,
     payload: stock,
+  };
+};
+
+const getGraphData = (data) => {
+  return {
+    type: GET_GRAPH_DATA,
+    payload: data,
   };
 };
 
@@ -35,7 +43,7 @@ export const getAllStocksThunk = () => async (dispatch) => {
 };
 
 export const searchStockThunk = (symbol) => async (dispatch) => {
-  const raw = await csrfFetch(`/api/stocks/${symbol}`);
+  const raw = await csrfFetch(`/api/stocks/search/${symbol}`);
   const response = await raw.json();
 
   console.log(response);
@@ -47,8 +55,17 @@ export const searchStockThunk = (symbol) => async (dispatch) => {
   return response;
 };
 
+export const getStockGraphDataThunk = (stockId) => async (dispatch) => {
+  const raw = await csrfFetch(`/api/stocks/${stockId}`);
+  const response = await raw.json();
+
+  if (response.status === "success") {
+    dispatch(getGraphData(response.data.graphData));
+  }
+};
+
 ///////////////////////////////////////////////////////////
-const initialState = { allStocks: {} };
+const initialState = { allStocks: {}, graphData: [] };
 
 const stocksReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -66,6 +83,9 @@ const stocksReducer = (state = initialState, action) => {
       };
       stateCopy.allStocks[id] = action.payload;
       return stateCopy;
+    }
+    case GET_GRAPH_DATA: {
+      return { ...state, graphData: action.payload };
     }
     default:
       return state;

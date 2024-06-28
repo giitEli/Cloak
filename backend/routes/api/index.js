@@ -3,6 +3,7 @@ const router = require("express").Router();
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
 const stocksRouter = require("./stocks.js");
+const watchlistRouter = require("./watchlist.js");
 
 const { restoreUser } = require("../../utils/auth.js");
 
@@ -16,5 +17,7 @@ router.use("/session", sessionRouter);
 router.use("/users", usersRouter);
 
 router.use("/stocks", stocksRouter);
+
+router.use("/watchlist", watchlistRouter);
 
 module.exports = router;

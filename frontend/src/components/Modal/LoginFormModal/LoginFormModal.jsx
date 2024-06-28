@@ -41,7 +41,7 @@ function LoginFormModal() {
   };
 
   const disableButton = () => {
-    return !(credential.length >= 4 && password.length >= 6);
+    return !(credential.length >= 3 && password.length >= 6);
   };
 
   return (

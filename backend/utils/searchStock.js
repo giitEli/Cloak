@@ -51,7 +51,15 @@ const twelveDataLookup = async (symbol) => {
 
   const { price } = responsePrice;
 
-  return { symbol, name, currency, exchange, country, type, price };
+  return {
+    symbol: symbol.toUpperCase(),
+    name,
+    currency,
+    exchange,
+    country,
+    type,
+    price,
+  };
 };
 
 const searchStock = async (symbol) => {
@@ -66,4 +74,36 @@ const searchStock = async (symbol) => {
   return { ...finnHubData, ...twelveDataData };
 };
 
-module.exports = searchStock;
+const getStockGraphData = async (symbol) => {
+  const urlStart = "https://api.twelvedata.com/";
+  const TWELVEDATA_API_KEY = process.env.TWELVEDATA_API_KEY;
+  const urlAPIKey = `?apikey=${TWELVEDATA_API_KEY}`;
+  const urlSymbol = `&symbol=${symbol}`;
+  const urlInterval = `&interval=1month`;
+  const urlOutputSize = `&outputsize=50`;
+  const seriesUrl =
+    urlStart +
+    "time_series" +
+    urlAPIKey +
+    urlSymbol +
+    urlInterval +
+    urlOutputSize;
+
+  const raw = await fetch(seriesUrl);
+  const response = await raw.json();
+
+  if (!response.values) {
+    return false;
+  }
+
+  const stockData = response.values.map((data) => {
+    return {
+      value: Number(data.close),
+      date: data.datetime,
+    };
+  });
+
+  return stockData;
+};
+
+module.exports = { searchStock, getStockGraphData };

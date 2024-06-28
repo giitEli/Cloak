@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import StocksDisplay from "./components/StocksDisplay";
-import Search from "./components/Search";
+import StockPage from "./components/StockPage";
+import WatchList from "./components/WatchList";
 import * as sessionActions from "./store/session";
 
 function Layout() {
@@ -33,8 +34,12 @@ const router = createBrowserRouter([
         element: <StocksDisplay />,
       },
       {
-        path: "/search",
-        element: <Search />,
+        path: "/stocks/:stockId",
+        element: <StockPage />,
+      },
+      {
+        path: "/watchlist",
+        element: <WatchList />,
       },
     ],
   },
