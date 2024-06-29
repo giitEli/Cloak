@@ -5,7 +5,7 @@ import {
   getWatchlistThunk,
   removeFromWatchlistThunk,
 } from "../../store/watchlist";
-import Stock from "../StocksDisplay/Stock";
+// import Stock from "../StocksDisplay/Stock";
 import { useNavigate } from "react-router-dom";
 
 const WatchList = () => {
