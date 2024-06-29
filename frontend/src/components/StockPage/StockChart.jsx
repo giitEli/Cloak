@@ -12,7 +12,7 @@ import {
 const StockChart = ({ graphData }) => {
   console.log(graphData);
   return (
-    <ResponsiveContainer width="100%" aspect={2}>
+    <ResponsiveContainer width="50%" aspect={2}>
       <LineChart width={300} height={100} data={graphData}>
         <Line
           type="monotone"

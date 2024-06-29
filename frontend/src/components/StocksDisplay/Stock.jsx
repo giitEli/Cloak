@@ -3,20 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { addToWatchlistThunk } from "../../store/watchlist";
 
 const Stock = ({
-  stock: {
-    id,
-    name,
-    symbol,
-    price,
-    currency,
-    exchange,
-    country,
-    type,
-    industry,
-    ipo,
-    marketCap,
-    outstandingShares,
-  },
+  stock: { id, name, symbol, price, exchange, country, industry },
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,14 +20,9 @@ const Stock = ({
       <h4>{symbol}</h4>
       <ul>
         <li>Price: {price}</li>
-        <li>Currency: {currency}</li>
         <li>Exchange: {exchange}</li>
         <li>Country: {country}</li>
-        <li>Type: {type}</li>
         <li>Industry: {industry}</li>
-        <li>IPO: {ipo}</li>
-        <li>Market Cap: {marketCap}</li>
-        <li>Outstanding Shares: {outstandingShares}</li>
       </ul>
       <button
         onClick={(e) => {

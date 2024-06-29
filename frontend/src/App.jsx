@@ -6,6 +6,7 @@ import StocksDisplay from "./components/StocksDisplay";
 import StockPage from "./components/StockPage";
 import WatchList from "./components/WatchList";
 import ProfilePage from "./components/ProfilePage";
+import PortfolioPage from "./components/PortfolioPage";
 import * as sessionActions from "./store/session";
 
 function Layout() {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <ProfilePage />,
+      },
+      {
+        path: "/portfolios",
+        element: <PortfolioPage />,
       },
     ],
   },

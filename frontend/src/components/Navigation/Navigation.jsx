@@ -56,7 +56,7 @@ function Navigation({ isLoaded }) {
               className={s.nav_element}
               onClick={(e) => {
                 e.preventDefault();
-                navigate("/portfolio");
+                navigate("/portfolios");
               }}
             >
               Portfolios
