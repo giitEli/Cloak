@@ -1,113 +1,47 @@
 .nav_bar {
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgb(161, 161, 161);
-  padding: 10px;
-  padding-top: 5px;
-  margin-bottom: 20px;
+  border-bottom: 1px solid gray;
+  height: 45px;
 }
 
 .home_icon {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 40px;
-  color: rgb(255, 52, 52);
-  cursor: pointer;
-}
-
-.right {
-  display: flex;
-  margin-right: 10px;
-}
-
-.create_spot_button {
-  border: none;
-  font-size: 15px;
-  border-radius: 10px;
-  padding: 5px 10px;
-  margin-right: 20px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgb(225, 225, 225);
-  }
-}
-
-.profile_button_container {
   display: flex;
   align-items: center;
-  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+
+  & > .logo {
+    font-size: 35px;
+  }
+  & > span {
+    font-size: 30px;
+  }
 }
 
-.profile_button {
+.nav_links {
   display: flex;
-  padding-top: 5px;
-  font-size: 20px;
-  border: 2px solid rgb(147, 147, 147);
-  border-radius: 20px;
-  background-color: white;
-  cursor: pointer;
+}
 
-  & > div {
-    padding-left: 7px;
-  }
-  &:hover {
-    background-color: rgb(232, 232, 232);
-  }
+.nav_element {
+  cursor: pointer;
+  margin: 8px;
 }
 
 .drop_down_menu {
   position: absolute;
-  top: 80px;
-  right: 18px;
-  border: 2px solid rgb(72, 72, 72);
-  border-radius: 10px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  list-style-type: none;
-}
+  text-align: right;
+  right: 0;
+  top: 45px;
+  border: 1px solid gray;
 
-.drop_down_top,
-.drop_down_middle,
-.drop_down_bottom {
-  padding: 10px;
-  border-bottom: 1px solid black;
-
-  & > li:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  & > * {
+    padding: 10px 10px;
   }
 }
 
-.drop_down_top {
-  border-radius: 10px 10px 0px 0px;
-  border-top: none;
-}
-
-.drop_down_bottom {
-  border-radius: 0px 0px 10px 10px;
-  border-bottom: none;
-}
-
-.logout_button {
-  padding: 10px;
-
-  display: flex;
-  justify-content: center;
-
-  & button {
-    border: none;
-    background-color: rgb(81, 81, 81);
-    color: white;
-    font-size: 20px;
-    padding: 5px 15px;
-    border-radius: 15px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: black;
-    }
-  }
+.dropdown_profile_button, .dropdown_logout_button {
+  cursor: pointer;
 }

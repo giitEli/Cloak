@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation";
 import StocksDisplay from "./components/StocksDisplay";
 import StockPage from "./components/StockPage";
 import WatchList from "./components/WatchList";
+import ProfilePage from "./components/ProfilePage";
 import * as sessionActions from "./store/session";
 
 function Layout() {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/watchlist",
         element: <WatchList />,
+      },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
       },
     ],
   },

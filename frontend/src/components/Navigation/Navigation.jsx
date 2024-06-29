@@ -1,11 +1,32 @@
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ProfileButton from "./ProfileButton";
+import AccountButton from "./AccountButton";
+import LoginFormModal from "../Modal/LoginFormModal";
+import SignupFormModal from "../Modal/SignupFormModal";
+import { GiHoodedFigure } from "react-icons/gi";
+import OpenModalMenuItem from "../Modal/OpenModalMenuItem";
 import s from "./Navigation.module.css";
 
 function Navigation({ isLoaded }) {
-  const sessionUser = useSelector((state) => state.session.user);
   const navigate = useNavigate();
+  const ulRef = useRef();
+  const sessionUser = useSelector((state) => state.session.user);
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
+
+  useEffect(() => {
+    if (!showAccountMenu) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowAccountMenu(false);
+      }
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showAccountMenu]);
 
   return (
     <nav className={s.nav_bar}>
@@ -16,13 +37,48 @@ function Navigation({ isLoaded }) {
           navigate("/");
         }}
       >
-        Cloak
+        <GiHoodedFigure className={s.logo} />
+        <span>Cloak</span>
       </div>
-      <div className={s.right}>
-        {isLoaded && (
-          <div className={s.profile_button_container}>
-            <ProfileButton user={sessionUser} />
-          </div>
+      <div className={s.nav_links}>
+        {isLoaded && sessionUser && (
+          <>
+            <div
+              className={s.nav_element}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/watchlist");
+              }}
+            >
+              Watchlist
+            </div>
+            <div
+              className={s.nav_element}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/portfolio");
+              }}
+            >
+              Portfolios
+            </div>
+            <AccountButton user={sessionUser} />
+          </>
+        )}
+        {isLoaded && !sessionUser && (
+          <>
+            <div className={s.nav_element}>
+              <OpenModalMenuItem
+                itemText="Log In"
+                modalComponent={<LoginFormModal />}
+              />
+            </div>
+            <div className={s.nav_element}>
+              <OpenModalMenuItem
+                itemText="Sign Up"
+                modalComponent={<SignupFormModal />}
+              />
+            </div>
+          </>
         )}
       </div>
     </nav>
