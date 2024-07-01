@@ -13,18 +13,54 @@ module.exports = (sequelize, DataTypes) => {
   }
   Stock.init(
     {
-      symbol: { type: DataTypes.STRING, allowNull: false },
-      name: { type: DataTypes.STRING, allowNull: false },
-      price: { type: DataTypes.STRING, allowNull: false },
-      currency: { type: DataTypes.STRING, allowNull: false },
-      exchange: { type: DataTypes.STRING, allowNull: false },
-      country: { type: DataTypes.STRING, allowNull: false },
-      type: { type: DataTypes.STRING, allowNull: false },
-      industry: { type: DataTypes.STRING, allowNull: false },
-      ipo: { type: DataTypes.DATE, allowNull: false },
-      logo: { type: DataTypes.STRING, allowNull: false },
-      marketCap: { type: DataTypes.STRING, allowNull: false },
-      outstandingShares: { type: DataTypes.STRING, allowNull: false },
+      symbol: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      currency: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      exchange: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      country: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      industry: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      ipo: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      logo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      marketCap: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      outstandingShares: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       sequelize,
