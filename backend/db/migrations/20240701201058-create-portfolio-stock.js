@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Portfolios",
+      "PortfolioStocks",
       {
         id: {
           allowNull: false,
@@ -16,14 +16,17 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        userId: {
+        portfolioId: {
           allowNull: false,
           type: Sequelize.INTEGER,
         },
-        balance: {
+        stockId: {
           allowNull: false,
           type: Sequelize.INTEGER,
-          defaultValue: 0,
+        },
+        amount: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -38,7 +41,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Portfolios";
+    options.tableName = "PortfolioStocks";
     await queryInterface.dropTable(options);
   },
 };

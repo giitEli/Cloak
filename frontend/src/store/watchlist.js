@@ -6,17 +6,17 @@ const REMOVE_FROM_WATCHLIST = "watchlist/remove";
 
 ///////////////////////////////////////////////////////////
 
-const addToWatchlist = (stock) => {
-  return {
-    type: ADD_TO_WATCHLIST,
-    payload: stock,
-  };
-};
-
 const getWatchlist = (stocks) => {
   return {
     type: GET_WATCHLIST,
     payload: stocks,
+  };
+};
+
+const addToWatchlist = (stock) => {
+  return {
+    type: ADD_TO_WATCHLIST,
+    payload: stock,
   };
 };
 
@@ -49,7 +49,7 @@ export const addToWatchlistThunk = (stockId) => async (dispatch) => {
   const response = await raw.json();
 
   if (response.status === "success") {
-    dispatch(addToWatchlist(response.data.spotId));
+    dispatch(addToWatchlist(response.data));
   }
 };
 
@@ -59,29 +59,38 @@ export const removeFromWatchlistThunk = (stockId) => async (dispatch) => {
   });
   const response = await raw.json();
 
-  console.log(response);
-
   if (response.status === "success") {
-    dispatch(removeFromWatchlist(response.data.stockId));
+    dispatch(removeFromWatchlist(response.data.id));
   }
 };
 
 ///////////////////////////////////////////////////////////
-const initialState = { stocks: [] };
+const initialState = { stocks: {} };
 
 const watchlistReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_WATCHLIST: {
-      return { ...state, stocks: action.payload };
+      const watchlist = action.payload.reduce((acc, stock) => {
+        acc[stock.id] = stock;
+        return acc;
+      }, {});
+
+      return { ...state, stocks: watchlist };
     }
     case ADD_TO_WATCHLIST: {
-      return { ...state, stocks: [...state.stocks, action.payload] };
+      const watchlist = { ...state };
+      watchlist.stocks[action.payload.id] = action.payload;
+      return watchlist;
     }
     case REMOVE_FROM_WATCHLIST: {
-      const watchlistStocks = state.stocks.filter(
-        (stockId) => stockId !== Number(action.payload)
-      );
-      return { ...state, stocks: watchlistStocks };
+      const watchlist = { ...state };
+      watchlist.stocks = Object.keys(state.stocks)
+        .filter((id) => id != action.payload)
+        .reduce((acc, id) => {
+          acc[id] = state.stocks[id];
+          return acc;
+        }, {});
+      return watchlist;
     }
     default:
       return state;

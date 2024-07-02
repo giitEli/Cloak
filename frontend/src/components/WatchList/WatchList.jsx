@@ -5,27 +5,29 @@ import {
   getWatchlistThunk,
   removeFromWatchlistThunk,
 } from "../../store/watchlist";
-import Stock from "../StocksDisplay/Stock";
+// import Stock from "../StocksDisplay/Stock";
 import { useNavigate } from "react-router-dom";
 
 const WatchList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const stocks = useSelector((state) => state.stocks.allStocks);
-  const watchlist = useSelector((state) => state.watchlist.stocks);
+  const stocks = useSelector((state) => state.watchlist.stocks);
+
 
   useEffect(() => {
     dispatch(getAllStocksThunk());
     dispatch(getWatchlistThunk());
   }, []);
+  
+  console.log(stocks);
 
-  if (!watchlist.length) {
+  if (!stocks) {
     return <div>You have nothing in your watchlist</div>;
   }
 
   return (
     <div>
-      {watchlist.map((stockId) => {
+      {Object.keys(stocks).map((stockId) => {
         const stock = stocks[stockId];
         if (stock) {
           const {
