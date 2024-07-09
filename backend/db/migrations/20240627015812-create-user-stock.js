@@ -23,7 +23,6 @@ module.exports = {
             model: "Users",
             key: "id",
           },
-          onUpdate: "CASCADE",
           onDelete: "CASCADE",
         },
         stockId: {
@@ -33,7 +32,6 @@ module.exports = {
             model: "Stocks",
             key: "id",
           },
-          onUpdate: "CASCADE",
           onDelete: "CASCADE",
         },
         createdAt: {

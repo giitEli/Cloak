@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // PortfolioStock.belongsToMany(models.Portfolio, {
-      //   foreignKey: "PortfolioId",
-      // });
+      PortfolioStock.belongsTo(models.Portfolio, {
+        foreignKey: "portfolioId",
+      });
     }
   }
   PortfolioStock.init(

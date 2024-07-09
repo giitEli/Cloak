@@ -9,19 +9,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Portfolio.hasMany(models.PortfolioStock, {
-        foreignKey: "PortfolioId",
+      Portfolio.belongsToMany(models.Stock, {
+        through: "PortfolioStocks",
+        foreignKey: "stockId",
       });
     }
   }
   Portfolio.init(
     {
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       name: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       balance: {

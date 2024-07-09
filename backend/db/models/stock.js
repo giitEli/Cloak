@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         through: "UserStocks",
         foreignKey: "stockId",
       });
+      Stock.belongsToMany(models.Portfolio, {
+        through: "PortfolioStocks",
+        foreignKey: "portfolioId",
+      });
     }
   }
   Stock.init(

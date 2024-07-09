@@ -19,10 +19,20 @@ module.exports = {
         portfolioId: {
           allowNull: false,
           type: Sequelize.INTEGER,
+          references: {
+            model: "Portfolios",
+            key: "id",
+          },
+          onDelete: "CASCADE",
         },
         stockId: {
           allowNull: false,
           type: Sequelize.INTEGER,
+          references: {
+            model: "Stocks",
+            key: "id",
+          },
+          onDelete: "CASCADE",
         },
         amount: {
           allowNull: false,
