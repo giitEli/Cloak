@@ -4,6 +4,7 @@ const GET_PORTFOLIOS = "portfolios/get";
 const GET_PORTFOLIO_BY_ID = "portfolios/getById";
 const CREATE_PORTFOLIO = "portfolios/create";
 const UPDATE_PORTFOLIO = "portfolios/update";
+const DELETE_PORTFOLIO = "portfolios/delete";
 
 ///////////////////////////////////////////////////////////
 
@@ -25,6 +26,13 @@ const updatePortfolio = (portfolio) => {
   return {
     type: UPDATE_PORTFOLIO,
     payload: portfolio,
+  };
+};
+
+const deletePortfolio = (portfolioId) => {
+  return {
+    type: DELETE_PORTFOLIO,
+    payload: portfolioId,
   };
 };
 
@@ -52,7 +60,8 @@ export const createPortfolioThunk = (portfolio) => async (dispatch) => {
   const response = await raw.json();
 
   if (response.status === "success") {
-    dispatch(createPortfolio(response.data));
+    // dispatch(createPortfolio(response.data));
+    dispatch(getPortfoliosThunk());
   }
   return response;
 };
@@ -75,6 +84,18 @@ export const updatePortfolioThunk =
     return response;
   };
 
+export const deletePortfolioThunk = (portfolioId) => async (dispatch) => {
+  const raw = await csrfFetch(`/api/portfolios/${portfolioId}`, {
+    method: "DELETE",
+  });
+  const response = await raw.json();
+
+  if (response.status === "success") {
+    dispatch(deletePortfolio(portfolioId));
+  }
+  return response;
+};
+
 ///////////////////////////////////////////////////////////
 const initialState = { userPortfolios: {} };
 
@@ -90,6 +111,16 @@ const portfolioReducer = (state = initialState, action) => {
       newState.userPortfolios[id].name = name;
       newState.userPortfolios[id].balance = balance;
 
+      return newState;
+    }
+    case DELETE_PORTFOLIO: {
+      const newState = { ...state };
+      newState.userPortfolios = Object.keys(state.userPortfolios)
+        .filter((id) => id != action.payload)
+        .reduce((acc, id) => {
+          acc[id] = state.userPortfolios[id];
+          return acc;
+        }, {});
       return newState;
     }
     default:

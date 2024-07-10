@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
-import CreatePortfolioModal from "./CreatePortfolioModal";
+import DeletePortfolioModal from "./DeletePortfolioModal";
 
-function CreatePortfolioModalButton() {
+function DeletePortfolioModalButton({ portfolioId, setSelectedPortfolio }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -23,12 +23,17 @@ function CreatePortfolioModalButton() {
   return (
     <button onClick={toggleMenu}>
       <OpenModalMenuItem
-        itemText="Create Portfolio"
+        itemText="Delete Portfolio"
         onItemClick={closeMenu}
-        modalComponent={<CreatePortfolioModal />}
+        modalComponent={
+          <DeletePortfolioModal
+            portfolioId={portfolioId}
+            setSelectedPortfolio={setSelectedPortfolio}
+          />
+        }
       />
     </button>
   );
 }
 
-export default CreatePortfolioModalButton;
+export default DeletePortfolioModalButton;

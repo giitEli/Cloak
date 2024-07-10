@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
 import UpdatePortfolioModal from "./UpdatePortfolioModal";
 
-function UpdatePortfolioModalButton({ currentPortfolio }) {
+function UpdatePortfolioModalButton({ currentPortfolio, className }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -21,7 +21,7 @@ function UpdatePortfolioModalButton({ currentPortfolio }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <button onClick={toggleMenu}>
+    <button onClick={toggleMenu} className={className || ""}>
       <OpenModalMenuItem
         itemText="Update Portfolio"
         onItemClick={closeMenu}

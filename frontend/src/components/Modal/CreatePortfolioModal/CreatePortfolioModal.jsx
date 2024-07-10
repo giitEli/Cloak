@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { createPortfolioThunk } from "../../../store/portfolio";
 import s from "./CreatePortfolio.module.css";
@@ -8,7 +8,7 @@ function CreatePortfolioModal() {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [name, setName] = useState();
-  const [balance, setBalance] = useState();
+  const [balance, setBalance] = useState(1);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,14 +33,14 @@ function CreatePortfolioModal() {
         />
       </label>
       <label>
-        Set an initial balance for your portfolio.
+        Set an initial balance for your portfolio. $
         <input
           type="number"
           defaultValue={0}
           value={balance}
           onChange={(e) => {
             e.preventDefault();
-            if (e.target.value >= 0) {
+            if (e.target.value >= 1) {
               setBalance(e.target.value);
             }
           }}
