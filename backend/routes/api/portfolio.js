@@ -55,19 +55,6 @@ router.get("/", requireAuth, async (req, res, next) => {
   return res.status(200).json({ status: "success", data: portfolioData });
 });
 
-router.get("/:portfolioId", requireAuth, async (req, res, next) => {
-  const userId = req.user.id;
-  const { portfolioId } = req.params;
-  const portfolio = await Portfolio.findOne({
-    where: {
-      userId,
-    },
-  });
-  const stocks = await portfolio.getStocks();
-
-  console.log(stocks);
-});
-
 router.post("", requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   const { name, balance } = req.body;
@@ -78,7 +65,17 @@ router.post("", requireAuth, async (req, res, next) => {
     balance,
   });
 
-  res.status(201).json({ status: "success", data: newPortfolio });
+  return res.status(201).json({ status: "success", data: newPortfolio });
+});
+
+router.put("/:portfolioId", requireAuth, async (req, res, next) => {
+  const { portfolioId } = req.params;
+  const portfolioData = req.body;
+  console.log(portfolioData);
+
+  const portfolio = await Portfolio.findByPk(portfolioId);
+  const updatedPortfolio = await portfolio.update(portfolioData);
+  res.status(200).json({ status: "success", data: updatedPortfolio });
 });
 
 module.exports = router;
