@@ -96,6 +96,24 @@ export const deletePortfolioThunk = (portfolioId) => async (dispatch) => {
   return response;
 };
 
+export const sellStockThunk = (portfolioId, stockId, amount) => async (dispatch) => {
+  const raw = await csrfFetch(`/api/portfolios/${portfolioId}/sell`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({stockId, amount
+    })
+  })
+
+  const response = await raw.json()
+
+  if(response.status === "success"){
+    dispatch(getPortfoliosThunk());
+  }
+  return response
+}
+
 ///////////////////////////////////////////////////////////
 const initialState = { userPortfolios: {} };
 

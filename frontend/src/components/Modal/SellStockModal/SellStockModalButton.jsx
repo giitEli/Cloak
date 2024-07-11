@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
-import DeleteSpotModal from "./DeleteSpotModal";
+import SellStockModal from "./SellStockModal";
 
-function DeleteSpotModalButton({ spotId }) {
+function SellStockModalButton({ portfolioId, stock }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -23,12 +23,14 @@ function DeleteSpotModalButton({ spotId }) {
   return (
     <button onClick={toggleMenu}>
       <OpenModalMenuItem
-        itemText="Delete"
+        itemText="Sell"
         onItemClick={closeMenu}
-        modalComponent={<DeleteSpotModal spotId={spotId} />}
+        modalComponent={
+          <SellStockModal portfolioId={portfolioId} stock={stock} />
+        }
       />
     </button>
   );
 }
 
-export default DeleteSpotModalButton;
+export default SellStockModalButton;

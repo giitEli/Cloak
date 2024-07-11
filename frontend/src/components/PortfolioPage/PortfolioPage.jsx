@@ -4,6 +4,7 @@ import CreatePortfolioModal from "../Modal/CreatePortfolioModal";
 import UpdatePortfolioModal from "../Modal/UpdatePortfolioModal";
 import DeletePortfolioModal from "../Modal/DeletePortfolioModal";
 import { getPortfoliosThunk } from "../../store/portfolio";
+import SellStockModal from "../Modal/SellStockModal";
 
 import s from "./PortfolioPage.module.css";
 
@@ -53,6 +54,7 @@ const PortfolioPage = () => {
               <li key={stock.id} className={s.stock_container}>
                 <span>{stock.name}</span>
                 <span>{stock.amount}</span>
+                <SellStockModal portfolioId={selectedPortfolio} stock={stock} />
               </li>
             );
           })}

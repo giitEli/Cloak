@@ -89,7 +89,46 @@ router.delete("/:portfolioId", requireAuth, async (req, res, next) => {
 
   await portfolio.destroy();
 
-  res.status(200).json({ status: "success", data: portfolio });
+  return res.status(200).json({ status: "success", data: portfolio });
+});
+
+//sell a stock
+router.put("/:portfolioId/sell", requireAuth, async (req, res, next) => {
+  const { portfolioId } = req.params;
+  const { stockId, amount } = req.body;
+  const stock = await Stock.findByPk(stockId);
+  const portfolio = await Portfolio.findByPk(portfolioId);
+
+  const newTotal = stock.price * amount + portfolio.balance;
+
+  const updatePortfolio = await portfolio.update({
+    balance: newTotal,
+  });
+
+  const portfolioStock = await PortfolioStock.findOne({
+    where: {
+      portfolioId,
+      stockId,
+    },
+  });
+
+  const newAmount = portfolioStock.amount - amount;
+
+  if (newAmount <= 0) {
+    await portfolioStock.destroy();
+  } else {
+    await portfolioStock.update({ amount: newAmount });
+  }
+
+  return res.status(200).json({
+    status: "success",
+    data: {
+      newBalance: newTotal,
+      newAmount,
+      portfolioId,
+      stockId,
+    },
+  });
 });
 
 module.exports = router;
