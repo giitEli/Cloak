@@ -99,7 +99,8 @@ router.put("/:portfolioId/sell", requireAuth, async (req, res, next) => {
   const stock = await Stock.findByPk(stockId);
   const portfolio = await Portfolio.findByPk(portfolioId);
 
-  const newTotal = stock.price * amount + portfolio.balance;
+  const newTotal =
+    Number(stock.price) * Number(amount) + Number(portfolio.balance);
 
   const updatePortfolio = await portfolio.update({
     balance: newTotal,

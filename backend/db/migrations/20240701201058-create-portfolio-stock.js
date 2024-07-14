@@ -36,7 +36,7 @@ module.exports = {
         },
         amount: {
           allowNull: false,
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING,
         },
         createdAt: {
           type: Sequelize.DATE,
