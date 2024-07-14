@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
-import DeleteReviewModal from "./DeleteReviewModal";
+import UpdatePortfolioModal from "./UpdatePortfolioModal";
 
-function DeleteReviewModalButton({ reviewId, spotId }) {
+function UpdatePortfolioModalButton({ currentPortfolio, className }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -21,16 +21,16 @@ function DeleteReviewModalButton({ reviewId, spotId }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <button onClick={toggleMenu}>
+    <button onClick={toggleMenu} className={className || ""}>
       <OpenModalMenuItem
-        itemText="Delete"
+        itemText="Update Portfolio"
         onItemClick={closeMenu}
         modalComponent={
-          <DeleteReviewModal reviewId={reviewId} spotId={spotId} />
+          <UpdatePortfolioModal currentPortfolio={currentPortfolio} />
         }
       />
     </button>
   );
 }
 
-export default DeleteReviewModalButton;
+export default UpdatePortfolioModalButton;

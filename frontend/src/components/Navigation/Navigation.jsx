@@ -8,7 +8,7 @@ import { GiHoodedFigure } from "react-icons/gi";
 import OpenModalMenuItem from "../Modal/OpenModalMenuItem";
 import s from "./Navigation.module.css";
 
-function Navigation({ isLoaded }) {
+function Navigation({ isLoaded, setShowCart }) {
   const navigate = useNavigate();
   const ulRef = useRef();
   const sessionUser = useSelector((state) => state.session.user);
@@ -60,6 +60,15 @@ function Navigation({ isLoaded }) {
               }}
             >
               Portfolios
+            </div>
+            <div
+              className={s.nav_element}
+              onClick={(e) => {
+                e.preventDefault();
+                setShowCart((prev) => !prev);
+              }}
+            >
+              Cart
             </div>
             <AccountButton user={sessionUser} />
           </>

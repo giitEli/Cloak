@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
-import CreateReviewModal from "./CreateReviewModal";
+import CreatePortfolioModal from "./CreatePortfolioModal";
 
-function CreateReviewModalButton({ spotId }) {
+function CreatePortfolioModalButton() {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -23,12 +23,12 @@ function CreateReviewModalButton({ spotId }) {
   return (
     <button onClick={toggleMenu}>
       <OpenModalMenuItem
-        itemText="Create Review"
+        itemText="Create Portfolio"
         onItemClick={closeMenu}
-        modalComponent={<CreateReviewModal spotId={spotId} />}
+        modalComponent={<CreatePortfolioModal />}
       />
     </button>
   );
 }
 
-export default CreateReviewModalButton;
+export default CreatePortfolioModalButton;

@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Watchlists",
+      "UserStocks",
       {
         id: {
           allowNull: false,
@@ -19,25 +19,35 @@ module.exports = {
         userId: {
           allowNull: false,
           type: Sequelize.INTEGER,
+          references: {
+            model: "Users",
+            key: "id",
+          },
+          onDelete: "CASCADE",
         },
         stockId: {
           allowNull: false,
           type: Sequelize.INTEGER,
+          references: {
+            model: "Stocks",
+            key: "id",
+          },
+          onDelete: "CASCADE",
         },
         createdAt: {
-          allowNull: false,
           type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
         updatedAt: {
-          allowNull: false,
           type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
       },
       options
     );
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Watchlists";
+    options.tableName = "UserStocks";
     return queryInterface.dropTable(options);
   },
 };

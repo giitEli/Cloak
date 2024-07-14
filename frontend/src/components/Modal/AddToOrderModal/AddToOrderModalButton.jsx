@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
-import DeleteSpotModal from "./DeleteSpotModal";
+import AddToOrderModal from "./AddToOrderModal";
 
-function DeleteSpotModalButton({ spotId }) {
+function AddToOrderModalButton({ stock }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -23,12 +23,12 @@ function DeleteSpotModalButton({ spotId }) {
   return (
     <button onClick={toggleMenu}>
       <OpenModalMenuItem
-        itemText="Delete"
+        itemText="Add"
         onItemClick={closeMenu}
-        modalComponent={<DeleteSpotModal spotId={spotId} />}
+        modalComponent={<AddToOrderModal stock={stock} />}
       />
     </button>
   );
 }
 
-export default DeleteSpotModalButton;
+export default AddToOrderModalButton;

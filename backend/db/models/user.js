@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Stock, {
+        through: "UserStocks",
+        foreignKey: "userId",
+      });
     }
   }
 
@@ -51,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
       defaultScope: {
         attributes: {
-          exclude: ["hashedPassword", "createdAt", "updatedAt"],
+          exclude: ["hashedPassword"],
         },
       },
     }

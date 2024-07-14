@@ -1,0 +1,17 @@
+.cart_container {
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid black;
+}
+
+.cart_header_container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.order_item_container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}

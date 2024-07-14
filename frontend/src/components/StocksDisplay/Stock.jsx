@@ -1,12 +1,13 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToWatchlistThunk } from "../../store/watchlist";
+import AddToOrderModal from "../Modal/AddToOrderModal";
 
-const Stock = ({
-  stock: { id, name, symbol, price, exchange, country, industry },
-}) => {
+const Stock = ({ stock }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { id, name, symbol, price, exchange, country, industry } = stock;
+
   return (
     <div>
       <h3
@@ -32,6 +33,7 @@ const Stock = ({
       >
         Add this stock to your watchlist!
       </button>
+      <AddToOrderModal stock={stock} />
     </div>
   );
 };

@@ -7,11 +7,14 @@ import StockPage from "./components/StockPage";
 import WatchList from "./components/WatchList";
 import ProfilePage from "./components/ProfilePage";
 import PortfolioPage from "./components/PortfolioPage";
+import Cart from "./components/Cart";
 import * as sessionActions from "./store/session";
+import s from "./Layout.module.css";
 
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
@@ -20,10 +23,13 @@ function Layout() {
   }, [dispatch]);
 
   return (
-    <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Outlet />}
-    </>
+    <div className={s.page_layout_container}>
+      <Navigation isLoaded={isLoaded} setShowCart={setShowCart} />
+      <div className={s.main_page_container}>
+        {isLoaded && <Outlet />}
+        {isLoaded && showCart && <Cart setShowCart={setShowCart} />}
+      </div>
+    </div>
   );
 }
 

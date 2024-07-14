@@ -4,6 +4,8 @@ const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
 const stocksRouter = require("./stocks.js");
 const watchlistRouter = require("./watchlist.js");
+const portfolioRouter = require("./portfolio.js");
+const orderRouter = require("./order.js");
 
 const { restoreUser } = require("../../utils/auth.js");
 
@@ -13,11 +15,10 @@ const { restoreUser } = require("../../utils/auth.js");
 router.use(restoreUser);
 
 router.use("/session", sessionRouter);
-
 router.use("/users", usersRouter);
-
 router.use("/stocks", stocksRouter);
-
 router.use("/watchlist", watchlistRouter);
+router.use("/portfolios", portfolioRouter);
+router.use("/orders", orderRouter);
 
 module.exports = router;

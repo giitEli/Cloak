@@ -1,70 +1,74 @@
 const express = require("express");
 const router = express.Router();
 const { searchStock, getStockGraphData } = require("../../utils/searchStock");
-const { Watchlist } = require("../../db/models");
+const { Stock } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 
 router.get("/", requireAuth, async (req, res, next) => {
-  const watchlistStocks = await Watchlist.findAll({
-    where: {
-      userId: Number(req.user.id),
-    },
-  });
+  //grab user from req
+  const { user } = req;
 
-  const data = JSON.parse(JSON.stringify(watchlistStocks)).map(
-    ({ stockId }) => stockId
-  );
+  //grab users watch list stocks
+  const userStocks = await user.getStocks();
 
-  console.log(data);
-
-  res.status(200).json({ status: "success", data });
+  //return data
+  res.status(200).json({ status: "success", data: userStocks });
 });
 
+// add a stock to a users watch list
 router.post("/", requireAuth, async (req, res, next) => {
-  const userId = req.user.id;
-  const stockId = req.body.stockId;
+  //grab stockId and user from req
+  const { stockId } = req.body;
+  const { user } = req;
 
-  const currentWatchlist = await Watchlist.findAll({
+  //see if stock exist
+  const stock = await Stock.findByPk(stockId);
+  if (!stock) {
+    return res.status(404).json({
+      status: "failure",
+      message: "stock with that id could not be found",
+    });
+  }
+
+  //see if stock is all ready in watch list
+  const existingUserStock = await user.getStocks({
     where: {
-      userId,
-      stockId,
+      id: Number(stockId),
     },
   });
-
-  if (currentWatchlist.length) {
+  if (existingUserStock.length) {
     return res
       .status(400)
       .json({ status: "failure", message: "stock all ready in watchlist" });
   }
 
-  Watchlist.create({
-    userId,
-    stockId,
-  });
-
-  return res.status(200).json({ status: "success", data: { stockId } });
+  //add stock to watch list and return stock
+  await user.addStock(stock);
+  return res.status(201).json({ status: "success", data: stock });
 });
 
 router.delete("/:stockId", requireAuth, async (req, res, next) => {
+  //pull user and stockId from req
+  const { user } = req;
   const { stockId } = req.params;
-  const userId = req.user.id;
 
-  const watchlistStock = await Watchlist.findOne({
+  //find stock
+  const stock = await user.getStocks({
     where: {
-      userId,
-      stockId,
+      id: Number(stockId),
     },
   });
 
-  if (!watchlistStock) {
+  //if no stock return error message
+  if (!stock) {
     return res
       .status(400)
       .json({ status: "failure", message: "stock not in watchlist" });
   }
 
-  watchlistStock.destroy();
-
-  return res.status(200).json({ status: "success", data: { stockId } });
+  //delete stock from watch list and return stock
+  await user.removeStock(stock);
+  return res.status(200).json({ status: "success", data: stock[0] });
 });
 
 module.exports = router;

@@ -33,8 +33,6 @@ export const getAllStocksThunk = () => async (dispatch) => {
   const raw = await csrfFetch("/api/stocks/");
   const response = await raw.json();
 
-  console.log(response);
-
   if (response.status === "success") {
     dispatch(getAllStocks(response.data));
   }
