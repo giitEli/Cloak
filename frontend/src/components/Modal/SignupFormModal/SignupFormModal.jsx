@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import * as sessionActions from "../../../store/session";
@@ -13,12 +13,47 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { closeModal } = useModal();
+
+  const isEmptySpaces = (string) => {
+    if (string.length === 0) return true;
+    for (const char of string) {
+      if (char !== " ") return false;
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    const newErrors = {};
+    if (isEmptySpaces(email) || !email.includes("@")) {
+      newErrors.email = "Not a valid email";
+    }
+    if (isEmptySpaces(username)) {
+      newErrors.username = "Username is required";
+    }
+    if (isEmptySpaces(firstName)) {
+      newErrors.firstName = "First name is required";
+    }
+    if (isEmptySpaces(lastName)) {
+      newErrors.lastName = "Last name is required";
+    }
+    if (isEmptySpaces(password)) {
+      newErrors.password = "Password is required";
+    }
+    if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Must match password";
+    }
+    setErrors(newErrors);
+  }, [email, username, firstName, lastName, password, confirmPassword]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
+    setIsSubmitted(true);
+    if (!Object.keys(errors).length) {
       return dispatch(
         sessionActions.signup({
           email,
@@ -48,18 +83,6 @@ function SignupFormModal() {
     });
   };
 
-  const enableButton = () => {
-    return !(
-      email &&
-      username.length >= 4 &&
-      password.length >= 6 &&
-      firstName &&
-      lastName &&
-      password &&
-      confirmPassword
-    );
-  };
-
   return (
     <form onSubmit={handleSubmit} className={s.form}>
       <h1>Sign Up</h1>
@@ -69,61 +92,62 @@ function SignupFormModal() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
-        required
       />
 
-      {errors.email && <span className={s.error}>{errors.email}</span>}
+      {isSubmitted && errors.email && (
+        <span className={s.error}>{errors.email}</span>
+      )}
 
       <input
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Username"
-        required
       />
 
-      {errors.username && <span>{errors.username}</span>}
+      {isSubmitted && errors.username && <span>{errors.username}</span>}
 
       <input
         type="text"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
         placeholder="First Name"
-        required
       />
 
-      {errors.firstName && <span>{errors.firstName}</span>}
+      {isSubmitted && errors.firstName && <span>{errors.firstName}</span>}
 
       <input
         type="text"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
         placeholder="Last Name"
-        required
       />
 
-      {errors.lastName && <span>{errors.lastName}</span>}
+      {isSubmitted && errors.lastName && <span>{errors.lastName}</span>}
 
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
-        required
       />
 
-      {errors.password && <span>{errors.password}</span>}
+      {isSubmitted && errors.password && <span>{errors.password}</span>}
 
       <input
         type="password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         placeholder="Confirm Password"
-        required
       />
 
-      {errors.confirmPassword && <span>{errors.confirmPassword}</span>}
-      <button type="submit" disabled={enableButton()}>
+      {isSubmitted && errors.confirmPassword && (
+        <span>{errors.confirmPassword}</span>
+      )}
+      <button
+        type="submit"
+        disabled={Object.keys(errors).length && isSubmitted}
+      >
         Sign Up
       </button>
     </form>

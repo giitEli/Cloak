@@ -43,6 +43,8 @@
   right: 0;
   top: 45px;
   border: 1px solid gray;
+  background-color: #252525;
+  color: white;
 
   & > * {
     padding: 10px 10px;

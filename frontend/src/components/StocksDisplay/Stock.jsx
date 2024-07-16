@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToWatchlistThunk } from "../../store/watchlist";
 import AddToOrderModal from "../Modal/AddToOrderModal";
@@ -9,7 +9,7 @@ const Stock = ({ stock }) => {
   const dispatch = useDispatch();
   const { id, name, symbol, price, exchange, country, industry, logo } = stock;
 
-  console.log(stock);
+  const user = useSelector((state) => state.session.user);
 
   return (
     <div className={s.stock_info_container}>
@@ -32,15 +32,19 @@ const Stock = ({ stock }) => {
         <li className={s.stock_info_text}>Price: {price}</li>
         <li className={s.stock_info_text}>Industry: {industry}</li>
       </ul>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          dispatch(addToWatchlistThunk(id));
-        }}
-      >
-        Add this stock to your watchlist!
-      </button>
-      <AddToOrderModal stock={stock} />
+      {user && (
+        <>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(addToWatchlistThunk(id));
+            }}
+          >
+            Add to watchlist
+          </button>
+          <AddToOrderModal stock={stock} />
+        </>
+      )}
     </div>
   );
 };

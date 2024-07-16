@@ -16,7 +16,6 @@ function LoginFormModal() {
     // const response = dispatch(sessionActions.login({ credential, password }));
     return dispatch(sessionActions.login({ credential, password }))
       .then((res) => {
-        console.log(res);
         if (res.message === "Invalid credentials") {
           setErrors({ credentials: "Invalid credentials" });
         } else {
@@ -25,7 +24,6 @@ function LoginFormModal() {
       })
       .catch(async (res) => {
         const data = await res.json();
-        console.log("data", data);
         if (data && data.errors) {
           setErrors(data.errors);
         }

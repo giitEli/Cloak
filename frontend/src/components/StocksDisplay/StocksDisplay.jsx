@@ -56,6 +56,7 @@ const StocksDisplay = () => {
             value={filter}
             onChange={(e) => {
               e.preventDefault();
+              setSearch(e.target.value);
               setFilter(e.target.value);
             }}
           />

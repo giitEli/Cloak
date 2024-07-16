@@ -181,7 +181,6 @@ router.get("/:portfolioId", requireAuth, async (req, res, next) => {
 
   for (const order of orders) {
     if (currentPortfolioStocks[order.stockId]) {
-      console.log("here");
       await currentPortfolioStocks[order.stockId].update({
         amount:
           Number(currentPortfolioStocks[order.stockId].amount) +

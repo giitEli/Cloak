@@ -16,6 +16,21 @@ const Cart = ({ setShowCart }) => {
   const portfolios = useSelector((state) => state.portfolios.userPortfolios);
   const [selectedPortfolio, setSelectedPortfolio] = useState();
 
+  const getTotal = (cart) => {
+    let total = 0;
+    for (const stock of Object.values(cart)) {
+      total += Number(stock.price) * Number(stock.amount);
+    }
+    return total;
+  };
+
+  const checkTotal = (cart, portfolio) => {
+    if (!portfolio) return false;
+    if (!Object.keys(cart).length) return false;
+    if (Number(portfolio.balance) < getTotal(cart)) return false;
+    return true;
+  };
+
   useEffect(() => {
     dispatch(getOrdersThunk());
     dispatch(getPortfoliosThunk());
@@ -25,7 +40,6 @@ const Cart = ({ setShowCart }) => {
     if (!selectedPortfolio) {
       setSelectedPortfolio(Object.keys(portfolios)[0]);
     }
-    console.log(selectedPortfolio);
   }, [portfolios]);
 
   return (
@@ -42,16 +56,14 @@ const Cart = ({ setShowCart }) => {
         </button>
       </div>
       <ul>
+        Portfolio
         {selectedPortfolio && (
           <select
             onChange={(e) => {
               e.preventDefault();
               setSelectedPortfolio(e.target.value);
-              console.log(e.target.value);
             }}
           >
-            {" "}
-            Pick a portfolio
             {Object.values(portfolios).map(({ id, name }) => {
               return (
                 <option key={id} value={id}>
@@ -61,7 +73,6 @@ const Cart = ({ setShowCart }) => {
             })}
           </select>
         )}
-
         {Object.values(cart).map((stock) => {
           return (
             <li key={stock.id} className={s.order_item_container}>
@@ -89,14 +100,22 @@ const Cart = ({ setShowCart }) => {
         >
           Clear Cart
         </button>
+        {}
         <button
           onClick={(e) => {
             e.preventDefault();
             dispatch(checkOutThunk(selectedPortfolio));
           }}
+          disabled={!checkTotal(cart, portfolios[selectedPortfolio])}
         >
-          purchase
+          Check Out
         </button>
+        {portfolios[selectedPortfolio] &&
+          Number(portfolios[selectedPortfolio].balance) < getTotal(cart) && (
+            <p className={s.error} style={{ color: "red" }}>
+              Cart total is greater then portfolio balance.
+            </p>
+          )}
       </ul>
     </div>
   );

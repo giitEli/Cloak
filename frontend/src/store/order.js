@@ -50,8 +50,6 @@ export const getOrdersThunk = () => async (dispatch) => {
   const raw = await csrfFetch("/api/orders");
   const response = await raw.json();
 
-  console.log({ response });
-
   if (response.status === "success") {
     dispatch(getOrders(response.data));
   }
@@ -66,8 +64,6 @@ export const addToCartThunk = (stockId, amount) => async (dispatch) => {
     body: JSON.stringify({ stockId, amount }),
   });
   const response = await raw.json();
-
-  console.log({ response });
 
   if (response.status === "success") {
     dispatch(addToCart(response.data));
@@ -100,8 +96,6 @@ export const editOrderInCartThunk = (stockId, amount) => async (dispatch) => {
     body: JSON.stringify({ stockId, amount }),
   });
   const response = await raw.json();
-
-  console.log(response);
 
   if (response.status === "success") {
     dispatch(editOrderInCart(response.data));
