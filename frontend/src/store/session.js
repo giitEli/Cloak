@@ -37,7 +37,6 @@ export const logout = () => async (dispatch) => {
     method: "DELETE",
   });
   // const json = await response.json();
-  console.log(response);
   dispatch(removeUser());
   return response;
 };
@@ -45,7 +44,6 @@ export const logout = () => async (dispatch) => {
 export const restoreUser = () => async (dispatch) => {
   const response = await csrfFetch("/api/session");
   const data = await response.json();
-  console.log(data);
   dispatch(setUser(data.user));
   return response;
 };
@@ -63,7 +61,6 @@ export const signup = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  console.log(data);
   if (!data.errors) {
     dispatch(setUser(data.user));
   }

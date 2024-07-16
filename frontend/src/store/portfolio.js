@@ -41,8 +41,6 @@ export const getPortfoliosThunk = () => async (dispatch) => {
   const raw = await csrfFetch("/api/portfolios");
   const response = await raw.json();
 
-  console.log(response);
-
   if (response.status === "success") {
     dispatch(getPortfolios(response.data));
   }
@@ -122,7 +120,6 @@ const portfolioReducer = (state = initialState, action) => {
       return { ...state, userPortfolios: action.payload };
     }
     case UPDATE_PORTFOLIO: {
-      console.log(action.payload);
       const { id, name, balance } = action.payload;
       const newState = { ...state };
       newState.userPortfolios[id].name = name;

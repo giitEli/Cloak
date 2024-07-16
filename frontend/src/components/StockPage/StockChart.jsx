@@ -8,20 +8,23 @@ import {
   // Legend,
   ResponsiveContainer,
 } from "recharts";
+import s from "./StockPage.module.css";
 
 const StockChart = ({ graphData }) => {
   console.log(graphData);
   return (
-    <ResponsiveContainer width="50%" aspect={2}>
-      <LineChart width={300} height={100} data={graphData}>
-        <Line
-          type="monotone"
-          dataKey="value"
-          stroke="#8884d8"
-          strokeWidth={2}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+    <div className={s.graph_container}>
+      <ResponsiveContainer width="100%" aspect={2}>
+        <LineChart data={graphData}>
+          <Line
+            type="monotone"
+            dataKey="value"
+            stroke="#8884d8"
+            strokeWidth={2}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

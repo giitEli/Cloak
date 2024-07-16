@@ -44,8 +44,6 @@ export const searchStockThunk = (symbol) => async (dispatch) => {
   const raw = await csrfFetch(`/api/stocks/search/${symbol}`);
   const response = await raw.json();
 
-  console.log(response);
-
   if (response.status === "success") {
     dispatch(addStock(response.data));
   }

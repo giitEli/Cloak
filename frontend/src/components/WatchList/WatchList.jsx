@@ -13,16 +13,15 @@ const WatchList = () => {
   const navigate = useNavigate();
   const stocks = useSelector((state) => state.watchlist.stocks);
 
-
   useEffect(() => {
     dispatch(getAllStocksThunk());
     dispatch(getWatchlistThunk());
   }, []);
-  
+
   console.log(stocks);
 
-  if (!stocks) {
-    return <div>You have nothing in your watchlist</div>;
+  if (!Object.keys(stocks).length) {
+    return <h1>You have nothing in your watchlist</h1>;
   }
 
   return (

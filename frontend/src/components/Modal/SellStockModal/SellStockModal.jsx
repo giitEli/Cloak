@@ -25,7 +25,6 @@ function SellStockModal({ portfolioId, stock }) {
           value={amount}
           onChange={(e) => {
             e.preventDefault();
-            console.log(Number(e.target.value));
             if (Number(e.target.value) < 0) {
               setAmount(0);
             } else if (Number(e.target.value) > stock.amount) {
