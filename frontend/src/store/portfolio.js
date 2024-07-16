@@ -1,8 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const GET_PORTFOLIOS = "portfolios/get";
-const GET_PORTFOLIO_BY_ID = "portfolios/getById";
-const CREATE_PORTFOLIO = "portfolios/create";
+// const CREATE_PORTFOLIO = "portfolios/create";
 const UPDATE_PORTFOLIO = "portfolios/update";
 const DELETE_PORTFOLIO = "portfolios/delete";
 
@@ -15,19 +14,19 @@ const getPortfolios = (portfolios) => {
   };
 };
 
-const createPortfolio = (portfolio) => {
-  return {
-    type: CREATE_PORTFOLIO,
-    payload: portfolio,
-  };
-};
+// const createPortfolio = (portfolio) => {
+//   return {
+//     type: CREATE_PORTFOLIO,
+//     payload: portfolio,
+//   };
+// };
 
-const updatePortfolio = (portfolio) => {
-  return {
-    type: UPDATE_PORTFOLIO,
-    payload: portfolio,
-  };
-};
+// const updatePortfolio = (portfolio) => {
+//   return {
+//     type: UPDATE_PORTFOLIO,
+//     payload: portfolio,
+//   };
+// };
 
 const deletePortfolio = (portfolioId) => {
   return {
@@ -96,23 +95,23 @@ export const deletePortfolioThunk = (portfolioId) => async (dispatch) => {
   return response;
 };
 
-export const sellStockThunk = (portfolioId, stockId, amount) => async (dispatch) => {
-  const raw = await csrfFetch(`/api/portfolios/${portfolioId}/sell`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({stockId, amount
-    })
-  })
+export const sellStockThunk =
+  (portfolioId, stockId, amount) => async (dispatch) => {
+    const raw = await csrfFetch(`/api/portfolios/${portfolioId}/sell`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ stockId, amount }),
+    });
 
-  const response = await raw.json()
+    const response = await raw.json();
 
-  if(response.status === "success"){
-    dispatch(getPortfoliosThunk());
-  }
-  return response
-}
+    if (response.status === "success") {
+      dispatch(getPortfoliosThunk());
+    }
+    return response;
+  };
 
 ///////////////////////////////////////////////////////////
 const initialState = { userPortfolios: {} };

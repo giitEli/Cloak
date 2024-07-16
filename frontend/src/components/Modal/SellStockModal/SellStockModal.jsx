@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
-import { sellStockThunk, updatePortfolioThunk } from "../../../store/portfolio";
+import { sellStockThunk } from "../../../store/portfolio";
 import s from "./SellStock.module.css";
 
 function SellStockModal({ portfolioId, stock }) {

@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { deletePortfolioThunk } from "../../../store/portfolio";
-import s from "./DeletePortfolio.module.css";
+// import s from "./DeletePortfolio.module.css";
 
 function DeletePortfolioModal({ portfolioId, setSelectedPortfolio }) {
   const dispatch = useDispatch();

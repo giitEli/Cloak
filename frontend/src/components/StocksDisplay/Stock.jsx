@@ -7,7 +7,7 @@ import s from "./StocksDisplay.module.css";
 const Stock = ({ stock }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id, name, symbol, price, exchange, country, industry, logo } = stock;
+  const { id, name, symbol, price, industry, logo } = stock;
 
   console.log(stock);
 

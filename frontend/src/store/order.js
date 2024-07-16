@@ -6,7 +6,7 @@ const ADD_TO_CART = "orders/addToCart";
 const REMOVE_FROM_CART = "orders/removeFromCart";
 const EDIT_ORDER_IN_CART = "orders/edit";
 const CLEAR_CART = "orders/clear";
-const CHECKOUT = "orders/checkout";
+// const CHECKOUT = "orders/checkout";
 
 ///////////////////////////////////////////////////////////
 
