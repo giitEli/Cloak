@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-=======
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
->>>>>>> Bedazzle
+import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { updatePortfolioThunk } from "../../../store/portfolio";
 import s from "./UpdatePortfolio.module.css";
