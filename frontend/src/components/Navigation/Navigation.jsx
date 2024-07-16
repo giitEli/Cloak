@@ -38,7 +38,7 @@ function Navigation({ isLoaded, setShowCart }) {
         }}
       >
         <GiHoodedFigure className={s.logo} />
-        <span>Cloak</span>
+        <span className={s.home_text}>Cloak</span>
       </div>
       <div className={s.nav_links}>
         {isLoaded && sessionUser && (

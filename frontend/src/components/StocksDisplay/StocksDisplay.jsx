@@ -1,19 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllStocksThunk } from "../../store/stocks";
-// import s from "./StocksDisplay.module.css";
+import s from "./StocksDisplay.module.css";
 import Stock from "./Stock";
 import { searchStockThunk } from "../../store/stocks";
 // import { useNavigate } from "react-router-dom";
-
+import { FaSearch } from "react-icons/fa";
+import { IoCloseCircle } from "react-icons/io5";
 ////////////////////////////////////////////////////////////////////
 
 const filterStocks = (stocks, string) => {
   return Object.keys(stocks).filter((id) => {
-    const { symbol, name } = stocks[id];
+    const { symbol, name, industry } = stocks[id];
     if (
       symbol.toLowerCase().includes(string.toLowerCase()) ||
-      name.toLowerCase().includes(string.toLowerCase())
+      name.toLowerCase().includes(string.toLowerCase()) ||
+      industry.toLowerCase().includes(string.toLowerCase())
     ) {
       return true;
     }
@@ -43,33 +45,37 @@ const StocksDisplay = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={submit}>
-        <label>
-          Symbol Search
+    <div id={s.main_stock_page_container}>
+      <form onSubmit={submit} id={s.search_bar_container}>
+        <div id={s.search_bar_left}>
+          <FaSearch id={s.search_symbol} />
           <input
+            id={s.search_bar}
+            placeholder="Symbol Search"
             type="text"
-            value={search}
+            value={filter}
             onChange={(e) => {
               e.preventDefault();
-              setSearch(e.target.value);
+              setFilter(e.target.value);
             }}
           />
-        </label>
-        <button type="submit">Search</button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setSearch("");
-            setFilter("");
-          }}
-        >
-          Clear
-        </button>
+        </div>
+        <div id={s.search_bar_right}>
+          <IoCloseCircle
+            id={s.close_search_symbol}
+            onClick={(e) => {
+              e.preventDefault();
+              setSearch("");
+              setFilter("");
+            }}
+          />
+        </div>
       </form>
-      {filterStocks(stocks, filter).map((id) => {
-        return <Stock key={id} stock={stocks[id]} />;
-      })}
+      <div id={s.stock_display_container}>
+        {filterStocks(stocks, filter).map((id) => {
+          return <Stock key={id} stock={stocks[id]} />;
+        })}
+      </div>
     </div>
   );
 };

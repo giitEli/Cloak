@@ -23,7 +23,7 @@ function AddToOrderModalButton({ stock }) {
   return (
     <button onClick={toggleMenu}>
       <OpenModalMenuItem
-        itemText="Add"
+        itemText="Purchase"
         onItemClick={closeMenu}
         modalComponent={<AddToOrderModal stock={stock} />}
       />

@@ -5,6 +5,13 @@
   align-items: center;
   border-bottom: 1px solid gray;
   height: 45px;
+  background-color: #252525;
+}
+
+.logo,
+.nav_element,
+.home_text {
+  color: #00a7e1;
 }
 
 .home_icon {
@@ -42,6 +49,7 @@
   }
 }
 
-.dropdown_profile_button, .dropdown_logout_button {
+.dropdown_profile_button,
+.dropdown_logout_button {
   cursor: pointer;
 }

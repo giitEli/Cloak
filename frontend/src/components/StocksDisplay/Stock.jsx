@@ -2,28 +2,35 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToWatchlistThunk } from "../../store/watchlist";
 import AddToOrderModal from "../Modal/AddToOrderModal";
+import s from "./StocksDisplay.module.css";
 
 const Stock = ({ stock }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id, name, symbol, price, exchange, country, industry } = stock;
+  const { id, name, symbol, price, exchange, country, industry, logo } = stock;
+
+  console.log(stock);
 
   return (
-    <div>
-      <h3
-        onClick={(e) => {
-          e.preventDefault();
-          navigate(`/stocks/${id}`);
-        }}
-      >
-        {name}
-      </h3>
-      <h4>{symbol}</h4>
+    <div className={s.stock_info_container}>
+      <div className={s.stock_info_top_container}>
+        <div className={s.stock_info_image_container}>
+          <img src={logo} />
+        </div>
+        <h3
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(`/stocks/${id}`);
+          }}
+          className={s.stock_info_name}
+        >
+          {name}
+        </h3>
+      </div>
+      <h4 className={s.stock_info_text}>{symbol}</h4>
       <ul>
-        <li>Price: {price}</li>
-        <li>Exchange: {exchange}</li>
-        <li>Country: {country}</li>
-        <li>Industry: {industry}</li>
+        <li className={s.stock_info_text}>Price: {price}</li>
+        <li className={s.stock_info_text}>Industry: {industry}</li>
       </ul>
       <button
         onClick={(e) => {
