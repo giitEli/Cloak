@@ -44,6 +44,8 @@ const StocksDisplay = () => {
     }
   };
 
+  ///////////////////////////////////////////////////////////////
+
   return (
     <div id={s.main_stock_page_container}>
       <form onSubmit={submit} id={s.search_bar_container}>
