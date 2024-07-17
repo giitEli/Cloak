@@ -74,7 +74,7 @@ function EditOrderModal({ stock }) {
         />
       </div>
       <button className={s.submit_button} type="submit" disabled={!amount}>
-        Add to Cart
+        Change order
       </button>
     </form>
   );

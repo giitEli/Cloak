@@ -23,7 +23,7 @@ function EditOrderModalButton({ stock }) {
   return (
     <button onClick={toggleMenu}>
       <OpenModalMenuItem
-        itemText="Edit"
+        itemText="Change order"
         onItemClick={closeMenu}
         modalComponent={<EditOrderModal stock={stock} />}
       />

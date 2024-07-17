@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllStocksThunk } from "../../store/stocks";
+import { getWatchlistThunk } from "../../store/watchlist";
 import s from "./StocksDisplay.module.css";
 import Stock from "./Stock";
 import { searchStockThunk } from "../../store/stocks";
@@ -34,6 +35,7 @@ const StocksDisplay = () => {
 
   useEffect(() => {
     dispatch(getAllStocksThunk());
+    dispatch(getWatchlistThunk());
   }, [dispatch]);
 
   const submit = async (e) => {

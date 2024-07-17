@@ -7,6 +7,7 @@ import configureStore from "./store";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/session";
 import { Modal, ModalProvider } from "./context/Modal";
+import CartDisplayProvider from "./context/Cart";
 
 const store = configureStore();
 
@@ -21,11 +22,13 @@ if (import.meta.env.MODE !== "production") {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ModalProvider>
-      <Provider store={store}>
-        <App />
+      <CartDisplayProvider>
+        <Provider store={store}>
+          <App />
 
-        <Modal />
-      </Provider>
+          <Modal />
+        </Provider>
+      </CartDisplayProvider>
     </ModalProvider>
   </React.StrictMode>
 );

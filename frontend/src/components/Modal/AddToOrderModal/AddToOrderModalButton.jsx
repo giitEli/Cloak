@@ -5,10 +5,10 @@ import AddToOrderModal from "./AddToOrderModal";
 function AddToOrderModalButton({ stock, className }) {
   const [showMenu, setShowMenu] = useState(false);
 
-  const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    setShowMenu(!showMenu);
-  };
+  // const toggleMenu = (e) => {
+  //   e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+  //   setShowMenu(!showMenu);
+  // };
 
   useEffect(() => {
     if (!showMenu) return;
@@ -21,13 +21,12 @@ function AddToOrderModalButton({ stock, className }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <button onClick={toggleMenu} className={className}>
-      <OpenModalMenuItem
-        itemText="Purchase"
-        onItemClick={closeMenu}
-        modalComponent={<AddToOrderModal stock={stock} />}
-      />
-    </button>
+    <OpenModalMenuItem
+      className={className}
+      itemText="Purchase"
+      onItemClick={closeMenu}
+      modalComponent={<AddToOrderModal stock={stock} />}
+    />
   );
 }
 

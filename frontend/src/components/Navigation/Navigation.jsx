@@ -7,12 +7,15 @@ import SignupFormModal from "../Modal/SignupFormModal";
 import { GiHoodedFigure } from "react-icons/gi";
 import OpenModalMenuItem from "../Modal/OpenModalMenuItem";
 import s from "./Navigation.module.css";
+import { useCartDisplayContext } from "../../context/Cart";
 
-function Navigation({ isLoaded, setShowCart }) {
+function Navigation({ isLoaded }) {
   const navigate = useNavigate();
   const ulRef = useRef();
   const sessionUser = useSelector((state) => state.session.user);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
+
+  const { setCartDisplay } = useCartDisplayContext();
 
   useEffect(() => {
     if (!showAccountMenu) return;
@@ -65,7 +68,7 @@ function Navigation({ isLoaded, setShowCart }) {
               className={s.nav_element}
               onClick={(e) => {
                 e.preventDefault();
-                setShowCart((prev) => !prev);
+                setCartDisplay((prev) => !prev);
               }}
             >
               Cart

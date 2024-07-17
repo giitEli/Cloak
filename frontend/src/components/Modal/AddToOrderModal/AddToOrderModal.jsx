@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { addToCartThunk } from "../../../store/order";
+import { useCartDisplayContext } from "../../../context/Cart";
 import s from "./AddToOrder.module.css";
 
 function AddToOrderModal({ stock }) {
@@ -10,11 +11,14 @@ function AddToOrderModal({ stock }) {
   const [amount, setAmount] = useState("");
   const [price, setPrice] = useState("");
 
+  const { setCartDisplay } = useCartDisplayContext();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await dispatch(addToCartThunk(stock.id, amount));
 
     if (response.status === "success") {
+      setCartDisplay(true);
       closeModal();
     }
   };
@@ -46,8 +50,8 @@ function AddToOrderModal({ stock }) {
               return;
             }
             if (checkValue(e.target.value)) {
-              setAmount(round(value, 1000));
-              setPrice(round(value * Number(stock.price), 100));
+              setAmount(value);
+              setPrice(value * Number(stock.price));
             }
           }}
         />
@@ -65,8 +69,8 @@ function AddToOrderModal({ stock }) {
               return;
             }
             if (checkValue(e.target.value)) {
-              setAmount(round(value / Number(stock.price), 1000));
-              setPrice(round(value, 100));
+              setAmount(value / Number(stock.price));
+              setPrice(value);
             }
           }}
         />

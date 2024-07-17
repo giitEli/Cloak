@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addToWatchlistThunk } from "../../store/watchlist";
+import {
+  addToWatchlistThunk,
+  removeFromWatchlistThunk,
+} from "../../store/watchlist";
 import AddToOrderModal from "../Modal/AddToOrderModal";
-import { round } from "../helpFunctions";
+import { displayRound } from "../helpFunctions";
 import s from "./StocksDisplay.module.css";
 
 const Stock = ({ stock }) => {
@@ -11,6 +14,9 @@ const Stock = ({ stock }) => {
   const { id, name, symbol, price, industry, logo } = stock;
 
   const user = useSelector((state) => state.session.user);
+  const inWatchlist = useSelector((state) => {
+    return state.watchlist.stocks[stock.id];
+  });
 
   ////////////////////////////////////////////////////////
 
@@ -36,21 +42,34 @@ const Stock = ({ stock }) => {
           <div className={s.stock_industry}>{industry}</div>
         </div>
         <div className={s.right_middle_container}>
-          <h2 className={s.stock_price}>${round(price)}</h2>
+          <h2 className={s.stock_price}>${displayRound(price, 100)}</h2>
         </div>
       </div>
       <ul></ul>
       {user && (
         <div className={s.signed_in_options}>
-          <button
-            className={s.add_to_watchlist_button}
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(addToWatchlistThunk(id));
-            }}
-          >
-            Add to watchlist
-          </button>
+          {inWatchlist ? (
+            <button
+              className={s.remove_from_watchlist_button}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(removeFromWatchlistThunk(id));
+              }}
+            >
+              Remove from wachlist
+            </button>
+          ) : (
+            <button
+              className={s.add_to_watchlist_button}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(addToWatchlistThunk(id));
+              }}
+            >
+              Add to watchlist
+            </button>
+          )}
+
           <AddToOrderModal
             stock={stock}
             className={s.add_to_order_modal_button}
