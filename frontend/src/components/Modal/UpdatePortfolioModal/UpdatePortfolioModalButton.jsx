@@ -21,15 +21,14 @@ function UpdatePortfolioModalButton({ currentPortfolio, className }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <button onClick={toggleMenu} className={className || ""}>
-      <OpenModalMenuItem
-        itemText="Update Portfolio"
-        onItemClick={closeMenu}
-        modalComponent={
-          <UpdatePortfolioModal currentPortfolio={currentPortfolio} />
-        }
-      />
-    </button>
+    <OpenModalMenuItem
+      className={className}
+      itemText="Update Portfolio"
+      onItemClick={closeMenu}
+      modalComponent={
+        <UpdatePortfolioModal currentPortfolio={currentPortfolio} />
+      }
+    />
   );
 }
 

@@ -7,36 +7,81 @@ import s from "./SellStock.module.css";
 function SellStockModal({ portfolioId, stock }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
+  const [price, setPrice] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(sellStockThunk(portfolioId, stock.id, amount));
-    closeModal();
+    const response = await dispatch(
+      sellStockThunk(portfolioId, stock.id, amount)
+    );
+
+    if (response.status === "success") {
+      closeModal();
+    }
+  };
+
+  const round = (value, num) => {
+    return Math.round(Number(value) * num) / num;
+  };
+
+  const checkValue = (value) => {
+    return !isNaN(value) && value >= 0;
   };
 
   return (
-    <form className={s.review_form} onSubmit={handleSubmit}>
-      <label>
-        How much {stock.name} would you like to sell?
+    <form className={s.modal_container} onSubmit={handleSubmit}>
+      <label className={s.input_label}>
+        How much {stock.symbol} would you like to sell?
+      </label>
+      <div className={s.input_area}>
         <input
+          className={s.amount_input}
           type="number"
           value={amount}
           onChange={(e) => {
             e.preventDefault();
-            if (Number(e.target.value) < 0) {
-              setAmount(0);
-            } else if (Number(e.target.value) > stock.amount) {
+            const value = Number(e.target.value);
+            if (e.target.value === "") {
+              setAmount("");
+              setPrice("");
+              return;
+            }
+            if (checkValue(e.target.value)) {
+              setAmount(value);
+              setPrice(value * Number(stock.price));
+            }
+            if (value > stock.amount) {
               setAmount(stock.amount);
-            } else {
-              setAmount(Number(e.target.value));
+              setPrice(Number(stock.amount * stock.price));
             }
           }}
         />
-      </label>
-      <button type="submit" disabled={!amount}>
-        Sell stock
+        <span className={s.units_for}> Units for $ </span>
+        <input
+          className={s.price_input}
+          type="number"
+          value={price}
+          onChange={(e) => {
+            e.preventDefault();
+            const value = Number(e.target.value);
+            if (e.target.value === "") {
+              setAmount("");
+              setPrice("");
+              return;
+            }
+            if (value > stock.amount * stock.price) {
+              setAmount(stock.amount);
+              setPrice(stock.amount * stock.price);
+              return;
+            }
+            setAmount(value / Number(stock.price));
+            setPrice(value);
+          }}
+        />
+      </div>
+      <button className={s.submit_button} type="submit" disabled={!amount}>
+        Sell
       </button>
     </form>
   );

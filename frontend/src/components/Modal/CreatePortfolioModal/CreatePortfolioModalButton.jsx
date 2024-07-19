@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
 import CreatePortfolioModal from "./CreatePortfolioModal";
 
-function CreatePortfolioModalButton() {
+function CreatePortfolioModalButton({ className }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -21,13 +21,12 @@ function CreatePortfolioModalButton() {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <button onClick={toggleMenu}>
-      <OpenModalMenuItem
-        itemText="Create Portfolio"
-        onItemClick={closeMenu}
-        modalComponent={<CreatePortfolioModal />}
-      />
-    </button>
+    <OpenModalMenuItem
+      className={className}
+      itemText="Create Portfolio"
+      onItemClick={closeMenu}
+      modalComponent={<CreatePortfolioModal />}
+    />
   );
 }
 

@@ -25,6 +25,9 @@ function CreatePortfolioModal() {
     if (isEmptySpaces(name)) {
       newErrors.name = "Portfolio name is required";
     }
+    if (name.length > 20) {
+      newErrors.name = "Name but me 20 characters or less";
+    }
     if (isEmptySpaces(balance)) {
       newErrors.balance = "Balance is required";
     }
@@ -48,40 +51,43 @@ function CreatePortfolioModal() {
       className={s.create_portfolio_modal_container}
       onSubmit={handleSubmit}
     >
-      <label>
-        Enter a name for your new portfolio.
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => {
-            e.preventDefault();
-            setName(e.target.value);
-          }}
-        />
-      </label>
+      <label className={s.label}>Enter a name for your new portfolio</label>
+      <input
+        className={s.input}
+        type="text"
+        value={name}
+        onChange={(e) => {
+          e.preventDefault();
+          setName(e.target.value);
+        }}
+      />
       {isSubmitted && errors.name && <p className={s.error}>{errors.name}</p>}
-      <label>
-        Set a balance for your portfolio.
+      <label className={s.label}>Set a balance for your portfolio</label>
+      <div className={s.balance_input_section}>
+        <span className={s.dollar_sign}>$</span>
         <input
-          type="number"
+          className={s.input}
+          type="text"
           defaultValue={0}
           value={balance}
           onChange={(e) => {
             e.preventDefault();
-            if (e.target.value >= 0) {
+            const value = Number(e.target.value);
+            if (!isNaN(value) && value >= 0) {
               setBalance(e.target.value);
             }
           }}
         />
-      </label>
+      </div>
       {isSubmitted && errors.balance && (
         <p className={s.error}>{errors.balance}</p>
       )}
       <button
+        className={s.button}
         type="submit"
         disabled={isSubmitted && Object.keys(errors).length}
       >
-        Update Portfolio
+        Create portfolio
       </button>
     </form>
   );

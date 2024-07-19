@@ -1,8 +1,50 @@
-.update_portfolio_modal_container {
+.create_portfolio_modal_container {
+  width: 400px;
   display: flex;
   flex-direction: column;
+  padding: 16px;
+  background-color: rgb(37, 37, 37);
+  border: 2px solid grey;
+}
+
+.label {
+  padding: 4px;
+  color: white;
+}
+
+.dollar_sign {
+  color: white;
+}
+
+.input {
+  margin: 4px;
+  border: 2px solid grey;
+  border-radius: 4px;
+  background-color: rgb(206, 206, 206);
 }
 
 .error {
-  color: red;
+  margin: 4px;
+  color: rgb(219, 76, 76);
+}
+
+.balance_input_section {
+  margin: 4px;
+}
+
+.button {
+  color: #00a7e1;
+  border: 2px solid #00a7e1;
+  border-radius: 4px;
+  padding: 4px;
+  margin: 4px;
+  font-size: 14px;
+  background-color: rgb(37, 37, 37);
+
+  &:hover {
+    cursor: pointer;
+    color: #3dcbfb;
+    border: 2px solid #3dcbfb;
+    background-color: rgb(65, 65, 65);
+  }
 }

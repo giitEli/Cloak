@@ -4,7 +4,7 @@ import CreatePortfolioModal from "../Modal/CreatePortfolioModal";
 import UpdatePortfolioModal from "../Modal/UpdatePortfolioModal";
 import DeletePortfolioModal from "../Modal/DeletePortfolioModal";
 import { getPortfoliosThunk } from "../../store/portfolio";
-import SellStockModal from "../Modal/SellStockModal";
+import Stock from "./Stock.jsx";
 
 import s from "./PortfolioPage.module.css";
 
@@ -20,49 +20,70 @@ const PortfolioPage = () => {
 
   return (
     <div className={s.portfolio_page_container}>
-      <div className={s.portfolio_navigation_container}>
-        {Object.values(portfolios).map((portfolio) => {
-          const { id, name } = portfolio;
-          return (
-            <div
-              key={id}
-              className={
-                id === selectedPortfolio
-                  ? s.portfolio_name_selected
-                  : s.portfolio_name
-              }
-              onClick={(e) => {
-                e.preventDefault();
-                setSelectedPortfolio(id);
-              }}
-            >
-              {name}
-            </div>
-          );
-        })}
-        <CreatePortfolioModal />
-      </div>
-      {selectedPortfolio && (
-        <ul>
-          <UpdatePortfolioModal
-            currentPortfolio={portfolios[selectedPortfolio]}
-            className={s.update_portfolio_button}
-          />
-          <li>Balance: ${portfolios[selectedPortfolio].balance}</li>
-          {portfolios[selectedPortfolio].stocks.map((stock) => {
+      <div className={s.list_of_users_portfolios}>
+        <div className={s.list_of_users_portfolios_top}>
+          <h2 className={s.portfolios_title}>Portfolios</h2>
+          {Object.values(portfolios).map((portfolio) => {
+            const { id, name } = portfolio;
             return (
-              <li key={stock.id} className={s.stock_container}>
-                <span>{stock.name}</span>
-                <span>{stock.amount}</span>
-                <SellStockModal portfolioId={selectedPortfolio} stock={stock} />
-              </li>
+              <div
+                key={id}
+                className={
+                  id === selectedPortfolio
+                    ? s.portfolio_name_selected
+                    : s.portfolio_name
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedPortfolio(id);
+                }}
+              >
+                {name}
+              </div>
             );
           })}
-          <DeletePortfolioModal
-            portfolioId={selectedPortfolio}
-            setSelectedPortfolio={setSelectedPortfolio}
-          />
-        </ul>
+        </div>
+        <CreatePortfolioModal className={s.create_portfolio_modal} />
+      </div>
+      {selectedPortfolio ? (
+        <div className={s.portfolio_right_side}>
+          <div className={s.portfolio_right_side_top}>
+            <div className={s.portfolio_balance_text}>
+              Balance: ${portfolios[selectedPortfolio].balance}
+            </div>
+            <UpdatePortfolioModal
+              currentPortfolio={portfolios[selectedPortfolio]}
+              className={s.update_portfolio_button}
+            />
+            <DeletePortfolioModal
+              className={s.delete_portfolio_button}
+              portfolioId={selectedPortfolio}
+              setSelectedPortfolio={setSelectedPortfolio}
+            />
+          </div>
+          <div className={s.portfolio_right_side_bottom}>
+            <div className={s.stock_index}>
+              <div className={s.stock_image_container_index}></div>
+              <div className={s.stock_index_text}>Name</div>
+              <div className={s.stock_index_text}>Price</div>
+              <div className={s.stock_index_text}>Amount</div>
+              <div className={s.stock_index_text}>Symbol</div>
+              <div className={s.stock_index_text}>Industry</div>
+            </div>
+            {selectedPortfolio &&
+              portfolios[selectedPortfolio].stocks.map((stock) => {
+                return (
+                  <Stock
+                    key={stock.id}
+                    stock={stock}
+                    selectedPortfolio={selectedPortfolio}
+                  />
+                );
+              })}
+          </div>
+        </div>
+      ) : (
+        <span>No portfolio selected</span>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { deletePortfolioThunk } from "../../../store/portfolio";
-// import s from "./DeletePortfolio.module.css";
+import s from "./DeletePortfolio.module.css";
 
 function DeletePortfolioModal({ portfolioId, setSelectedPortfolio }) {
   const dispatch = useDispatch();
@@ -17,10 +17,18 @@ function DeletePortfolioModal({ portfolioId, setSelectedPortfolio }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      Are you sure you want to delete this portfolio?
-      <button onClick={closeModal}>Back</button>
-      <button type="submit">Yes</button>
+    <form onSubmit={handleSubmit} className={s.delete_portfolio_modal}>
+      <span className={s.delete_portfolio_text}>
+        Are you sure you want to delete this portfolio?
+      </span>
+      <div className={s.buttons}>
+        <button className={s.back_button} onClick={closeModal}>
+          Back
+        </button>
+        <button className={s.delete_button} type="submit">
+          Yes
+        </button>
+      </div>
     </form>
   );
 }

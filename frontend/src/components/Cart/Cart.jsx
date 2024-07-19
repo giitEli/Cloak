@@ -11,6 +11,8 @@ import EditOrderModal from "../Modal/EditOrderModal";
 import { getPortfoliosThunk } from "../../store/portfolio";
 import { useCartDisplayContext } from "../../context/Cart";
 import { FaCartShopping } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
+import CreatePortfolioModal from "../Modal/CreatePortfolioModal";
 
 const Cart = () => {
   const { cartDisplay, setCartDisplay } = useCartDisplayContext();
@@ -52,18 +54,17 @@ const Cart = () => {
           <span className={s.cart_text}>Cart</span>
           <FaCartShopping />
         </span>
-        <button
+        <IoClose
+          className={s.close_cart_x}
           onClick={(e) => {
             e.preventDefault();
             setCartDisplay(false);
           }}
-        >
-          X
-        </button>
+        />
       </div>
       <div className={s.cart_section_2}>
         <span className={s.portfolio_text}>Portfolio</span>
-        {selectedPortfolio && (
+        {selectedPortfolio && Boolean(Object.keys(portfolios).length) && (
           <select
             className={s.portfolio_select}
             defaultValue={"Select a portfolio"}
@@ -81,6 +82,9 @@ const Cart = () => {
             })}
           </select>
         )}
+        {!Object.keys(portfolios).length && (
+          <CreatePortfolioModal className={s.create_portfolio_button} />
+        )}
       </div>
       <ul className={s.cart_section_3}>
         {Object.values(cart).map((stock) => {
@@ -89,7 +93,7 @@ const Cart = () => {
               <div className={s.order_header}>
                 <div className={s.order_header_left}>
                   <span className={s.order_stock_name}>{stock.name}</span>
-                  <span>{stock.symbol}</span>
+                  <span className={s.order_stock_symbol}>{stock.symbol}</span>
                 </div>
                 <img src={stock.logo} className={s.order_logo} />
               </div>
@@ -104,8 +108,12 @@ const Cart = () => {
                 </div>
               </div>
               <div className={s.order_footer}>
-                <EditOrderModal stock={stock} />
+                <EditOrderModal
+                  stock={stock}
+                  className={s.change_order_button}
+                />
                 <button
+                  className={s.remove_from_cart_button}
                   onClick={(e) => {
                     e.preventDefault();
                     dispatch(removeFromCartThunk(stock.id));
@@ -121,21 +129,21 @@ const Cart = () => {
       <div className={s.cart_section_4}>
         <div className={s.cart_section_4_top}>
           <span className={s.portfolio_balance}>
-            Balance: $
             {portfolios[selectedPortfolio]
-              ? portfolios[selectedPortfolio].balance
-              : "No portfolio selected"}
+              ? `Balance: $${portfolios[selectedPortfolio].balance}`
+              : " No portfolio selected"}
           </span>
-          <span>Subtotal: ${getTotal(cart)}</span>
+          <span className={s.cart_total_text}>Total: ${getTotal(cart)}</span>
           {portfolios[selectedPortfolio] &&
             Number(portfolios[selectedPortfolio].balance) < getTotal(cart) && (
               <p className={s.error}>
-                Cart total is greater then portfolio balance.
+                Cart total is greater then portfolio balance
               </p>
             )}
         </div>
         <div className={s.cart_section_4_bottom}>
           <button
+            className={s.clear_cart_button}
             onClick={(e) => {
               e.preventDefault();
               dispatch(clearCartThunk());
@@ -144,6 +152,7 @@ const Cart = () => {
             Clear Cart
           </button>
           <button
+            className={s.checkout_button}
             onClick={(e) => {
               e.preventDefault();
               dispatch(checkOutThunk(selectedPortfolio));

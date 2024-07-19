@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
 import SellStockModal from "./SellStockModal";
 
-function SellStockModalButton({ portfolioId, stock }) {
+function SellStockModalButton({ className, portfolioId, stock }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -21,15 +21,14 @@ function SellStockModalButton({ portfolioId, stock }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <button onClick={toggleMenu}>
-      <OpenModalMenuItem
-        itemText="Sell"
-        onItemClick={closeMenu}
-        modalComponent={
-          <SellStockModal portfolioId={portfolioId} stock={stock} />
-        }
-      />
-    </button>
+    <OpenModalMenuItem
+      className={className}
+      itemText="Sell Stock"
+      onItemClick={closeMenu}
+      modalComponent={
+        <SellStockModal portfolioId={portfolioId} stock={stock} />
+      }
+    />
   );
 }
 

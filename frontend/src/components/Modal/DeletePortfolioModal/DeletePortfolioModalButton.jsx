@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
 import DeletePortfolioModal from "./DeletePortfolioModal";
 
-function DeletePortfolioModalButton({ portfolioId, setSelectedPortfolio }) {
+function DeletePortfolioModalButton({
+  portfolioId,
+  setSelectedPortfolio,
+  className,
+}) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -21,18 +25,17 @@ function DeletePortfolioModalButton({ portfolioId, setSelectedPortfolio }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <button onClick={toggleMenu}>
-      <OpenModalMenuItem
-        itemText="Delete Portfolio"
-        onItemClick={closeMenu}
-        modalComponent={
-          <DeletePortfolioModal
-            portfolioId={portfolioId}
-            setSelectedPortfolio={setSelectedPortfolio}
-          />
-        }
-      />
-    </button>
+    <OpenModalMenuItem
+      className={className}
+      itemText="Delete Portfolio"
+      onItemClick={closeMenu}
+      modalComponent={
+        <DeletePortfolioModal
+          portfolioId={portfolioId}
+          setSelectedPortfolio={setSelectedPortfolio}
+        />
+      }
+    />
   );
 }
 

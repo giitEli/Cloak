@@ -4,8 +4,9 @@
   flex-direction: column;
   border-left: 2px solid black;
   height: calc(100vh - 45px);
-  width: 400px;
-  background-color: rgb(25, 25, 25);
+  width: 300px;
+  min-width: 300px;
+  background-color: rgb(37, 37, 37);
 }
 
 .cart_section_1 {
@@ -13,7 +14,19 @@
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  padding: 0px 16px;
+  padding-left: 8px;
+  padding-top: 4px;
+  padding-right: 4px;
+
+  & > .close_cart_x {
+    color: #db5461;
+    font-size: 30px;
+
+    &:hover {
+      color: #f3808c;
+      cursor: pointer;
+    }
+  }
 
   & > span {
     display: flex;
@@ -48,6 +61,21 @@
     border: 2px solid grey;
     padding: 4px;
   }
+
+  & > .create_portfolio_button {
+    color: #00a7e1;
+    border: 2px solid #00a7e1;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
+
+    &:hover {
+      cursor: pointer;
+      color: #3dcbfb;
+      border: 2px solid #3dcbfb;
+      background-color: rgb(38, 38, 38);
+    }
+  }
 }
 
 .cart_section_3 {
@@ -56,8 +84,9 @@
   flex-direction: column;
   align-items: start;
   height: 100%;
-  overflow-y: scroll;
   margin: 0px;
+
+  overflow-y: scroll;
 
   & > .order_item_container {
     display: flex;
@@ -76,12 +105,19 @@
         flex-direction: column;
 
         & > .order_stock_name {
+          color: white;
           overflow-x: hidden;
           overflow-y: hidden;
+        }
+
+        & > .order_stock_symbol {
+          color: rgb(194, 194, 194);
         }
       }
 
       & > .order_logo {
+        border: 2px solid grey;
+        border-radius: 5px;
         height: 40px;
         width: 40px;
       }
@@ -97,6 +133,51 @@
         display: flex;
         justify-content: space-between;
       }
+
+      & > .order_stock_amount {
+        color: rgb(194, 194, 194);
+      }
+
+      & > .order_stock_subtotal {
+        color: #48bf84;
+      }
+    }
+
+    & > .order_footer {
+      display: flex;
+      justify-content: space-between;
+
+      & > .change_order_button {
+        color: #00a7e1;
+        border: 2px solid #00a7e1;
+        border-radius: 4px;
+        padding: 4px;
+        font-size: 14px;
+
+        &:hover {
+          cursor: pointer;
+          color: #3dcbfb;
+          border: 2px solid #3dcbfb;
+          background-color: rgb(38, 38, 38);
+        }
+      }
+
+      & > .remove_from_cart_button {
+        all: unset;
+        cursor: pointer;
+        color: #db5461;
+        border: 2px solid #db5461;
+        font-size: 14px;
+        border-radius: 4px;
+        padding: 4px;
+
+        &:hover {
+          cursor: pointer;
+          color: #ffa1aa;
+          border: 2px solid #ffa1aa;
+          background-color: rgb(38, 38, 38);
+        }
+      }
     }
   }
 }
@@ -110,6 +191,15 @@
     padding-left: 16px;
     display: flex;
     flex-direction: column;
+
+    & > .portfolio_balance {
+      color: rgb(194, 194, 194);
+    }
+
+    & > .cart_total_text {
+      color: #48bf84;
+    }
+
     & > .error {
       color: red;
       margin-top: 8px;
@@ -124,5 +214,59 @@
     padding-right: 16px;
     display: flex;
     justify-content: space-between;
+
+    & > .clear_cart_button {
+      all: unset;
+      color: #db5461;
+      border: 2px solid #db5461;
+      border-radius: 4px;
+      padding: 4px;
+      cursor: pointer;
+
+      &:hover {
+        color: #f79aa3;
+        border: 2px solid #f79aa3;
+        background-color: #4b4b4b;
+      }
+    }
+
+    & > .checkout_button {
+      all: unset;
+      color: #48bf84;
+      border: 2px solid #48bf84;
+      padding: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        color: #75e9af;
+        border: 2px solid #75e9af;
+        background-color: #4b4b4b;
+      }
+
+      &[disabled] {
+        color: #157a47;
+        border: 2px solid #157a47;
+        cursor: unset;
+      }
+    }
   }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(37, 37, 37);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }

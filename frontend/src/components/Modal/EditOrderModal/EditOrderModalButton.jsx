@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
 import EditOrderModal from "./EditOrderModal";
 
-function EditOrderModalButton({ stock }) {
+function EditOrderModalButton({ stock, className }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = (e) => {
@@ -21,13 +21,12 @@ function EditOrderModalButton({ stock }) {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <button onClick={toggleMenu}>
-      <OpenModalMenuItem
-        itemText="Change order"
-        onItemClick={closeMenu}
-        modalComponent={<EditOrderModal stock={stock} />}
-      />
-    </button>
+    <OpenModalMenuItem
+      className={className}
+      itemText="Change order"
+      onItemClick={closeMenu}
+      modalComponent={<EditOrderModal stock={stock} />}
+    />
   );
 }
 
