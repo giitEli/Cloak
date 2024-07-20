@@ -44,7 +44,7 @@ function LoginFormModal() {
 
   return (
     <form onSubmit={handleSubmit} className={s.form}>
-      <h2>Log In</h2>
+      <h2 className={s.title}>Log In</h2>
 
       <input
         type="text"

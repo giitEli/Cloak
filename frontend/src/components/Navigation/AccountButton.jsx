@@ -65,7 +65,9 @@ function AccountButton({ user }) {
                 Profile
               </div>
               <div className={s.dropdown_logout_button}>
-                <button onClick={logout}>Log Out</button>
+                <button onClick={logout} className={s.logout_button}>
+                  Log Out
+                </button>
               </div>
             </>
           ) : (

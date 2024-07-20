@@ -85,7 +85,7 @@ function SignupFormModal() {
 
   return (
     <form onSubmit={handleSubmit} className={s.form}>
-      <h1>Sign Up</h1>
+      <h1 className={s.title}>Sign Up</h1>
 
       <input
         type="text"

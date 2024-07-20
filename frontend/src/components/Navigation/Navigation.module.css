@@ -51,7 +51,23 @@
   }
 }
 
-.dropdown_profile_button,
-.dropdown_logout_button {
+.dropdown_profile_button:hover {
   cursor: pointer;
+  text-decoration: underline;
+}
+
+.logout_button {
+  all: unset;
+  color: #00a7e1;
+  border: 2px solid #00a7e1;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 14px;
+
+  &:hover {
+    cursor: pointer;
+    color: #3dcbfb;
+    border: 2px solid #3dcbfb;
+    background-color: rgb(38, 38, 38);
+  }
 }
