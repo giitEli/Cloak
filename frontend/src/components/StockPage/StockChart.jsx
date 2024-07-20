@@ -1,30 +1,51 @@
 import {
   LineChart,
   Line,
-  // XAxis,
+  XAxis,
   // YAxis,
-  // CartesianGrid,
-  // Tooltip,
+  Tooltip,
   // Legend,
   ResponsiveContainer,
 } from "recharts";
-import s from "./StockPage.module.css";
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const StockChart = ({ graphData }) => {
-  console.log(graphData);
+  graphData = graphData.map(({ price, date }) => {
+    const dateTime = new Date(date);
+    return {
+      Price: price,
+      Date: `${months[dateTime.getMonth()]} ${dateTime.getFullYear()}`,
+    };
+  });
+
   return (
-    <div className={s.graph_container}>
-      <ResponsiveContainer width="100%" aspect={2}>
-        <LineChart data={graphData}>
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke="#8884d8"
-            strokeWidth={2}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" aspect={2.4}>
+      <LineChart data={graphData} dataKey={"date"}>
+        <Tooltip isAnimationActive={false} />
+        <XAxis dataKey="Date" hide={true} />
+        <Line
+          type="monotone"
+          dataKey="Price"
+          stroke="#00A7e1"
+          strokeWidth={2}
+          isAnimationActive={false}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
 };
 

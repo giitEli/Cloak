@@ -81,10 +81,9 @@ const stocksReducer = (state = initialState, action) => {
       return stateCopy;
     }
     case GET_GRAPH_DATA: {
-      const newState = { ...state };
-      console.log(action.payload);
-      state.graphData[action.payload.stockId] = action.payload.data;
-      return { newState };
+      const newState = { ...state, graphData: { ...state.graphData } };
+      newState.graphData[action.payload.stockId] = action.payload.data;
+      return newState;
     }
     default:
       return state;

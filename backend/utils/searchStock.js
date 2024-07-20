@@ -98,7 +98,7 @@ const getStockGraphData = async (symbol) => {
 
   const stockData = response.values.map((data) => {
     return {
-      value: Number(data.close),
+      price: Number(data.close),
       date: data.datetime,
     };
   });

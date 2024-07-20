@@ -91,7 +91,6 @@
   color: white;
   padding-left: 8px;
   max-height: 50px;
-  overflow: hidden;
 
   &:hover {
     cursor: pointer;
