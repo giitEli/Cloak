@@ -83,7 +83,7 @@ const PortfolioPage = () => {
           </div>
         </div>
       ) : (
-        <span>No portfolio selected</span>
+        <span></span>
       )}
     </div>
   );

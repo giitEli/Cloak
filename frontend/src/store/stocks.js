@@ -20,10 +20,10 @@ const addStock = (stock) => {
   };
 };
 
-const getGraphData = (data) => {
+const getGraphData = (stockId, data) => {
   return {
     type: GET_GRAPH_DATA,
-    payload: data,
+    payload: { stockId, data },
   };
 };
 
@@ -56,12 +56,12 @@ export const getStockGraphDataThunk = (stockId) => async (dispatch) => {
   const response = await raw.json();
 
   if (response.status === "success") {
-    dispatch(getGraphData(response.data.graphData));
+    dispatch(getGraphData(stockId, response.data.graphData));
   }
 };
 
 ///////////////////////////////////////////////////////////
-const initialState = { allStocks: {}, graphData: [] };
+const initialState = { allStocks: {}, graphData: {} };
 
 const stocksReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -81,7 +81,10 @@ const stocksReducer = (state = initialState, action) => {
       return stateCopy;
     }
     case GET_GRAPH_DATA: {
-      return { ...state, graphData: action.payload };
+      const newState = { ...state };
+      console.log(action.payload);
+      state.graphData[action.payload.stockId] = action.payload.data;
+      return { newState };
     }
     default:
       return state;
