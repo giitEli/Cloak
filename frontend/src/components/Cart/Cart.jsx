@@ -15,7 +15,7 @@ import { IoClose } from "react-icons/io5";
 import CreatePortfolioModal from "../Modal/CreatePortfolioModal";
 
 const Cart = () => {
-  const { cartDisplay, setCartDisplay } = useCartDisplayContext();
+  const { setCartDisplay } = useCartDisplayContext();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.orders.userOrders);
   const portfolios = useSelector((state) => state.portfolios.userPortfolios);

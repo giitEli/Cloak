@@ -5,10 +5,10 @@ import SellStockModal from "./SellStockModal";
 function SellStockModalButton({ className, portfolioId, stock }) {
   const [showMenu, setShowMenu] = useState(false);
 
-  const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    setShowMenu(!showMenu);
-  };
+  // const toggleMenu = (e) => {
+  //   e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+  //   setShowMenu(!showMenu);
+  // };
 
   useEffect(() => {
     if (!showMenu) return;

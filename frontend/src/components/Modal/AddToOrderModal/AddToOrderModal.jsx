@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { addToCartThunk } from "../../../store/order";
@@ -21,10 +21,6 @@ function AddToOrderModal({ stock }) {
       setCartDisplay(true);
       closeModal();
     }
-  };
-
-  const round = (value, num) => {
-    return Math.round(Number(value) * num) / num;
   };
 
   const checkValue = (value) => {

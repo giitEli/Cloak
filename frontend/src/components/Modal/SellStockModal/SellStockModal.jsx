@@ -21,10 +21,6 @@ function SellStockModal({ portfolioId, stock }) {
     }
   };
 
-  const round = (value, num) => {
-    return Math.round(Number(value) * num) / num;
-  };
-
   const checkValue = (value) => {
     return !isNaN(value) && value >= 0;
   };
