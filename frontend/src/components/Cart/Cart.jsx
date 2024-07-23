@@ -41,14 +41,12 @@ const Cart = () => {
     if (!selectedPortfolio || !portfolios[selectedPortfolio]) {
       newErrors.portfolio = "No portfolio selected";
       setErrors(newErrors);
-      console.log(newErrors);
       return;
     }
     //cart cost more then portfolio
     if (portfolios[selectedPortfolio] && getTotal(cart) > portfolios[selectedPortfolio].balance) {
       newErrors.balance = "Cart total is greater then portfolio balance";
     }
-    console.log(newErrors);
     setErrors(newErrors);
   }, [cart, selectedPortfolio, portfolios]);
 

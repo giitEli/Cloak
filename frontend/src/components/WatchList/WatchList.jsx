@@ -24,7 +24,7 @@ const WatchList = () => {
     dispatch(getWatchlistThunk());
   }, []);
 
-  console.log(stocks);
+  // console.log(stocks);
 
   if (!Object.keys(stocks).length) {
     return (

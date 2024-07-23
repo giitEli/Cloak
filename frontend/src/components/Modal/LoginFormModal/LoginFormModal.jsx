@@ -14,7 +14,6 @@ function LoginFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hi");
     // setIsSubmitted(true);
     // const response = dispatch(sessionActions.login({ credential, password }));
     return dispatch(sessionActions.login({ credential, password }))

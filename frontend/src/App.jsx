@@ -23,8 +23,6 @@ function Layout() {
     });
   }, [dispatch]);
 
-  console.log(cartDisplay);
-
   return (
     <div className={s.page_layout_container}>
       <Navigation isLoaded={isLoaded} />
