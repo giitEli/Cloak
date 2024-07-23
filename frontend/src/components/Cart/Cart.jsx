@@ -19,7 +19,9 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.orders.userOrders);
   const portfolios = useSelector((state) => state.portfolios.userPortfolios);
-  const [selectedPortfolio, setSelectedPortfolio] = useState();
+  const [selectedPortfolio, setSelectedPortfolio] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const getTotal = (cart) => {
     let total = 0;
@@ -29,12 +31,26 @@ const Cart = () => {
     return total;
   };
 
-  const checkTotal = (cart, portfolio) => {
-    if (!portfolio) return false;
-    if (!Object.keys(cart).length) return false;
-    if (Number(portfolio.balance) < getTotal(cart)) return false;
-    return true;
-  };
+  useEffect(() => {
+    const newErrors = {};
+    //cart is empty
+    if (!Object.keys(cart).length) {
+      newErrors.empty = "Cart is empty";
+    }
+    //no portfolio selected
+    if (!selectedPortfolio || !portfolios[selectedPortfolio]) {
+      newErrors.portfolio = "No portfolio selected";
+      setErrors(newErrors);
+      console.log(newErrors);
+      return;
+    }
+    //cart cost more then portfolio
+    if (portfolios[selectedPortfolio] && getTotal(cart) > portfolios[selectedPortfolio].balance) {
+      newErrors.balance = "Cart total is greater then portfolio balance";
+    }
+    console.log(newErrors);
+    setErrors(newErrors);
+  }, [cart, selectedPortfolio, portfolios]);
 
   useEffect(() => {
     dispatch(getOrdersThunk());
@@ -42,7 +58,7 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
-    if (!selectedPortfolio) {
+    if (!selectedPortfolio || !portfolios[selectedPortfolio]) {
       setSelectedPortfolio(Object.keys(portfolios)[0]);
     }
   }, [portfolios]);
@@ -64,10 +80,11 @@ const Cart = () => {
       </div>
       <div className={s.cart_section_2}>
         <span className={s.portfolio_text}>Portfolio</span>
-        {selectedPortfolio && Boolean(Object.keys(portfolios).length) && (
+        {Boolean(Object.keys(portfolios).length) && (
           <select
             className={s.portfolio_select}
-            defaultValue={"Select a portfolio"}
+            defaultValue="Select a portfolio"
+            placeholder="Select a portfolio"
             onChange={(e) => {
               e.preventDefault();
               setSelectedPortfolio(e.target.value);
@@ -134,12 +151,16 @@ const Cart = () => {
               : " No portfolio selected"}
           </span>
           <span className={s.cart_total_text}>Total: ${getTotal(cart)}</span>
-          {portfolios[selectedPortfolio] &&
-            Number(portfolios[selectedPortfolio].balance) < getTotal(cart) && (
-              <p className={s.error}>
-                Cart total is greater then portfolio balance
-              </p>
-            )}
+
+          {isSubmitted && errors.empty && (
+            <p className={s.error}>{errors.empty}</p>
+          )}
+          {isSubmitted && errors.portfolio && (
+            <p className={s.error}>{errors.portfolio}</p>
+          )}
+          {isSubmitted && errors.balance && (
+            <p className={s.error}>{errors.balance}</p>
+          )}
         </div>
         <div className={s.cart_section_4_bottom}>
           <button
@@ -153,11 +174,15 @@ const Cart = () => {
           </button>
           <button
             className={s.checkout_button}
+            disabled={isSubmitted && Object.keys(errors).length}
             onClick={(e) => {
               e.preventDefault();
-              dispatch(checkOutThunk(selectedPortfolio));
+              setIsSubmitted(true);
+              if (!Object.keys(errors).length) {
+                setIsSubmitted(false);
+                dispatch(checkOutThunk(selectedPortfolio));
+              }
             }}
-            disabled={!checkTotal(cart, portfolios[selectedPortfolio])}
           >
             Check Out
           </button>

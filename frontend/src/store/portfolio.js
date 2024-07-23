@@ -1,7 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const GET_PORTFOLIOS = "portfolios/get";
-// const CREATE_PORTFOLIO = "portfolios/create";
+const CREATE_PORTFOLIO = "portfolios/create";
 const UPDATE_PORTFOLIO = "portfolios/update";
 const DELETE_PORTFOLIO = "portfolios/delete";
 
@@ -14,12 +14,12 @@ const getPortfolios = (portfolios) => {
   };
 };
 
-// const createPortfolio = (portfolio) => {
-//   return {
-//     type: CREATE_PORTFOLIO,
-//     payload: portfolio,
-//   };
-// };
+const createPortfolio = (portfolio) => {
+  return {
+    type: CREATE_PORTFOLIO,
+    payload: portfolio,
+  };
+};
 
 // const updatePortfolio = (portfolio) => {
 //   return {
@@ -57,8 +57,8 @@ export const createPortfolioThunk = (portfolio) => async (dispatch) => {
   const response = await raw.json();
 
   if (response.status === "success") {
-    // dispatch(createPortfolio(response.data));
-    dispatch(getPortfoliosThunk());
+    dispatch(createPortfolio(response.data));
+    // dispatch(getPortfoliosThunk());
   }
   return response;
 };
@@ -125,6 +125,15 @@ const portfolioReducer = (state = initialState, action) => {
       newState.userPortfolios[id].name = name;
       newState.userPortfolios[id].balance = balance;
 
+      return newState;
+    }
+    case CREATE_PORTFOLIO: {
+      const newState = {
+        ...state,
+        userPortfolios: { ...state.userPortfolios },
+      };
+      newState.userPortfolios[action.payload.id] = action.payload;
+      newState.userPortfolios[action.payload.id].stocks = [];
       return newState;
     }
     case DELETE_PORTFOLIO: {
