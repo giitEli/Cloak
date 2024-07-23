@@ -17,6 +17,8 @@ const StockPage = () => {
   const { stockId } = useParams();
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.session.user);
+
   const stock = useSelector((state) => state.stocks.allStocks[stockId] || {});
   const watchlist = useSelector((state) => state.watchlist.stocks || {});
   const graphData = useSelector((state) => {
@@ -86,7 +88,7 @@ const StockPage = () => {
         <div className={s.top_right_section}>
           <h3 className={s.symbol}>{symbol}</h3>
           <h5 className={s.price}>${price}</h5>
-          {watchlist[stockId] ? (
+          {user && watchlist[stockId] && (
             <button
               className={s.remove_from_watchlist_button}
               onClick={(e) => {
@@ -96,7 +98,8 @@ const StockPage = () => {
             >
               Remove from watchlist
             </button>
-          ) : (
+          )}
+          {user && !watchlist[stockId] && (
             <button
               className={s.add_to_watchlist_button}
               onClick={(e) => {
@@ -107,10 +110,37 @@ const StockPage = () => {
               Add to watchlist
             </button>
           )}
+          {user && (
+            <AddToOrderModal
+              stock={stock}
+              className={s.add_to_order_modal_button}
+            />
+          )}
+          {/* {watchlist[stockId] ? (
+            <button
+              className={s.remove_from_watchlist_button}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(removeFromWatchlistThunk(stockId));
+              }}
+            >
+              Remove from watchlist
+            </button>
+          ) : ( */}
+          {/* <button
+            className={s.add_to_watchlist_button}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(addToWatchlistThunk(stockId));
+            }}
+          >
+            Add to watchlist
+          </button>
+          )}
           <AddToOrderModal
             stock={stock}
             className={s.add_to_order_modal_button}
-          />
+          /> */}
         </div>
       </div>
       <div className={s.bottom_section}>

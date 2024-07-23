@@ -65,6 +65,7 @@ function SignupFormModal() {
       )
         .then((res) => {
           if (res.errors) {
+            console.log(res);
             setErrors(res.errors);
           } else {
             closeModal();

@@ -6,6 +6,7 @@ import s from "./LoginForm.module.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -13,6 +14,8 @@ function LoginFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("hi");
+    setIsSubmitted(true);
     // const response = dispatch(sessionActions.login({ credential, password }));
     return dispatch(sessionActions.login({ credential, password }))
       .then((res) => {
@@ -38,9 +41,12 @@ function LoginFormModal() {
     ).then(closeModal);
   };
 
-  const disableButton = () => {
-    return !(credential.length >= 3 && password.length >= 6);
-  };
+  // const disableButton = () => {
+  //   if (!isSubmitted) {
+  //     return false;
+  //   }
+  //   return !(credential.length >= 3 && password.length >= 6);
+  // };
 
   return (
     <form onSubmit={handleSubmit} className={s.form}>
@@ -67,9 +73,7 @@ function LoginFormModal() {
         </span>
       )}
       {errors.credential && <p>{errors.credential}</p>}
-      <button type="submit" disabled={disableButton()}>
-        Log In
-      </button>
+      <button type="submit">Log In</button>
       <div onClick={logInDemo} className={s.demo_user}>
         Demo User
       </div>
