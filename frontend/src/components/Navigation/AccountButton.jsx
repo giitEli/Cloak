@@ -5,6 +5,7 @@ import OpenModalMenuItem from "../Modal/OpenModalMenuItem";
 import LoginFormModal from "../Modal/LoginFormModal";
 import SignupFormModal from "../Modal/SignupFormModal";
 import { useNavigate } from "react-router-dom";
+import { useCartDisplayContext } from "../../context/Cart";
 
 import s from "./Navigation.module.css";
 
@@ -14,8 +15,11 @@ function AccountButton({ user }) {
   const ulRef = useRef();
   const navigate = useNavigate();
 
+  const { setCartDisplay } = useCartDisplayContext();
+
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    setCartDisplay(false);
     setShowMenu(!showMenu);
   };
 
