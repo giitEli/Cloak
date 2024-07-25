@@ -14,14 +14,20 @@ import { FaCartShopping } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import CreatePortfolioModal from "../Modal/CreatePortfolioModal";
 
+/////////////////////////////////////////////
+
 const Cart = () => {
   const { setCartDisplay } = useCartDisplayContext();
   const dispatch = useDispatch();
+
   const cart = useSelector((state) => state.orders.userOrders);
   const portfolios = useSelector((state) => state.portfolios.userPortfolios);
+
   const [selectedPortfolio, setSelectedPortfolio] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  //////////////////
 
   const getTotal = (cart) => {
     let total = 0;
@@ -31,6 +37,20 @@ const Cart = () => {
     return total;
   };
 
+  //initial render useEffects
+  useEffect(() => {
+    dispatch(getOrdersThunk());
+    dispatch(getPortfoliosThunk());
+  }, []);
+
+  //if portfolio is deleted auto-select first portfolio
+  useEffect(() => {
+    if (!selectedPortfolio || !portfolios[selectedPortfolio]) {
+      setSelectedPortfolio(Object.keys(portfolios)[0]);
+    }
+  }, [portfolios]);
+
+  //set errors for cart as order or portfolio is updated
   useEffect(() => {
     const newErrors = {};
     //cart is empty
@@ -44,22 +64,16 @@ const Cart = () => {
       return;
     }
     //cart cost more then portfolio
-    if (portfolios[selectedPortfolio] && getTotal(cart) > portfolios[selectedPortfolio].balance) {
+    if (
+      portfolios[selectedPortfolio] &&
+      getTotal(cart) > portfolios[selectedPortfolio].balance
+    ) {
       newErrors.balance = "Cart total is greater then portfolio balance";
     }
     setErrors(newErrors);
   }, [cart, selectedPortfolio, portfolios]);
 
-  useEffect(() => {
-    dispatch(getOrdersThunk());
-    dispatch(getPortfoliosThunk());
-  }, []);
-
-  useEffect(() => {
-    if (!selectedPortfolio || !portfolios[selectedPortfolio]) {
-      setSelectedPortfolio(Object.keys(portfolios)[0]);
-    }
-  }, [portfolios]);
+  /////////////////////////
 
   return (
     <div className={s.cart_container}>
@@ -98,7 +112,9 @@ const Cart = () => {
           </select>
         )}
         {!Object.keys(portfolios).length && (
-          <CreatePortfolioModal className={s.create_portfolio_button} />
+          <CreatePortfolioModal
+            className={`${s.create_portfolio_button} blue_button`}
+          />
         )}
       </div>
       <ul className={s.cart_section_3}>
@@ -125,10 +141,10 @@ const Cart = () => {
               <div className={s.order_footer}>
                 <EditOrderModal
                   stock={stock}
-                  className={s.change_order_button}
+                  className={`${s.change_order_button} blue_button`}
                 />
                 <button
-                  className={s.remove_from_cart_button}
+                  className={`${s.remove_from_cart_button} red_button`}
                   onClick={(e) => {
                     e.preventDefault();
                     dispatch(removeFromCartThunk(stock.id));
@@ -162,7 +178,7 @@ const Cart = () => {
         </div>
         <div className={s.cart_section_4_bottom}>
           <button
-            className={s.clear_cart_button}
+            className={`${s.clear_cart_button} red_button`}
             onClick={(e) => {
               e.preventDefault();
               dispatch(clearCartThunk());
@@ -171,7 +187,7 @@ const Cart = () => {
             Clear Cart
           </button>
           <button
-            className={s.checkout_button}
+            className={`${s.checkout_button} green_button`}
             disabled={isSubmitted && Object.keys(errors).length}
             onClick={(e) => {
               e.preventDefault();

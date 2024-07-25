@@ -5,18 +5,24 @@ import UpdatePortfolioModal from "../Modal/UpdatePortfolioModal";
 import DeletePortfolioModal from "../Modal/DeletePortfolioModal";
 import { getPortfoliosThunk } from "../../store/portfolio";
 import Stock from "./Stock.jsx";
-
 import s from "./PortfolioPage.module.css";
+
+//////////////////////////////////////////
 
 const PortfolioPage = () => {
   const dispatch = useDispatch();
+
   const portfolios = useSelector((state) => state.portfolios.userPortfolios);
 
   const [selectedPortfolio, setSelectedPortfolio] = useState(false);
 
+  ////////////////////////
+
   useEffect(() => {
     dispatch(getPortfoliosThunk());
   }, []);
+
+  ////////////////////////
 
   return (
     <div className={s.portfolio_page_container}>
@@ -43,7 +49,9 @@ const PortfolioPage = () => {
             );
           })}
         </div>
-        <CreatePortfolioModal className={s.create_portfolio_modal} />
+        <CreatePortfolioModal
+          className={`${s.create_portfolio_modal} blue_button`}
+        />
       </div>
       {selectedPortfolio ? (
         <div className={s.portfolio_right_side}>
@@ -53,10 +61,10 @@ const PortfolioPage = () => {
             </div>
             <UpdatePortfolioModal
               currentPortfolio={portfolios[selectedPortfolio]}
-              className={s.update_portfolio_button}
+              className={`${s.update_portfolio_button} blue_button`}
             />
             <DeletePortfolioModal
-              className={s.delete_portfolio_button}
+              className={`${s.delete_portfolio_button} red_button`}
               portfolioId={selectedPortfolio}
               setSelectedPortfolio={setSelectedPortfolio}
             />

@@ -5,26 +5,30 @@ import {
   getWatchlistThunk,
   removeFromWatchlistThunk,
 } from "../../store/watchlist";
-// import Stock from "../StocksDisplay/Stock";
 import { useNavigate } from "react-router-dom";
 import s from "./WatchList.module.css";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleUp } from "react-icons/fa";
 import AddToOrderModal from "../Modal/AddToOrderModal";
 
+//////////////////////////////////////////////////
+
 const WatchList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const stocks = useSelector((state) => state.watchlist.stocks);
 
   const [selectedStock, setSelectedStock] = useState(false);
+
+  /////////////////////
 
   useEffect(() => {
     dispatch(getAllStocksThunk());
     dispatch(getWatchlistThunk());
   }, []);
 
-  // console.log(stocks);
+  ///////////////////
 
   if (!Object.keys(stocks).length) {
     return (
@@ -44,6 +48,8 @@ const WatchList = () => {
       </div>
     );
   }
+
+  ///////////////////
 
   return (
     <div className={s.watchlist_page_container}>
@@ -83,6 +89,7 @@ const WatchList = () => {
           const date = `${months[ipoDate.getMonth()]}, ${
             ipoDate.getDay() + 1
           }, ${ipoDate.getFullYear()}`;
+
           return (
             <div key={id} className={s.stock_container}>
               <div className={s.section_1}>
@@ -136,7 +143,7 @@ const WatchList = () => {
                   </div>
                   <div className={s.section_5}>
                     <button
-                      className={s.remove_from_watchlist_button}
+                      className={`${s.remove_from_watchlist_button} red_button`}
                       onClick={(e) => {
                         e.preventDefault();
                         dispatch(removeFromWatchlistThunk(id));
@@ -146,7 +153,7 @@ const WatchList = () => {
                     </button>
                     <AddToOrderModal
                       stock={stock}
-                      className={s.add_to_order_modal_button}
+                      className={`${s.add_to_order_modal_button} green_button`}
                     />
                   </div>
                 </div>

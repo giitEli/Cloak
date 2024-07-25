@@ -64,18 +64,9 @@
   }
 
   & > .create_portfolio_button {
-    color: #00a7e1;
-    border: 2px solid #00a7e1;
     border-radius: 4px;
     padding: 4px;
     font-size: 14px;
-
-    &:hover {
-      cursor: pointer;
-      color: #3dcbfb;
-      border: 2px solid #3dcbfb;
-      background-color: rgb(38, 38, 38);
-    }
   }
 }
 
@@ -149,35 +140,15 @@
       justify-content: space-between;
 
       & > .change_order_button {
-        color: #00a7e1;
-        border: 2px solid #00a7e1;
         border-radius: 4px;
         padding: 4px;
         font-size: 14px;
-
-        &:hover {
-          cursor: pointer;
-          color: #3dcbfb;
-          border: 2px solid #3dcbfb;
-          background-color: rgb(38, 38, 38);
-        }
       }
 
       & > .remove_from_cart_button {
-        all: unset;
-        cursor: pointer;
-        color: #db5461;
-        border: 2px solid #db5461;
         font-size: 14px;
         border-radius: 4px;
         padding: 4px;
-
-        &:hover {
-          cursor: pointer;
-          color: #ffa1aa;
-          border: 2px solid #ffa1aa;
-          background-color: rgb(38, 38, 38);
-        }
       }
     }
   }
@@ -185,7 +156,6 @@
 
 .cart_section_4 {
   border-top: 2px solid grey;
-  /* height: 175px; */
 
   & > .cart_section_4_top {
     padding-top: 8px;
@@ -202,7 +172,7 @@
     }
 
     & > .error {
-      color: red;
+      color: #db5461;
       margin-top: 8px;
       margin-left: 8px;
       margin-bottom: 8px;
@@ -218,59 +188,13 @@
     justify-content: space-between;
 
     & > .clear_cart_button {
-      all: unset;
-      color: #db5461;
-      border: 2px solid #db5461;
       border-radius: 4px;
       padding: 4px;
-      cursor: pointer;
-
-      &:hover {
-        color: #f79aa3;
-        border: 2px solid #f79aa3;
-        background-color: #4b4b4b;
-      }
     }
 
     & > .checkout_button {
-      all: unset;
-      color: #48bf84;
-      border: 2px solid #48bf84;
       padding: 4px;
       border-radius: 4px;
-      cursor: pointer;
-      background-color: rgb(37, 37, 37);
-
-      &:hover {
-        color: #75e9af;
-        border: 2px solid #75e9af;
-        background-color: #4b4b4b;
-      }
-
-      &[disabled] {
-        color: #157a47;
-        border: 2px solid #157a47;
-        cursor: unset;
-        background-color: rgb(37, 37, 37);
-      }
     }
   }
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(37, 37, 37);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
 }

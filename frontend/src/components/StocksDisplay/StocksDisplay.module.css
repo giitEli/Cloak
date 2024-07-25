@@ -138,51 +138,17 @@
   width: 100%;
 }
 
-/* .stock_info_container:hover > .signed_in_options {
-  display: flex;
-} */
-
 .add_to_watchlist_button {
-  border: 2px solid #00a7e1;
-  color: #00a7e1;
-  background-color: #252525;
   padding: 8px;
   border-radius: 5px;
-
-  &:hover {
-    border: 2px solid #49d2ff;
-    color: #49d2ff;
-    background-color: #434343;
-    cursor: pointer;
-  }
 }
 
 .remove_from_watchlist_button {
-  border: 2px solid #db5461;
-  color: #db5461;
-  background-color: #252525;
   padding: 8px;
   border-radius: 5px;
-
-  &:hover {
-    border: 2px solid #ee7d88;
-    color: #ee7d88;
-    background-color: #434343;
-    cursor: pointer;
-  }
 }
 
 .add_to_order_modal_button {
-  border: 2px solid #48bf84;
-  color: #48bf84;
-  background-color: #252525;
   padding: 8px;
   border-radius: 5px;
-
-  &:hover {
-    border: 2px solid #6edda5;
-    color: #6edda5;
-    background-color: #434343;
-    cursor: pointer;
-  }
 }
