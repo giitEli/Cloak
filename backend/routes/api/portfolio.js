@@ -72,13 +72,23 @@ router.post("", requireAuth, async (req, res, next) => {
   return res.status(201).json({ status: "success", data: newPortfolio });
 });
 
-//edit a portfolio balance or name
+//edit a portfolio name
+//deposit into a portfolio balance
+//withdraw from a portfolio balance
 router.put("/:portfolioId", requireAuth, async (req, res, next) => {
   const { portfolioId } = req.params;
-  const portfolioData = req.body;
+  const { name, amount } = req.body;
+
+  const editObj = {};
+
+  if (name) {
+    editObj.name = name;
+  } else if (amount) {
+    editObj.amount = amount;
+  }
 
   const portfolio = await Portfolio.findByPk(portfolioId);
-  const updatedPortfolio = await portfolio.update(portfolioData);
+  const updatedPortfolio = await portfolio.update(editObj);
   res.status(200).json({ status: "success", data: updatedPortfolio });
 });
 
