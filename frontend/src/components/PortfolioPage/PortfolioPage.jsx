@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import CreatePortfolioModal from "../Modal/CreatePortfolioModal";
 import UpdatePortfolioModal from "../Modal/UpdatePortfolioModal";
 import DeletePortfolioModal from "../Modal/DeletePortfolioModal";
+import DepositModal from "../Modal/DepositModal";
+import WithdrawModal from "../Modal/WithdrawModal";
 import { getPortfoliosThunk } from "../../store/portfolio";
 import Stock from "./Stock.jsx";
 import s from "./PortfolioPage.module.css";
@@ -62,6 +64,14 @@ const PortfolioPage = () => {
             <UpdatePortfolioModal
               currentPortfolio={portfolios[selectedPortfolio]}
               className={`${s.update_portfolio_button} blue_button`}
+            />
+            <DepositModal
+              currentPortfolio={portfolios[selectedPortfolio]}
+              className={`${s.deposit_button} green_button`}
+            />
+            <WithdrawModal
+              currentPortfolio={portfolios[selectedPortfolio]}
+              className={`${s.deposit_button} green_button`}
             />
             <DeletePortfolioModal
               className={`${s.delete_portfolio_button} red_button`}

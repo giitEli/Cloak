@@ -69,13 +69,9 @@
   color: white;
 }
 
-.update_portfolio_button {
-  border-radius: 4px;
-  padding: 4px;
-  font-size: 14px;
-}
-
-.delete_portfolio_button {
+.update_portfolio_button,
+.delete_portfolio_button,
+.deposit_button {
   font-size: 14px;
   border-radius: 4px;
   padding: 4px;

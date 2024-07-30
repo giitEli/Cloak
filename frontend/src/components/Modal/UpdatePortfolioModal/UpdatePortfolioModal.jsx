@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { updatePortfolioThunk } from "../../../store/portfolio";
+import PulseLoader from "react-spinners/PulseLoader";
 import s from "./UpdatePortfolio.module.css";
 
 function UpdatePortfolioModal({ currentPortfolio }) {
@@ -10,6 +11,7 @@ function UpdatePortfolioModal({ currentPortfolio }) {
   const [name, setName] = useState(currentPortfolio.name);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState();
 
   useEffect(() => {
     const isEmptySpaces = (string) => {
@@ -32,6 +34,7 @@ function UpdatePortfolioModal({ currentPortfolio }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setIsSubmitted(true);
     if (!Object.keys(errors).length) {
       const response = await dispatch(
@@ -41,6 +44,7 @@ function UpdatePortfolioModal({ currentPortfolio }) {
         closeModal();
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -64,7 +68,11 @@ function UpdatePortfolioModal({ currentPortfolio }) {
         type="submit"
         disabled={isSubmitted && Object.keys(errors).length}
       >
-        Update portfolio
+        {isLoading ? (
+          <PulseLoader color="grey" size="10px" />
+        ) : (
+          "Update portfolio"
+        )}
       </button>
     </form>
   );

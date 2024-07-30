@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
-import UpdatePortfolioModal from "./UpdatePortfolioModal";
+import DepositModal from "./DepositModal";
 
-function UpdatePortfolioModalButton({ currentPortfolio, className }) {
+function DepositModalButton({ currentPortfolio, className }) {
   const [showMenu, setShowMenu] = useState(false);
-
-  // const toggleMenu = (e) => {
-  //   e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-  //   setShowMenu(!showMenu);
-  // };
 
   useEffect(() => {
     if (!showMenu) return;
@@ -23,13 +18,11 @@ function UpdatePortfolioModalButton({ currentPortfolio, className }) {
   return (
     <OpenModalMenuItem
       className={className}
-      itemText={"Update Portfolio"}
+      itemText="Deposit"
       onItemClick={closeMenu}
-      modalComponent={
-        <UpdatePortfolioModal currentPortfolio={currentPortfolio} />
-      }
+      modalComponent={<DepositModal currentPortfolio={currentPortfolio} />}
     />
   );
 }
 
-export default UpdatePortfolioModalButton;
+export default DepositModalButton;
