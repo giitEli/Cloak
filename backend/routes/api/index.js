@@ -6,6 +6,7 @@ const stocksRouter = require("./stocks.js");
 const watchlistRouter = require("./watchlist.js");
 const portfolioRouter = require("./portfolio.js");
 const orderRouter = require("./order.js");
+const transactionRouter = require("./transactions.js");
 
 const { restoreUser } = require("../../utils/auth.js");
 
@@ -20,5 +21,6 @@ router.use("/stocks", stocksRouter);
 router.use("/watchlist", watchlistRouter);
 router.use("/portfolios", portfolioRouter);
 router.use("/orders", orderRouter);
+router.use("transactions", transactionRouter);
 
 module.exports = router;

@@ -5,6 +5,7 @@ import stocksReducer from "./stocks";
 import watchlistReducer from "./watchlist";
 import portfolioReducer from "./portfolio";
 import ordersReducer from "./order";
+import transactionReducer from "./transactions";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   watchlist: watchlistReducer,
   portfolios: portfolioReducer,
   orders: ordersReducer,
+  transactions: transactionReducer,
 });
 
 let enhancer;
