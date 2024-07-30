@@ -15,7 +15,8 @@ const getTransactions = (transactions) => {
 
 export const getTransactionsThunk = () => async (dispatch) => {
   const raw = await csrfFetch("/api/transactions");
-  const response = raw.json();
+  const response = await raw.json();
+
 
   if (response.status === "success") {
     dispatch(getTransactions(response.data));

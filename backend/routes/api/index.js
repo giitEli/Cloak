@@ -21,6 +21,6 @@ router.use("/stocks", stocksRouter);
 router.use("/watchlist", watchlistRouter);
 router.use("/portfolios", portfolioRouter);
 router.use("/orders", orderRouter);
-router.use("transactions", transactionRouter);
+router.use("/transactions", transactionRouter);
 
 module.exports = router;
