@@ -76,35 +76,15 @@
 }
 
 .remove_from_watchlist_button {
-  border: 2px solid #db5461;
-  color: #db5461;
-  background-color: #252525;
   padding: 8px;
   border-radius: 5px;
   height: min-content;
-
-  &:hover {
-    border: 2px solid #ee7d88;
-    color: #ee7d88;
-    background-color: #434343;
-    cursor: pointer;
-  }
 }
 
 .add_to_order_modal_button {
-  border: 2px solid #48bf84;
-  color: #48bf84;
-  background-color: #252525;
   padding: 8px;
   border-radius: 5px;
   height: min-content;
-
-  &:hover {
-    border: 2px solid #6edda5;
-    color: #6edda5;
-    background-color: #434343;
-    cursor: pointer;
-  }
 }
 
 .arrow_container {

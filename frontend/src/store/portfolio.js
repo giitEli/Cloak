@@ -21,12 +21,12 @@ const createPortfolio = (portfolio) => {
   };
 };
 
-// const updatePortfolio = (portfolio) => {
-//   return {
-//     type: UPDATE_PORTFOLIO,
-//     payload: portfolio,
-//   };
-// };
+const updatePortfolio = (portfolio) => {
+  return {
+    type: UPDATE_PORTFOLIO,
+    payload: portfolio,
+  };
+};
 
 const deletePortfolio = (portfolioId) => {
   return {
@@ -63,23 +63,24 @@ export const createPortfolioThunk = (portfolio) => async (dispatch) => {
   return response;
 };
 
-export const updatePortfolioThunk =
-  (portfolioId, portfolioData) => async (dispatch) => {
-    const raw = await csrfFetch(`/api/portfolios/${portfolioId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(portfolioData),
-    });
-    const response = await raw.json();
+export const updatePortfolioThunk = (portfolioId, data) => async (dispatch) => {
+  const raw = await csrfFetch(`/api/portfolios/${portfolioId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const response = await raw.json();
 
-    if (response.status === "success") {
-      // dispatch(updatePortfolio(response.data));
-      dispatch(getPortfoliosThunk());
-    }
-    return response;
-  };
+  console.log(response);
+
+  if (response.status === "success") {
+    dispatch(updatePortfolio(response.data));
+    // dispatch(getPortfoliosThunk());
+  }
+  return response;
+};
 
 export const deletePortfolioThunk = (portfolioId) => async (dispatch) => {
   const raw = await csrfFetch(`/api/portfolios/${portfolioId}`, {
@@ -121,7 +122,10 @@ const portfolioReducer = (state = initialState, action) => {
     }
     case UPDATE_PORTFOLIO: {
       const { id, name, balance } = action.payload;
-      const newState = { ...state };
+      const newState = {
+        ...state,
+        userPortfolios: { ...state.userPortfolios },
+      };
       newState.userPortfolios[id].name = name;
       newState.userPortfolios[id].balance = balance;
 

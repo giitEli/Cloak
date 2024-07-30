@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { Portfolio, PortfolioStock, Stock } = require("../../db/models");
+const {
+  Portfolio,
+  PortfolioStock,
+  Stock,
+  Transaction,
+} = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 
 //get all user portfolio data
@@ -72,13 +77,37 @@ router.post("", requireAuth, async (req, res, next) => {
   return res.status(201).json({ status: "success", data: newPortfolio });
 });
 
-//edit a portfolio balance or name
+//edit a portfolio name
+//deposit into a portfolio balance
+//withdraw from a portfolio balance
 router.put("/:portfolioId", requireAuth, async (req, res, next) => {
+  const userId = req.user.id;
   const { portfolioId } = req.params;
-  const portfolioData = req.body;
+  const { name, balance } = req.body;
 
   const portfolio = await Portfolio.findByPk(portfolioId);
-  const updatedPortfolio = await portfolio.update(portfolioData);
+
+  const editObj = {};
+  if (name) {
+    editObj.name = name;
+  } else if (balance) {
+    editObj.balance = Number(balance) + Number(portfolio.balance);
+    if (Number(balance) > 0) {
+      await Transaction.create({
+        userId,
+        type: "Deposit",
+        total: balance,
+      });
+    } else if (Number(balance) < 0) {
+      await Transaction.create({
+        userId,
+        type: "Withdraw",
+        total: Math.abs(Number(balance)),
+      });
+    }
+  }
+
+  const updatedPortfolio = await portfolio.update(editObj);
   res.status(200).json({ status: "success", data: updatedPortfolio });
 });
 

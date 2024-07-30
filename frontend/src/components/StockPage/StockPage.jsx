@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-// import Stock from "../StocksDisplay/Stock";
 import { useEffect } from "react";
 import { getAllStocksThunk, getStockGraphDataThunk } from "../../store/stocks";
 import { getOrdersThunk } from "../../store/order";
@@ -13,12 +12,13 @@ import {
 } from "../../store/watchlist";
 import s from "./StockPage.module.css";
 
+////////////////////////////////////////////////////
+
 const StockPage = () => {
   const { stockId } = useParams();
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.session.user);
-
   const stock = useSelector((state) => state.stocks.allStocks[stockId] || {});
   const watchlist = useSelector((state) => state.watchlist.stocks || {});
   const graphData = useSelector((state) => {
@@ -30,7 +30,7 @@ const StockPage = () => {
     return [];
   });
 
-  console.log(watchlist);
+  /////////////////////////////
 
   useEffect(() => {
     dispatch(getAllStocksThunk());
@@ -40,8 +40,6 @@ const StockPage = () => {
       dispatch(getStockGraphDataThunk(stockId));
     }
   }, []);
-
-  // console.log(graphData);
 
   const {
     name,
@@ -76,6 +74,8 @@ const StockPage = () => {
     ipoDate.getDay() + 1
   }, ${ipoDate.getFullYear()}`;
 
+  /////////////////////////////
+
   return (
     <div className={s.stock_page_container}>
       <div className={s.top_section}>
@@ -90,7 +90,7 @@ const StockPage = () => {
           <h5 className={s.price}>${price}</h5>
           {user && watchlist[stockId] && (
             <button
-              className={s.remove_from_watchlist_button}
+              className={`${s.remove_from_watchlist_button} red_button`}
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(removeFromWatchlistThunk(stockId));
@@ -101,7 +101,7 @@ const StockPage = () => {
           )}
           {user && !watchlist[stockId] && (
             <button
-              className={s.add_to_watchlist_button}
+              className={`${s.add_to_watchlist_button} blue_button`}
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(addToWatchlistThunk(stockId));
@@ -113,34 +113,9 @@ const StockPage = () => {
           {user && (
             <AddToOrderModal
               stock={stock}
-              className={s.add_to_order_modal_button}
+              className={`${s.add_to_order_modal_button} green_button`}
             />
           )}
-          {/* {watchlist[stockId] ? (
-            <button
-              className={s.remove_from_watchlist_button}
-              onClick={(e) => {
-                e.preventDefault();
-                dispatch(removeFromWatchlistThunk(stockId));
-              }}
-            >
-              Remove from watchlist
-            </button>
-          ) : ( */}
-          {/* <button
-            className={s.add_to_watchlist_button}
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(addToWatchlistThunk(stockId));
-            }}
-          >
-            Add to watchlist
-          </button>
-          )}
-          <AddToOrderModal
-            stock={stock}
-            className={s.add_to_order_modal_button}
-          /> */}
         </div>
       </div>
       <div className={s.bottom_section}>

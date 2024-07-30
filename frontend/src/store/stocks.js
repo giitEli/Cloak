@@ -30,7 +30,7 @@ const getGraphData = (stockId, data) => {
 ///////////////////////////////////////////////////////////
 
 export const getAllStocksThunk = () => async (dispatch) => {
-  const raw = await csrfFetch("/api/stocks/");
+  const raw = await csrfFetch("/api/stocks");
   const response = await raw.json();
 
   if (response.status === "success") {
@@ -41,7 +41,13 @@ export const getAllStocksThunk = () => async (dispatch) => {
 };
 
 export const searchStockThunk = (symbol) => async (dispatch) => {
-  const raw = await csrfFetch(`/api/stocks/search/${symbol}`);
+  const raw = await csrfFetch("/api/stocks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ symbol }),
+  });
   const response = await raw.json();
 
   if (response.status === "success") {
@@ -58,9 +64,12 @@ export const getStockGraphDataThunk = (stockId) => async (dispatch) => {
   if (response.status === "success") {
     dispatch(getGraphData(stockId, response.data.graphData));
   }
+
+  return response;
 };
 
 ///////////////////////////////////////////////////////////
+
 const initialState = { allStocks: {}, graphData: {} };
 
 const stocksReducer = (state = initialState, action) => {
@@ -70,18 +79,29 @@ const stocksReducer = (state = initialState, action) => {
         acc[ele.id] = ele;
         return acc;
       }, {});
-      return { ...state, allStocks };
+      const newState = {
+        ...state,
+        allStocks,
+        graphData: { ...state.graphData },
+      };
+      return newState;
     }
     case STOCK_SEARCH: {
       const id = action.payload.id;
-      const stateCopy = {
+      const newState = {
+        ...state,
         allStocks: { ...state.allStocks },
+        graphData: { ...state.graphData },
       };
-      stateCopy.allStocks[id] = action.payload;
-      return stateCopy;
+      newState.allStocks[id] = action.payload;
+      return newState;
     }
     case GET_GRAPH_DATA: {
-      const newState = { ...state, graphData: { ...state.graphData } };
+      const newState = {
+        ...state,
+        allStocks: { ...state.allStocks },
+        graphData: { ...state.graphData },
+      };
       newState.graphData[action.payload.stockId] = action.payload.data;
       return newState;
     }

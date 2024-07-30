@@ -47,19 +47,10 @@
 .create_portfolio_modal {
   display: flex;
   justify-content: center;
-  color: #00a7e1;
-  border: 2px solid #00a7e1;
   border-radius: 4px;
   padding: 6px;
   font-size: 18px;
   margin-right: 8px;
-
-  &:hover {
-    cursor: pointer;
-    color: #3dcbfb;
-    border: 2px solid #3dcbfb;
-    background-color: rgb(38, 38, 38);
-  }
 }
 
 .portfolio_right_side {
@@ -78,36 +69,12 @@
   color: white;
 }
 
-.update_portfolio_button {
-  color: #00a7e1;
-  border: 2px solid #00a7e1;
-  border-radius: 4px;
-  padding: 4px;
-  font-size: 14px;
-
-  &:hover {
-    cursor: pointer;
-    color: #3dcbfb;
-    border: 2px solid #3dcbfb;
-    background-color: rgb(38, 38, 38);
-  }
-}
-
-.delete_portfolio_button {
-  all: unset;
-  cursor: pointer;
-  color: #db5461;
-  border: 2px solid #db5461;
+.update_portfolio_button,
+.delete_portfolio_button,
+.deposit_button {
   font-size: 14px;
   border-radius: 4px;
   padding: 4px;
-
-  &:hover {
-    cursor: pointer;
-    color: #ffa1aa;
-    border: 2px solid #ffa1aa;
-    background-color: rgb(38, 38, 38);
-  }
 }
 
 .portfolio_right_side_bottom {
@@ -180,17 +147,8 @@
 }
 
 .sell_stock_button {
-  color: #48bf84;
-  border: 2px solid #48bf84;
   padding: 4px;
   border-radius: 4px;
-  cursor: pointer;
   font-size: 14px;
   min-width: 76px;
-
-  &:hover {
-    color: #75e9af;
-    border: 2px solid #75e9af;
-    background-color: #4b4b4b;
-  }
 }

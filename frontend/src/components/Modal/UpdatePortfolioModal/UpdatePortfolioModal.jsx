@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { updatePortfolioThunk } from "../../../store/portfolio";
+import PulseLoader from "react-spinners/PulseLoader";
 import s from "./UpdatePortfolio.module.css";
 
 function UpdatePortfolioModal({ currentPortfolio }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [name, setName] = useState(currentPortfolio.name);
-  const [balance, setBalance] = useState(currentPortfolio.balance);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState();
 
   useEffect(() => {
     const isEmptySpaces = (string) => {
@@ -26,26 +27,24 @@ function UpdatePortfolioModal({ currentPortfolio }) {
       newErrors.name = "Portfolio name is required";
     }
     if (name.length > 20) {
-      newErrors.name = "Name but me 20 characters or less";
-    }
-    if (isEmptySpaces(balance)) {
-      newErrors.balance = "Balance is required";
+      newErrors.name = "Name must be 20 characters or less";
     }
     setErrors(newErrors);
-  }, [name, balance]);
+  }, [name]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setIsSubmitted(true);
     if (!Object.keys(errors).length) {
-      const portfolioData = { name, balance };
       const response = await dispatch(
-        updatePortfolioThunk(currentPortfolio.id, portfolioData)
+        updatePortfolioThunk(currentPortfolio.id, { name })
       );
       if (response.status === "success") {
         closeModal();
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -64,32 +63,16 @@ function UpdatePortfolioModal({ currentPortfolio }) {
         }}
       />
       {isSubmitted && errors.name && <p className={s.error}>{errors.name}</p>}
-      <label className={s.label}>Set a balance for your portfolio</label>
-      <div className={s.balance_input_section}>
-        <span className={s.dollar_sign}>$</span>
-        <input
-          className={s.input}
-          type="text"
-          defaultValue={0}
-          value={balance}
-          onChange={(e) => {
-            e.preventDefault();
-            const value = Number(e.target.value);
-            if (!isNaN(value) && value >= 0) {
-              setBalance(e.target.value);
-            }
-          }}
-        />
-      </div>
-      {isSubmitted && errors.balance && (
-        <p className={s.error}>{errors.balance}</p>
-      )}
       <button
         className={s.button}
         type="submit"
         disabled={isSubmitted && Object.keys(errors).length}
       >
-        Update portfolio
+        {isLoading ? (
+          <PulseLoader color="grey" size="10px" />
+        ) : (
+          "Update portfolio"
+        )}
       </button>
     </form>
   );

@@ -16,7 +16,7 @@ const Stock = ({ stock, selectedPortfolio }) => {
       <SellStockModal
         portfolioId={selectedPortfolio}
         stock={stock}
-        className={s.sell_stock_button}
+        className={`${s.sell_stock_button} green_button`}
       />
     </li>
   );

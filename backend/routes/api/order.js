@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { Order, Stock, Portfolio, PortfolioStock } = require("../../db/models");
+const {
+  Order,
+  Stock,
+  Portfolio,
+  PortfolioStock,
+  Transaction,
+} = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 
 //get users orders
@@ -194,6 +200,21 @@ router.get("/:portfolioId", requireAuth, async (req, res, next) => {
       });
     }
   }
+
+  //create transactions
+  const transactions = orders.map((order) => {
+    const stock = stockData[order.stockId];
+    return {
+      userId,
+      type: "Buy",
+      symbol: stock.symbol,
+      amount: order.amount,
+      price: stock.price,
+      total: Number(stock.price) * Number(order.amount),
+    };
+  });
+
+  await Transaction.bulkCreate(transactions);
 
   //delete order
   await Order.destroy({

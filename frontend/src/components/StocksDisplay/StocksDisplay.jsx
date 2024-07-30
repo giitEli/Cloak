@@ -5,9 +5,9 @@ import { getWatchlistThunk } from "../../store/watchlist";
 import s from "./StocksDisplay.module.css";
 import Stock from "./Stock";
 import { searchStockThunk } from "../../store/stocks";
-// import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { IoCloseCircle } from "react-icons/io5";
+
 ////////////////////////////////////////////////////////////////////
 
 const filterStocks = (stocks, string) => {
@@ -27,11 +27,12 @@ const filterStocks = (stocks, string) => {
 ////////////////////////////////////////////////////////////////////
 
 const StocksDisplay = () => {
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const stocks = useSelector((state) => state.stocks.allStocks);
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
+
+  /////////////////////////////
 
   useEffect(() => {
     dispatch(getAllStocksThunk());
@@ -46,7 +47,7 @@ const StocksDisplay = () => {
     }
   };
 
-  ///////////////////////////////////////////////////////////////
+  /////////////////////////////
 
   return (
     <div id={s.main_stock_page_container}>

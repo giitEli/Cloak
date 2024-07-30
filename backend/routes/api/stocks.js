@@ -9,8 +9,8 @@ router.get("/", async (req, res, next) => {
   return res.status(200).json({ data: allStocks, status: "success" });
 });
 
-router.get("/search/:symbol", async (req, res, next) => {
-  const { symbol } = req.params;
+router.post("/", async (req, res, next) => {
+  const { symbol } = req.body;
 
   const currentStockWithSymbol = await Stock.findOne({
     where: {
@@ -19,7 +19,7 @@ router.get("/search/:symbol", async (req, res, next) => {
   });
 
   if (currentStockWithSymbol) {
-    return res.status(404).json({
+    return res.status(400).json({
       status: "failure",
       message: "Stock with that symbol all ready exist",
     });
@@ -28,7 +28,12 @@ router.get("/search/:symbol", async (req, res, next) => {
   const stockData = await searchStock(symbol);
 
   if (!stockData) {
-    return res.status(404).json({ status: "failure" });
+    return res
+      .status(404)
+      .json({
+        status: "failure",
+        message: "Stock with that symbol could not be found",
+      });
   }
 
   const new_stock = await Stock.create(stockData);

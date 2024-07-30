@@ -8,6 +8,8 @@ import AddToOrderModal from "../Modal/AddToOrderModal";
 import { displayRound } from "../helpFunctions";
 import s from "./StocksDisplay.module.css";
 
+////////////////////////////////////////////////////////
+
 const Stock = ({ stock }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,7 +20,7 @@ const Stock = ({ stock }) => {
     return state.watchlist.stocks[stock.id];
   });
 
-  ////////////////////////////////////////////////////////
+  //////////////////////////
 
   return (
     <div className={s.stock_info_container}>
@@ -50,7 +52,7 @@ const Stock = ({ stock }) => {
         <div className={s.signed_in_options}>
           {inWatchlist ? (
             <button
-              className={s.remove_from_watchlist_button}
+              className={`${s.remove_from_watchlist_button} red_button`}
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(removeFromWatchlistThunk(id));
@@ -60,7 +62,7 @@ const Stock = ({ stock }) => {
             </button>
           ) : (
             <button
-              className={s.add_to_watchlist_button}
+              className={`${s.add_to_watchlist_button} blue_button`}
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(addToWatchlistThunk(id));
@@ -72,7 +74,7 @@ const Stock = ({ stock }) => {
 
           <AddToOrderModal
             stock={stock}
-            className={s.add_to_order_modal_button}
+            className={`${s.add_to_order_modal_button} green_button`}
           />
         </div>
       )}
