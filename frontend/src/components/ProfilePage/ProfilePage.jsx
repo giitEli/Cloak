@@ -7,6 +7,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const transactions = useSelector((state) => state.transactions);
+  const user = useSelector((state) => state.session.user || {});
 
   useEffect(() => {
     dispatch(getTransactionsThunk());
@@ -14,26 +15,40 @@ const ProfilePage = () => {
 
   return (
     <div className={s.profile_page_container}>
-      <h2 className={s.coming_soon}>Coming soon</h2>
-      <ul>
+      <div className={s.page_left_container}>
+        <div className={s.left_upper_container}>
+          <div className={s.user_symbol}>
+            {user.firstName && user.firstName[0]}
+          </div>
+          <div className={s.first_last_name}>
+            <span>First: {user.firstName}</span>
+            <span>Last: {user.lastName}</span>
+          </div>
+        </div>
+        <ul className={s.left_lower_container}>
+          <li>User ID: {user.id}</li>
+          <li>Email: {user.email}</li>
+          <li>Username: {user.username}</li>
+        </ul>
+      </div>
+      <ul className={s.transactions}>
+        <li className={s.transactions_index}>
+          <span>Type</span>
+          <span>Symbol/Portfolio</span>
+          <span>Amount</span>
+          <span>Total</span>
+          <span>Date</span>
+        </li>
         {transactions.map((transaction) => {
-          if (
-            transaction.type === "Deposit" ||
-            transaction.type === "Withdraw"
-          ) {
-            return (
-              <li key={transaction.id}>
-                {transaction.type} {transaction.total}
-              </li>
-            );
-          } else {
-            return (
-              <li key={transaction.id}>
-                {transaction.type} {transaction.symbol} {transaction.amount}{" "}
-                {transaction.total}
-              </li>
-            );
-          }
+          return (
+            <li key={transaction.id} className={s.transaction}>
+              <span>{transaction.type}</span>
+              <span>{transaction.symbol}</span>
+              <span>{transaction.amount}</span>
+              <span>{transaction.total}</span>
+              <span>{transaction.createdAt}</span>
+            </li>
+          );
         })}
       </ul>
     </div>

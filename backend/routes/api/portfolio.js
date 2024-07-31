@@ -96,12 +96,14 @@ router.put("/:portfolioId", requireAuth, async (req, res, next) => {
       await Transaction.create({
         userId,
         type: "Deposit",
+        symbol: portfolio.name,
         total: balance,
       });
     } else if (Number(balance) < 0) {
       await Transaction.create({
         userId,
         type: "Withdraw",
+        symbol: portfolio.name,
         total: Math.abs(Number(balance)),
       });
     }
