@@ -6,7 +6,11 @@ import { getTransactionsThunk } from "../../store/transactions";
 const ProfilePage = () => {
   const dispatch = useDispatch();
 
-  const transactions = useSelector((state) => state.transactions);
+  const transactions = useSelector((state) => {
+    return state.transactions.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+  });
   const user = useSelector((state) => state.session.user || {});
 
   useEffect(() => {
@@ -31,40 +35,47 @@ const ProfilePage = () => {
           <li>Username: {user.username}</li>
         </ul>
       </div>
-      <ul className={s.transactions}>
-        <li className={s.transactions_index}>
-          <span className={s.type}>Type</span>
-          <span className={s.symbol}>Symbol/Portfolio</span>
-          <span className={s.amount}>Amount</span>
-          <span className={s.total}>Total</span>
-          <span className={s.date}>Date</span>
-          <span className={s.time}>Time</span>
-        </li>
-        {transactions.map((transaction) => {
-          const date = new Date(transaction.createdAt);
-          const month = date.getMonth() + 1;
-          const day = date.getDate();
-          const year = date.getFullYear();
-          const hour = date.getHours();
-          const minute =
-            date.getMinutes() < 10
-              ? `0${date.getMinutes()}`
-              : date.getMinutes();
-          return (
-            <li key={transaction.id} className={s.transaction}>
-              <span className={s.type}>{transaction.type}</span>
-              <span className={s.symbol}>{transaction.symbol}</span>
-              <span className={s.amount}>{transaction.amount}</span>
-              <span className={s.total}>${transaction.total}</span>
-              <span className={s.date}>
-                {month} / {day} / {year}
-              </span>
-              <span className={s.time}>
-                {hour}:{minute}
-              </span>
-            </li>
-          );
-        })}
+      <ul className={s.transactions_container}>
+        <div className={s.transactions_header}>
+          <h3>Transactions</h3>
+          <li className={s.transactions_index}>
+            <span className={s.type}>Type</span>
+            <span className={s.symbol}>Symbol/Portfolio</span>
+            <span className={s.amount}>Amount</span>
+            <span className={s.total}>Total</span>
+            <span className={s.date}>Date</span>
+            <span className={s.time}>Time</span>
+          </li>
+        </div>
+        <div>
+          <div className={s.transactions}>
+            {transactions.map((transaction) => {
+              const date = new Date(transaction.createdAt);
+              const month = date.getMonth() + 1;
+              const day = date.getDate();
+              const year = date.getFullYear();
+              const hour = date.getHours();
+              const minute =
+                date.getMinutes() < 10
+                  ? `0${date.getMinutes()}`
+                  : date.getMinutes();
+              return (
+                <li key={transaction.id} className={s.transaction}>
+                  <span className={s.type}>{transaction.type}</span>
+                  <span className={s.symbol}>{transaction.symbol}</span>
+                  <span className={s.amount}>{transaction.amount}</span>
+                  <span className={s.total}>${transaction.total}</span>
+                  <span className={s.date}>
+                    {month} / {day} / {year}
+                  </span>
+                  <span className={s.time}>
+                    {hour}:{minute}
+                  </span>
+                </li>
+              );
+            })}
+          </div>
+        </div>
       </ul>
     </div>
   );

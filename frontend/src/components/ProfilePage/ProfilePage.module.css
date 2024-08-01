@@ -57,28 +57,48 @@
   }
 }
 
-.transactions {
+.transactions_container {
   width: 100%;
   display: flex;
   flex-direction: column;
   padding-left: 0px;
-  border: 2px solid white;
+  border: 2px solid grey;
 
   & > li {
     list-style-type: none;
   }
 }
 
+.transactions_header {
+  display: flex;
+  width: calc(100% - 18px);
+  align-items: center;
+  flex-direction: column;
+  margin-left: 8px;
+  margin-right: 8px;
+
+  & > h3 {
+    color: white;
+    margin: 8px 0px;
+  }
+}
+
+.transactions {
+  overflow-y: scroll;
+  margin-left: 8px;
+}
+
 .transactions_index,
 .transaction {
   display: flex;
+  width: 100%;
 }
 
 .transactions_index {
   margin-bottom: 8px;
 }
 
-.transaction{
+.transaction {
   padding: 4px 0px;
 }
 
