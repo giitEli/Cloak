@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       symbol: DataTypes.STRING,
+      portfolio: DataTypes.STRING,
       amount: DataTypes.STRING,
       price: DataTypes.STRING,
       total: {

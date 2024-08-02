@@ -207,6 +207,7 @@ router.get("/:portfolioId", requireAuth, async (req, res, next) => {
     return {
       userId,
       type: "Buy",
+      portfolio: portfolio.name,
       symbol: stock.symbol,
       amount: order.amount,
       price: stock.price,

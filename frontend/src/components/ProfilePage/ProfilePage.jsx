@@ -40,7 +40,8 @@ const ProfilePage = () => {
           <h3>Transactions</h3>
           <li className={s.transactions_index}>
             <span className={s.type}>Type</span>
-            <span className={s.symbol}>Symbol/Portfolio</span>
+            <span className={s.portfolio}>Portfolio</span>
+            <span className={s.symbol}>Symbol</span>
             <span className={s.amount}>Amount</span>
             <span className={s.total}>Total</span>
             <span className={s.date}>Date</span>
@@ -62,6 +63,7 @@ const ProfilePage = () => {
               return (
                 <li key={transaction.id} className={s.transaction}>
                   <span className={s.type}>{transaction.type}</span>
+                  <span className={s.portfolio}>{transaction.portfolio}</span>
                   <span className={s.symbol}>{transaction.symbol}</span>
                   <span className={s.amount}>{transaction.amount}</span>
                   <span className={s.total}>${transaction.total}</span>

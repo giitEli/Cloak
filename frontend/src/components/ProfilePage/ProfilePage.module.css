@@ -103,6 +103,7 @@
 }
 
 .type,
+.portfolio,
 .symbol,
 .amount,
 .total,
@@ -117,12 +118,16 @@
   width: 10%;
 }
 
+.portfolio {
+  width: 25%;
+}
+
 .symbol {
-  width: 35%;
+  width: 10%;
 }
 
 .amount {
-  width: 12%;
+  width: 10%;
 }
 
 .total {

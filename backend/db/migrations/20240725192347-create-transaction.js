@@ -27,6 +27,9 @@ module.exports = {
         symbol: {
           type: Sequelize.STRING,
         },
+        portfolio: {
+          type: Sequelize.STRING,
+        },
         amount: {
           type: Sequelize.STRING,
         },
