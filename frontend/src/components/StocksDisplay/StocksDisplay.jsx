@@ -7,6 +7,7 @@ import Stock from "./Stock";
 import { searchStockThunk } from "../../store/stocks";
 import { FaSearch } from "react-icons/fa";
 import { IoCloseCircle } from "react-icons/io5";
+import { MoonLoader } from "react-spinners";
 
 ////////////////////////////////////////////////////////////////////
 
@@ -31,6 +32,7 @@ const StocksDisplay = () => {
   const stocks = useSelector((state) => state.stocks.allStocks);
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   /////////////////////////////
 
@@ -43,7 +45,9 @@ const StocksDisplay = () => {
     e.preventDefault();
     setFilter(search);
     if (search.length <= 5) {
-      dispatch(searchStockThunk(search));
+      setIsLoading(true);
+      await dispatch(searchStockThunk(search));
+      setIsLoading(false);
     }
   };
 
@@ -77,11 +81,23 @@ const StocksDisplay = () => {
           />
         </div>
       </form>
-      <div id={s.stock_display_container}>
-        {filterStocks(stocks, filter).map((id) => {
-          return <Stock key={id} stock={stocks[id]} />;
-        })}
-      </div>
+      {isLoading && (
+        <div className={s.loading_icon_container}>
+          <MoonLoader color="#d9d9d9" size={80} speedMultiplier={0.7} />
+        </div>
+      )}
+      {Boolean(!isLoading && !filterStocks(stocks, filter).length) && (
+        <h3 className={s.not_found_container}>
+          Stock with that symbol could not be found
+        </h3>
+      )}
+      {Boolean(!isLoading && filterStocks(stocks, filter).length) && (
+        <div className={s.stock_display_container}>
+          {filterStocks(stocks, filter).map((id) => {
+            return <Stock key={id} stock={stocks[id]} />;
+          })}
+        </div>
+      )}
     </div>
   );
 };

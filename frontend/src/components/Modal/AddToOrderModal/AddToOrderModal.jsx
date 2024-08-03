@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { addToCartThunk } from "../../../store/order";
 import { useCartDisplayContext } from "../../../context/Cart";
+import { PulseLoader } from "react-spinners";
 import s from "./AddToOrder.module.css";
 
 function AddToOrderModal({ stock }) {
@@ -10,13 +11,15 @@ function AddToOrderModal({ stock }) {
   const { closeModal } = useModal();
   const [amount, setAmount] = useState("");
   const [price, setPrice] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { setCartDisplay } = useCartDisplayContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const response = await dispatch(addToCartThunk(stock.id, amount));
-
+    setIsLoading(false);
     if (response.status === "success") {
       setCartDisplay(true);
       closeModal();
@@ -72,7 +75,7 @@ function AddToOrderModal({ stock }) {
         />
       </div>
       <button className={s.submit_button} type="submit" disabled={!amount}>
-        Add to Cart
+        {isLoading ? <PulseLoader color="grey" size="10px" /> : "Add to Cart"}
       </button>
     </form>
   );

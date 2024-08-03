@@ -15,7 +15,7 @@ import s from "./StocksDisplay.module.css";
 const Stock = ({ stock }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { id, name, symbol, price, industry, logo } = stock;
 
