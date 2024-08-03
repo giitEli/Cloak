@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   addToWatchlistThunk,
@@ -6,6 +7,7 @@ import {
 } from "../../store/watchlist";
 import AddToOrderModal from "../Modal/AddToOrderModal";
 import { displayRound } from "../helpFunctions";
+import { PulseLoader } from "react-spinners";
 import s from "./StocksDisplay.module.css";
 
 ////////////////////////////////////////////////////////
@@ -13,6 +15,8 @@ import s from "./StocksDisplay.module.css";
 const Stock = ({ stock }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
+
   const { id, name, symbol, price, industry, logo } = stock;
 
   const user = useSelector((state) => state.session.user);
@@ -53,22 +57,34 @@ const Stock = ({ stock }) => {
           {inWatchlist ? (
             <button
               className={`${s.remove_from_watchlist_button} red_button`}
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.preventDefault();
-                dispatch(removeFromWatchlistThunk(id));
+                setIsLoading(true);
+                await dispatch(removeFromWatchlistThunk(id));
+                setIsLoading(false);
               }}
             >
-              Remove from wachlist
+              {isLoading ? (
+                <PulseLoader color="grey" size="10px" />
+              ) : (
+                "Remove from wachlist"
+              )}
             </button>
           ) : (
             <button
               className={`${s.add_to_watchlist_button} blue_button`}
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.preventDefault();
-                dispatch(addToWatchlistThunk(id));
+                setIsLoading(true);
+                await dispatch(addToWatchlistThunk(id));
+                setIsLoading(false);
               }}
             >
-              Add to watchlist
+              {isLoading ? (
+                <PulseLoader color="grey" size="10px" />
+              ) : (
+                "Add to watchlist"
+              )}
             </button>
           )}
 

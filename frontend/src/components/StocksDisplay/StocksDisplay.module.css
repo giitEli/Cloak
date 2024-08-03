@@ -141,14 +141,22 @@
 .add_to_watchlist_button {
   padding: 8px;
   border-radius: 5px;
+  width: 120px;
 }
 
 .remove_from_watchlist_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px;
   border-radius: 5px;
+  width: 160px;
 }
 
 .add_to_order_modal_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px;
   border-radius: 5px;
 }
