@@ -4,7 +4,11 @@ const { searchStock, getStockGraphData } = require("../../utils/searchStock");
 const { Stock } = require("../../db/models");
 
 router.get("/", async (req, res, next) => {
-  const allStocks = await Stock.findAll();
+  const { page } = req.query;
+  const allStocks = await Stock.findAll({
+    limit: 31,
+    offset: 30 * (Number(page) - 1),
+  });
 
   return res.status(200).json({ data: allStocks, status: "success" });
 });
@@ -28,12 +32,10 @@ router.post("/", async (req, res, next) => {
   const stockData = await searchStock(symbol);
 
   if (!stockData) {
-    return res
-      .status(404)
-      .json({
-        status: "failure",
-        message: "Stock with that symbol could not be found",
-      });
+    return res.status(404).json({
+      status: "failure",
+      message: "Stock with that symbol could not be found",
+    });
   }
 
   const new_stock = await Stock.create(stockData);
@@ -41,6 +43,7 @@ router.post("/", async (req, res, next) => {
   res.status(201).json({ data: new_stock, status: "success" });
 });
 
+//get specific stock data
 router.get("/:stockId", async (req, res, next) => {
   const { stockId } = req.params;
 

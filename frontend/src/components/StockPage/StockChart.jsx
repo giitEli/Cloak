@@ -23,7 +23,7 @@ const months = [
   "December",
 ];
 
-const StockChart = ({ graphData }) => {
+const StockChart = ({ graphData, stock }) => {
   graphData = graphData.map(({ price, date }) => {
     const dateTime = new Date(date);
     return {
@@ -31,6 +31,10 @@ const StockChart = ({ graphData }) => {
       Date: `${months[dateTime.getMonth()]} ${dateTime.getFullYear()}`,
     };
   });
+
+  if (graphData.length) {
+    graphData.push({ Price: stock.price, Date: "Current" });
+  }
 
   return (
     <ResponsiveContainer width="100%" aspect={2.4}>
@@ -43,6 +47,7 @@ const StockChart = ({ graphData }) => {
           stroke="#00A7e1"
           strokeWidth={2}
           isAnimationActive={false}
+          dot={false}
         />
       </LineChart>
     </ResponsiveContainer>

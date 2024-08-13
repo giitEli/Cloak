@@ -24,7 +24,6 @@ const WatchList = () => {
   /////////////////////
 
   useEffect(() => {
-    dispatch(getAllStocksThunk());
     dispatch(getWatchlistThunk());
   }, []);
 

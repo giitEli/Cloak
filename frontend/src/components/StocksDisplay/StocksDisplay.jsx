@@ -12,8 +12,9 @@ import { MoonLoader } from "react-spinners";
 ////////////////////////////////////////////////////////////////////
 
 const filterStocks = (stocks, string) => {
-  return Object.keys(stocks).filter((id) => {
-    const { symbol, name, industry } = stocks[id];
+  const stocksArr = Object.values(stocks);
+  return stocksArr.filter((stock) => {
+    const { symbol, name, industry } = stock;
     if (
       symbol.toLowerCase().includes(string.toLowerCase()) ||
       name.toLowerCase().includes(string.toLowerCase()) ||
@@ -25,30 +26,45 @@ const filterStocks = (stocks, string) => {
   });
 };
 
+//return an array of stocks for a given page
+const paginateStocks = (stocks, page) => {
+  const pageStocks = stocks.slice(30 * (page - 1), 30 * (page - 1) + 30);
+  return pageStocks;
+};
+
 ////////////////////////////////////////////////////////////////////
 
 const StocksDisplay = () => {
   const dispatch = useDispatch();
-  const stocks = useSelector((state) => state.stocks.allStocks);
-  const [filter, setFilter] = useState("");
+  const [searchString, setSearchString] = useState("");
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const stocks = useSelector((state) =>
+    filterStocks(state.stocks.allStocks, search)
+  );
 
   /////////////////////////////
 
   useEffect(() => {
-    dispatch(getAllStocksThunk());
+    dispatch(getAllStocksThunk(page));
     dispatch(getWatchlistThunk());
   }, [dispatch]);
 
   const submit = async (e) => {
     e.preventDefault();
-    setFilter(search);
-    if (search.length <= 5) {
-      setIsLoading(true);
+    setIsLoading(true);
+    setSearch(searchString);
+    setPage(1);
+    if (
+      searchString.length <= 5 &&
+      !stocks.find(
+        ({ symbol }) => symbol.toLowerCase() === searchString.toLowerCase()
+      )
+    ) {
       await dispatch(searchStockThunk(search));
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   /////////////////////////////
@@ -62,11 +78,10 @@ const StocksDisplay = () => {
             id={s.search_bar}
             placeholder="Symbol Search"
             type="text"
-            value={filter}
+            value={searchString}
             onChange={(e) => {
               e.preventDefault();
-              setSearch(e.target.value);
-              setFilter(e.target.value);
+              setSearchString(e.target.value);
             }}
           />
         </div>
@@ -76,27 +91,54 @@ const StocksDisplay = () => {
             onClick={(e) => {
               e.preventDefault();
               setSearch("");
-              setFilter("");
+              setSearchString("");
             }}
           />
         </div>
       </form>
+
+      {/* loading screen */}
       {isLoading && (
         <div className={s.loading_icon_container}>
           <MoonLoader color="#d9d9d9" size={80} speedMultiplier={0.7} />
         </div>
       )}
-      {Boolean(!isLoading && !filterStocks(stocks, filter).length) && (
-        <h3 className={s.not_found_container}>
-          Stock with that symbol could not be found
-        </h3>
-      )}
-      {Boolean(!isLoading && filterStocks(stocks, filter).length) && (
+
+      {/* normal stock page */}
+      {Boolean(!isLoading && stocks.length) && (
         <div className={s.stock_display_container}>
-          {filterStocks(stocks, filter).map((id) => {
-            return <Stock key={id} stock={stocks[id]} />;
+          {paginateStocks(stocks, page).map((stock) => {
+            return <Stock key={stock.id} stock={stock} />;
           })}
+          <div className={s.page_selector_container}>
+            <button
+              className={s.left_arrow}
+              disabled={page <= 1}
+              onClick={(e) => {
+                e.preventDefault();
+                setPage((prev) => prev - 1);
+              }}
+            >
+              {"<"}
+            </button>
+            <span className={s.page}>{page}</span>
+            <button
+              className={s.right_arrow}
+              disabled={Object.keys(stocks).length < page * 30 + 1}
+              onClick={(e) => {
+                e.preventDefault();
+                setPage((prev) => prev + 1);
+              }}
+            >
+              {">"}
+            </button>
+          </div>
         </div>
+      )}
+
+      {/* no stocks found page */}
+      {Boolean(!isLoading && !stocks.length) && (
+        <h3 className={s.not_found_container}>No stocks found...</h3>
       )}
     </div>
   );

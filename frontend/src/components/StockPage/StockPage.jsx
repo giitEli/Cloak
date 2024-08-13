@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { getAllStocksThunk, getStockGraphDataThunk } from "../../store/stocks";
+import { getSpecificStockThunk } from "../../store/stocks";
 import { getOrdersThunk } from "../../store/order";
 import AddToOrderModal from "../Modal/AddToOrderModal";
 import StockChart from "./StockChart";
@@ -33,11 +33,10 @@ const StockPage = () => {
   /////////////////////////////
 
   useEffect(() => {
-    dispatch(getAllStocksThunk());
     dispatch(getWatchlistThunk());
     dispatch(getOrdersThunk());
-    if (!graphData.length) {
-      dispatch(getStockGraphDataThunk(stockId));
+    if (!graphData.length || !stock) {
+      dispatch(getSpecificStockThunk(stockId));
     }
   }, []);
 
@@ -82,7 +81,7 @@ const StockPage = () => {
         <div className={s.top_left_section}>
           <h3 className={s.stock_name}>{name}</h3>
           <div className={s.stock_chart_container}>
-            {graphData && <StockChart graphData={graphData} />}
+            {graphData && <StockChart graphData={graphData} stock={stock} />}
           </div>
         </div>
         <div className={s.top_right_section}>

@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const STOCK_SEARCH = "stocks/search";
 const GET_ALL_STOCKS = "stocks/getAllStocks";
-const GET_GRAPH_DATA = "stocks/getGraphData";
+const GET_SPECIFIC_STOCK = "stocks/getGraphData";
 
 ///////////////////////////////////////////////////////////
 
@@ -20,17 +20,18 @@ const addStock = (stock) => {
   };
 };
 
-const getGraphData = (stockId, data) => {
+const getSpecificStock = (stockId, data) => {
+  console.log(data);
   return {
-    type: GET_GRAPH_DATA,
+    type: GET_SPECIFIC_STOCK,
     payload: { stockId, data },
   };
 };
 
 ///////////////////////////////////////////////////////////
 
-export const getAllStocksThunk = () => async (dispatch) => {
-  const raw = await csrfFetch("/api/stocks");
+export const getAllStocksThunk = (page) => async (dispatch) => {
+  const raw = await csrfFetch(`/api/stocks?page=${page}`);
   const response = await raw.json();
 
   if (response.status === "success") {
@@ -57,12 +58,13 @@ export const searchStockThunk = (symbol) => async (dispatch) => {
   return response;
 };
 
-export const getStockGraphDataThunk = (stockId) => async (dispatch) => {
+export const getSpecificStockThunk = (stockId) => async (dispatch) => {
   const raw = await csrfFetch(`/api/stocks/${stockId}`);
   const response = await raw.json();
 
   if (response.status === "success") {
-    dispatch(getGraphData(stockId, response.data.graphData));
+    console.log(response);
+    dispatch(getSpecificStock(stockId, response.data));
   }
 
   return response;
@@ -96,13 +98,15 @@ const stocksReducer = (state = initialState, action) => {
       newState.allStocks[id] = action.payload;
       return newState;
     }
-    case GET_GRAPH_DATA: {
+    case GET_SPECIFIC_STOCK: {
       const newState = {
         ...state,
         allStocks: { ...state.allStocks },
         graphData: { ...state.graphData },
       };
-      newState.graphData[action.payload.stockId] = action.payload.data;
+      newState.allStocks[action.payload.stockId] = action.payload.data.stock;
+      newState.graphData[action.payload.stockId] =
+        action.payload.data.graphData;
       return newState;
     }
     default:
