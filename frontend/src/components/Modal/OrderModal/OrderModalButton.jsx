@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import OpenModalMenuItem from "../OpenModalMenuItem";
-import AddToOrderModal from "./AddToOrderModal";
+import OrderModal from "./OrderModal";
 
-function AddToOrderModalButton({ stock, className }) {
+function OrderModalButton({ stock, className, type, currentAmount }) {
   const [showMenu, setShowMenu] = useState(false);
-
-  // const toggleMenu = (e) => {
-  //   e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-  //   setShowMenu(!showMenu);
-  // };
 
   useEffect(() => {
     if (!showMenu) return;
@@ -23,11 +18,13 @@ function AddToOrderModalButton({ stock, className }) {
   return (
     <OpenModalMenuItem
       className={className}
-      itemText="Purchase"
+      itemText={type === "purchase" ? "Purchase" : "Change Order"}
       onItemClick={closeMenu}
-      modalComponent={<AddToOrderModal stock={stock} />}
+      modalComponent={
+        <OrderModal stock={stock} type={type} currentAmount={currentAmount} />
+      }
     />
   );
 }
 
-export default AddToOrderModalButton;
+export default OrderModalButton;

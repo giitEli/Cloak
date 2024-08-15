@@ -5,8 +5,8 @@ import {
   addToWatchlistThunk,
   removeFromWatchlistThunk,
 } from "../../store/watchlist";
-import AddToOrderModal from "../Modal/AddToOrderModal";
-import { displayRound } from "../helpFunctions";
+import OrderModal from "../Modal/OrderModal";
+import { formatNumber } from "../helperFunctions";
 import { PulseLoader } from "react-spinners";
 import s from "./StocksDisplay.module.css";
 
@@ -48,7 +48,7 @@ const Stock = ({ stock }) => {
           <div className={s.stock_industry}>{industry}</div>
         </div>
         <div className={s.right_middle_container}>
-          <h2 className={s.stock_price}>${displayRound(price, 100)}</h2>
+          <h2 className={s.stock_price}>${formatNumber(price)}</h2>
         </div>
       </div>
       <ul></ul>
@@ -88,9 +88,10 @@ const Stock = ({ stock }) => {
             </button>
           )}
 
-          <AddToOrderModal
+          <OrderModal
             stock={stock}
             className={`${s.add_to_order_modal_button} green_button`}
+            type="purchase"
           />
         </div>
       )}

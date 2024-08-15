@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getSpecificStockThunk } from "../../store/stocks";
 import { getOrdersThunk } from "../../store/order";
-import AddToOrderModal from "../Modal/AddToOrderModal";
+import OrderModal from "../Modal/OrderModal";
 import StockChart from "./StockChart";
 import {
   addToWatchlistThunk,
@@ -110,9 +110,10 @@ const StockPage = () => {
             </button>
           )}
           {user && (
-            <AddToOrderModal
+            <OrderModal
               stock={stock}
               className={`${s.add_to_order_modal_button} green_button`}
+              type="purchase"
             />
           )}
         </div>

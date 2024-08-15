@@ -7,7 +7,7 @@ import {
 } from "../../store/order";
 import { removeFromCartThunk } from "../../store/order";
 import s from "./Cart.module.css";
-import EditOrderModal from "../Modal/EditOrderModal";
+import OrderModal from "../Modal/OrderModal";
 import { getPortfoliosThunk } from "../../store/portfolio";
 import { useCartDisplayContext } from "../../context/Cart";
 import { FaCartShopping } from "react-icons/fa6";
@@ -139,9 +139,11 @@ const Cart = () => {
                 </div>
               </div>
               <div className={s.order_footer}>
-                <EditOrderModal
+                <OrderModal
                   stock={stock}
                   className={`${s.change_order_button} blue_button`}
+                  type="edit"
+                  currentAmount={stock.amount}
                 />
                 <button
                   className={`${s.remove_from_cart_button} red_button`}

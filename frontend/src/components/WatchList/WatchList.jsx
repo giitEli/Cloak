@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllStocksThunk } from "../../store/stocks";
 import {
   getWatchlistThunk,
   removeFromWatchlistThunk,
@@ -9,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import s from "./WatchList.module.css";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleUp } from "react-icons/fa";
-import AddToOrderModal from "../Modal/AddToOrderModal";
+import OrderModal from "../Modal/OrderModal";
 
 //////////////////////////////////////////////////
 
@@ -150,9 +149,10 @@ const WatchList = () => {
                     >
                       Remove from watchlist
                     </button>
-                    <AddToOrderModal
+                    <OrderModal
                       stock={stock}
                       className={`${s.add_to_order_modal_button} green_button`}
+                      type="purchase"
                     />
                   </div>
                 </div>

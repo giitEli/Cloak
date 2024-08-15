@@ -1,4 +1,5 @@
 import SellStockModal from "../Modal/SellStockModal";
+import { formatNumber } from "../helperFunctions";
 import s from "./PortfolioPage.module.css";
 
 const Stock = ({ stock, selectedPortfolio }) => {
@@ -8,8 +9,8 @@ const Stock = ({ stock, selectedPortfolio }) => {
         <img className={s.stock_image} src={stock.logo} />
       </div>
       <span className={s.stock_text}>{stock.name}</span>
-      <span className={s.stock_text}>${stock.price}</span>
-      <span className={s.stock_text}>{stock.amount}</span>
+      <span className={s.stock_text}>${formatNumber(stock.price)}</span>
+      <span className={s.stock_text}>{formatNumber(stock.amount)}</span>
       <span className={s.stock_text}>{stock.symbol}</span>
       <span className={s.stock_text}>{stock.industry}</span>
 

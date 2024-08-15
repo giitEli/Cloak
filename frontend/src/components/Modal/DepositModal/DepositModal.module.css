@@ -1,0 +1,11 @@
+.deposit_modal {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.label,
+.input,
+.button {
+  margin: 8px;
+}

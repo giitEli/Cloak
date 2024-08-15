@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { updatePortfolioThunk } from "../../../store/portfolio";
 import PulseLoader from "react-spinners/PulseLoader";
+import { priceFunc } from "../helper";
 import s from "./WithdrawModal.module.css";
 
 function WithdrawModal({ currentPortfolio }) {
@@ -37,20 +38,13 @@ function WithdrawModal({ currentPortfolio }) {
         value={balance}
         onChange={(e) => {
           e.preventDefault();
-          const value = Number(e.target.value);
-          if (e.target.value === "") {
-            setBalance("");
-          }
-          if (!isNaN(value)) {
-            if (value < 0) {
-              setBalance(0);
-            }
-            if (value > currentPortfolio.balance) {
-              setBalance(currentPortfolio.balance);
+          setBalance((prev) => {
+            if (Number(e.target.value) > currentPortfolio.balance) {
+              return currentPortfolio.balance;
             } else {
-              setBalance(e.target.value);
+              return priceFunc(prev, e.target.value);
             }
-          }
+          });
         }}
       />
       <button className={s.button} type="submit" disabled={isNaN(balance)}>

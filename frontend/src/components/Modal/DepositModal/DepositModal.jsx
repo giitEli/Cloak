@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { updatePortfolioThunk } from "../../../store/portfolio";
 import PulseLoader from "react-spinners/PulseLoader";
+import { priceFunc } from "../helper.js";
 import s from "./DepositModal.module.css";
 
 function DepositModal({ currentPortfolio }) {
@@ -10,6 +11,10 @@ function DepositModal({ currentPortfolio }) {
   const { closeModal } = useModal();
   const [balance, setBalance] = useState("");
   const [isLoading, setIsLoading] = useState();
+
+  useEffect(() => {
+    console.log(balance, !isNaN(balance), Number(balance));
+  }, [balance]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,39 +31,31 @@ function DepositModal({ currentPortfolio }) {
   };
 
   return (
-    <form
-      className={s.create_portfolio_modal_container}
-      onSubmit={handleSubmit}
-    >
+    <form className={s.deposit_modal} onSubmit={handleSubmit}>
       <label className={s.label}>How much would you like to deposit?</label>
-      <input
-        className={s.input}
-        type="text"
-        value={balance}
-        onChange={(e) => {
-          e.preventDefault();
-          const value = Number(e.target.value);
-          if (e.target.value === "") {
-            setBalance("");
-          }
-          if (!isNaN(value)) {
-            if (value < 0) {
-              setBalance(0);
-            }
-            if (value > 10000000) {
-              setBalance(10000000);
-            } else {
-              setBalance(e.target.value);
-            }
-          }
-        }}
-      />
-      <button className={s.button} type="submit" disabled={isNaN(balance)}>
-        {isLoading ? (
-          <PulseLoader color="grey" size="12px" />
-        ) : (
-          "Update portfolio"
-        )}
+      <span className={s.input}>
+        ${" "}
+        <input
+          type="text"
+          value={balance}
+          onChange={(e) => {
+            e.preventDefault();
+            setBalance((prev) => {
+              if (Number(e.target.value) > 1000000) {
+                return 1000000;
+              } else {
+                return priceFunc(prev, e.target.value);
+              }
+            });
+          }}
+        />
+      </span>
+      <button
+        className={s.button}
+        type="submit"
+        disabled={isNaN(balance) || Number(balance) <= 0}
+      >
+        {isLoading ? <PulseLoader color="grey" size="12px" /> : "Deposit"}
       </button>
     </form>
   );

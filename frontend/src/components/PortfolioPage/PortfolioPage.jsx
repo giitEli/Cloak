@@ -7,6 +7,7 @@ import DepositModal from "../Modal/DepositModal";
 import WithdrawModal from "../Modal/WithdrawModal";
 import { getPortfoliosThunk } from "../../store/portfolio";
 import Stock from "./Stock.jsx";
+import { formatNumber } from "../helperFunctions";
 import s from "./PortfolioPage.module.css";
 
 //////////////////////////////////////////
@@ -59,7 +60,7 @@ const PortfolioPage = () => {
         <div className={s.portfolio_right_side}>
           <div className={s.portfolio_right_side_top}>
             <div className={s.portfolio_balance_text}>
-              Balance: ${portfolios[selectedPortfolio].balance}
+              Balance: ${formatNumber(portfolios[selectedPortfolio].balance)}
             </div>
             <UpdatePortfolioModal
               currentPortfolio={portfolios[selectedPortfolio]}
