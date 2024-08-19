@@ -6,7 +6,7 @@ import {
   removeFromWatchlistThunk,
 } from "../../store/watchlist";
 import OrderModal from "../Modal/OrderModal";
-import { formatNumber } from "../helperFunctions";
+import { formatPrice } from "../helperFunctions";
 import { PulseLoader } from "react-spinners";
 import s from "./StocksDisplay.module.css";
 
@@ -48,7 +48,7 @@ const Stock = ({ stock }) => {
           <div className={s.stock_industry}>{industry}</div>
         </div>
         <div className={s.right_middle_container}>
-          <h2 className={s.stock_price}>${formatNumber(price)}</h2>
+          <h2 className={s.stock_price}>${formatPrice(price)}</h2>
         </div>
       </div>
       <ul></ul>

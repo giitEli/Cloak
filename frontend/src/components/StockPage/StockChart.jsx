@@ -27,7 +27,7 @@ const StockChart = ({ graphData, stock }) => {
   graphData = graphData.map(({ price, date }) => {
     const dateTime = new Date(date);
     return {
-      Price: price,
+      Price: Math.round(price * 100) / 100,
       Date: `${months[dateTime.getMonth()]} ${dateTime.getFullYear()}`,
     };
   });

@@ -91,20 +91,20 @@ router.put("/:portfolioId", requireAuth, async (req, res, next) => {
   if (name) {
     editObj.name = name;
   } else if (balance) {
-    editObj.balance = Number(balance) + Number(portfolio.balance);
+    editObj.balance = (Number(balance) + Number(portfolio.balance)).toFixed(2);
     if (Number(balance) > 0) {
       await Transaction.create({
         userId,
         type: "Deposit",
         portfolio: portfolio.name,
-        total: balance,
+        total: Number(balance).toFixed(2),
       });
     } else if (Number(balance) < 0) {
       await Transaction.create({
         userId,
         type: "Withdraw",
         portfolio: portfolio.name,
-        total: Math.abs(Number(balance)),
+        total: Math.abs(Number(balance)).toFixed(2),
       });
     }
   }
@@ -131,8 +131,10 @@ router.put("/:portfolioId/sell", requireAuth, async (req, res, next) => {
   const stock = await Stock.findByPk(stockId);
   const portfolio = await Portfolio.findByPk(portfolioId);
 
-  const newTotal =
-    Number(stock.price) * Number(amount) + Number(portfolio.balance);
+  const newTotal = (
+    Number(stock.price) * Number(amount) +
+    Number(portfolio.balance)
+  ).toFixed(2);
 
   const updatePortfolio = await portfolio.update({
     balance: newTotal,
@@ -145,7 +147,7 @@ router.put("/:portfolioId/sell", requireAuth, async (req, res, next) => {
     },
   });
 
-  const newAmount = portfolioStock.amount - amount;
+  const newAmount = (portfolioStock.amount - amount).toFixed(4);
 
   if (newAmount <= 0) {
     await portfolioStock.destroy();
@@ -158,8 +160,8 @@ router.put("/:portfolioId/sell", requireAuth, async (req, res, next) => {
     userId,
     portfolio: portfolio.name,
     symbol: stock.symbol,
-    amount,
-    total: Number(amount) * Number(stock.price),
+    amount: Number(amount).toFixed(4),
+    total: (Number(amount) * Number(stock.price)).toFixed(2),
   });
 
   return res.status(200).json({

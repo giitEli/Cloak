@@ -31,11 +31,14 @@ function DepositModal({ currentPortfolio }) {
   };
 
   return (
-    <form className={s.deposit_modal} onSubmit={handleSubmit}>
-      <label className={s.label}>How much would you like to deposit?</label>
-      <span className={s.input}>
-        ${" "}
+    <form className={s.modal_container} onSubmit={handleSubmit}>
+      <label className={s.input_label}>
+        How much would you like to deposit?
+      </label>
+      <div className={s.input_area}>
+        <span className={s.dollar_sign}>$ </span>
         <input
+          className={s.amount_input}
           type="text"
           value={balance}
           onChange={(e) => {
@@ -49,9 +52,9 @@ function DepositModal({ currentPortfolio }) {
             });
           }}
         />
-      </span>
+      </div>
       <button
-        className={s.button}
+        className={s.submit_button}
         type="submit"
         disabled={isNaN(balance) || Number(balance) <= 0}
       >

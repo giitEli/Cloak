@@ -34,7 +34,7 @@ const Cart = () => {
     for (const stock of Object.values(cart)) {
       total += Number(stock.price) * Number(stock.amount);
     }
-    return total;
+    return Number(total.toFixed(2));
   };
 
   //initial render useEffects
@@ -66,7 +66,7 @@ const Cart = () => {
     //cart cost more then portfolio
     if (
       portfolios[selectedPortfolio] &&
-      getTotal(cart) > portfolios[selectedPortfolio].balance
+      Number(getTotal(cart)) > portfolios[selectedPortfolio].balance
     ) {
       newErrors.balance = "Cart total is greater then portfolio balance";
     }
@@ -135,7 +135,9 @@ const Cart = () => {
                 </div>
                 <div className={s.order_stock_subtotal}>
                   <span>Subtotal</span>
-                  <span>${Number(stock.amount) * Number(stock.price)}</span>
+                  <span>
+                    ${(Number(stock.amount) * Number(stock.price)).toFixed(2)}
+                  </span>
                 </div>
               </div>
               <div className={s.order_footer}>

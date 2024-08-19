@@ -63,7 +63,9 @@ router.put("/add", requireAuth, async (req, res, next) => {
 
   //if user has order update amount
   if (currentStockOrder) {
-    const newAmount = Number(currentStockOrder.amount) + Number(amount);
+    const newAmount = (
+      Number(currentStockOrder.amount) + Number(amount)
+    ).toFixed(4);
     const updatedOrder = await currentStockOrder.update({
       amount: newAmount,
     });
@@ -73,9 +75,9 @@ router.put("/add", requireAuth, async (req, res, next) => {
     const newOrder = await Order.create({
       userId,
       stockId,
-      amount,
+      amount: Number(amount).toFixed(4),
     });
-    updatedOrderData.amount = amount;
+    updatedOrderData.amount = Number(amount).toFixed(4);
   }
 
   res.status(201).json({ status: "success", data: updatedOrderData });
@@ -116,7 +118,9 @@ router.put("", requireAuth, async (req, res, next) => {
   });
 
   //update order
-  const updatedOrder = await order.update({ stockId, amount });
+  const updatedOrder = await order.update({
+    amount: Number(amount.toFixed(4)),
+  });
 
   //return updated order
   res.status(200).json({ status: "success", data: updatedOrder });
@@ -167,9 +171,10 @@ router.get("/:portfolioId", requireAuth, async (req, res, next) => {
 
   const portfolio = await Portfolio.findByPk(portfolioId);
   await portfolio.update({
-    balance: Number(portfolio.balance) - total,
+    balance: (Number(portfolio.balance) - total).toFixed(2),
   });
 
+  //add stocks to portfolio
   const currentPortfolioStocksArr = await PortfolioStock.findAll({
     where: {
       stockId: stockIds,
@@ -185,33 +190,33 @@ router.get("/:portfolioId", requireAuth, async (req, res, next) => {
     {}
   );
 
-  for (const order of orders) {
-    if (currentPortfolioStocks[order.stockId]) {
-      await currentPortfolioStocks[order.stockId].update({
+  for (const { stockId, amount } of orders) {
+    if (currentPortfolioStocks[stockId]) {
+      await currentPortfolioStocks[stockId].update({
         amount:
-          Number(currentPortfolioStocks[order.stockId].amount) +
-          Number(order.amount),
+          Number(currentPortfolioStocks[stockId].amount).toFixed(4) +
+          Number(amount).toFixed(4),
       });
     } else {
       await PortfolioStock.create({
         portfolioId,
-        stockId: order.stockId,
-        amount: order.amount,
+        stockId: stockId,
+        amount: Number(amount).toFixed(4),
       });
     }
   }
 
   //create transactions
-  const transactions = orders.map((order) => {
-    const stock = stockData[order.stockId];
+  const transactions = orders.map(({ stockId, amount }) => {
+    const stock = stockData[stockId];
     return {
       userId,
       type: "Buy",
       portfolio: portfolio.name,
       symbol: stock.symbol,
-      amount: order.amount,
+      amount: Number(amount).toFixed(4),
       price: stock.price,
-      total: Number(stock.price) * Number(order.amount),
+      total: (Number(stock.price) * Number(amount)).toFixed(2),
     };
   });
 

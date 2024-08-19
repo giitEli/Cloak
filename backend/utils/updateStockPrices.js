@@ -14,7 +14,7 @@ const updateStockPrice = async (stock, resolve) => {
     if (data === null) {
       setTimeout(() => updateStockPrice(stock, resolve), 1000);
     } else {
-      stock.update({ price: data.o });
+      stock.update({ price: Number(data.o).toFixed(2) });
       resolve();
     }
   });

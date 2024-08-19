@@ -62,7 +62,7 @@ const addCommas = (numberString) => {
       c = 0;
     }
   }
-  // if decimal add it to th end
+  // if decimal add it to the end
   if (decimal) {
     result += "." + decimal;
   }
@@ -87,4 +87,12 @@ export const formatNumber = (numberString) => {
     returnNumber = roundToThreeSigFigs(numberString);
   }
   return returnNumber;
+};
+
+export const formatPrice = (numberString) => {
+  return addCommas(Number(numberString).toFixed(2));
+};
+
+export const formatAmount = (numberString) => {
+  return addCommas(Number(numberString).toFixed(4));
 };

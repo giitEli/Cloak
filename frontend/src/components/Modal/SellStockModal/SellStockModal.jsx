@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { sellStockThunk } from "../../../store/portfolio";
+import { roundPrice, roundAmount, priceFunc, amountFunc } from "../helper";
 import s from "./SellStock.module.css";
 
 function SellStockModal({ portfolioId, stock }) {
@@ -33,50 +34,50 @@ function SellStockModal({ portfolioId, stock }) {
       <div className={s.input_area}>
         <input
           className={s.amount_input}
-          type="number"
+          type="text"
           value={amount}
           onChange={(e) => {
             e.preventDefault();
-            const value = Number(e.target.value);
-            if (e.target.value === "") {
-              setAmount("");
+            const newAmount = amountFunc(amount, e.target.value);
+            setAmount(newAmount);
+            if (newAmount === "" || newAmount === ".") {
               setPrice("");
-              return;
+            } else {
+              setPrice(roundPrice(stock.price, newAmount));
             }
-            if (checkValue(e.target.value)) {
-              setAmount(value);
-              setPrice(value * Number(stock.price));
-            }
-            if (value > stock.amount) {
+            if (Number(newAmount) > Number(stock.amount)) {
               setAmount(stock.amount);
-              setPrice(Number(stock.amount * stock.price));
             }
           }}
         />
         <span className={s.units_for}> Units for $ </span>
         <input
           className={s.price_input}
-          type="number"
+          type="text"
           value={price}
           onChange={(e) => {
             e.preventDefault();
-            const value = Number(e.target.value);
-            if (e.target.value === "") {
+            const newPrice = priceFunc(price, e.target.value);
+            setPrice(newPrice);
+            if (newPrice === "" || newPrice === ".") {
               setAmount("");
-              setPrice("");
-              return;
+            } else {
+              setAmount(roundAmount(stock.price, newPrice));
             }
-            if (value > stock.amount * stock.price) {
-              setAmount(stock.amount);
-              setPrice(stock.amount * stock.price);
-              return;
+            console.log(Number(stock.amount) * Number(stock.price));
+            if (Number(newPrice) > Number(stock.amount) * Number(stock.price)) {
+              setPrice(
+                (Number(stock.amount) * Number(stock.price)).toFixed(2)
+              );
             }
-            setAmount(value / Number(stock.price));
-            setPrice(value);
           }}
         />
       </div>
-      <button className={s.submit_button} type="submit" disabled={!amount}>
+      <button
+        className={s.submit_button}
+        type="submit"
+        disabled={!Number(amount) || !Number(price)}
+      >
         Sell
       </button>
     </form>
