@@ -193,9 +193,9 @@ router.get("/:portfolioId", requireAuth, async (req, res, next) => {
   for (const { stockId, amount } of orders) {
     if (currentPortfolioStocks[stockId]) {
       await currentPortfolioStocks[stockId].update({
-        amount:
-          Number(currentPortfolioStocks[stockId].amount).toFixed(4) +
-          Number(amount).toFixed(4),
+        amount: (
+          Number(currentPortfolioStocks[stockId].amount) + Number(amount)
+        ).toFixed(4),
       });
     } else {
       await PortfolioStock.create({
