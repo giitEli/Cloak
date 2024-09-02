@@ -11,6 +11,7 @@ const finnHubLookup = async (symbol) => {
 
   if (!response.name) {
     console.log(`\nError grabbing data on finnHub for symbol: ${symbol}\n`);
+    console.log(response);
     return false;
   }
 
@@ -36,6 +37,7 @@ const twelveDataLookup = async (symbol) => {
   const responseProfile = await rawProfile.json();
   if (responseProfile.count === 0) {
     console.log(`\nError grabbing data on twelveData for symbol: ${symbol}\n`);
+    console.log(responseProfile);
     return false;
   }
 
@@ -46,6 +48,7 @@ const twelveDataLookup = async (symbol) => {
   const responsePrice = await rawPrice.json();
   if (!responsePrice.price) {
     console.log(`\nError grabbing data on twelveData for symbol: ${symbol}\n`);
+    console.log(responsePrice);
     return false;
   }
 
