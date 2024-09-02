@@ -2,7 +2,14 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { sellStockThunk } from "../../../store/portfolio";
-import { roundPrice, roundAmount, priceFunc, amountFunc } from "../helper";
+import {
+  roundPrice,
+  roundAmount,
+  priceFunc,
+  amountFunc,
+  newAmountFunc,
+  newPriceFunc,
+} from "../helper";
 import s from "./SellStock.module.css";
 
 function SellStockModal({ portfolioId, stock }) {
@@ -38,16 +45,14 @@ function SellStockModal({ portfolioId, stock }) {
           value={amount}
           onChange={(e) => {
             e.preventDefault();
-            const newAmount = amountFunc(amount, e.target.value);
-            setAmount(newAmount);
-            if (newAmount === "" || newAmount === ".") {
-              setPrice("");
-            } else {
-              setPrice(roundPrice(stock.price, newAmount));
-            }
-            if (Number(newAmount) > Number(stock.amount)) {
-              setAmount(stock.amount);
-            }
+            const newData = newAmountFunc(
+              amount,
+              e.target.value,
+              stock.amount,
+              stock.price
+            );
+            setPrice(newData.price);
+            setAmount(newData.amount);
           }}
         />
         <span className={s.units_for}> Units for $ </span>
@@ -57,19 +62,14 @@ function SellStockModal({ portfolioId, stock }) {
           value={price}
           onChange={(e) => {
             e.preventDefault();
-            const newPrice = priceFunc(price, e.target.value);
-            setPrice(newPrice);
-            if (newPrice === "" || newPrice === ".") {
-              setAmount("");
-            } else {
-              setAmount(roundAmount(stock.price, newPrice));
-            }
-            console.log(Number(stock.amount) * Number(stock.price));
-            if (Number(newPrice) > Number(stock.amount) * Number(stock.price)) {
-              setPrice(
-                (Number(stock.amount) * Number(stock.price)).toFixed(2)
-              );
-            }
+            const newData = newPriceFunc(
+              price,
+              e.target.value,
+              stock.amount,
+              stock.price
+            );
+            setPrice(newData.price);
+            setAmount(newData.amount);
           }}
         />
       </div>
