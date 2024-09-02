@@ -52,6 +52,7 @@ const StocksDisplay = () => {
   }, [dispatch]);
 
   const submit = async (e) => {
+    console.log({ search }, { searchString });
     e.preventDefault();
     setIsLoading(true);
     setSearch(searchString);
@@ -62,7 +63,7 @@ const StocksDisplay = () => {
         ({ symbol }) => symbol.toLowerCase() === searchString.toLowerCase()
       )
     ) {
-      await dispatch(searchStockThunk(search));
+      await dispatch(searchStockThunk(searchString));
     }
     setIsLoading(false);
   };
