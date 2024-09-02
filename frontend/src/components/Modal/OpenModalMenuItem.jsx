@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useModal } from "../../context/Modal";
 
 function OpenModalMenuItem({

@@ -3,10 +3,6 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { sellStockThunk } from "../../../store/portfolio";
 import {
-  roundPrice,
-  roundAmount,
-  priceFunc,
-  amountFunc,
   newAmountFunc,
   newPriceFunc,
 } from "../helper";
@@ -29,9 +25,9 @@ function SellStockModal({ portfolioId, stock }) {
     }
   };
 
-  const checkValue = (value) => {
-    return !isNaN(value) && value >= 0;
-  };
+  // const checkValue = (value) => {
+  //   return !isNaN(value) && value >= 0;
+  // };
 
   return (
     <form className={s.modal_container} onSubmit={handleSubmit}>

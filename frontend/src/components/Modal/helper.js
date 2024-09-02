@@ -12,7 +12,7 @@ export const roundAmount = (stockPrice, price) => {
   return String((Number(price) / Number(stockPrice)).toFixed(4));
 };
 
-export const amountFunc = (currentAmount, targetAmount, maxAmount) => {
+export const amountFunc = (currentAmount, targetAmount) => {
   //target can be empty string
   if (targetAmount === "") {
     return "";
@@ -119,16 +119,16 @@ export const newAmountFunc = (
   }
 };
 
-const validatePrice = (numString) => {
-  //in numString includes spaces return false
-  if (numString.includes(" ")) {
-    return false;
-  }
-  if (!isNaN(numString) || numString === "." || numString === "") {
-    return true;
-  }
-  return false;
-};
+// const validatePrice = (numString) => {
+//   //in numString includes spaces return false
+//   if (numString.includes(" ")) {
+//     return false;
+//   }
+//   if (!isNaN(numString) || numString === "." || numString === "") {
+//     return true;
+//   }
+//   return false;
+// };
 
 export const newPriceFunc = (
   currentPrice,
