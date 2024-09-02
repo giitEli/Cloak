@@ -84,7 +84,6 @@ export const newAmountFunc = (
   stockPrice
 ) => {
   //validate that targetAmount is a number, "." or ""
-  console.log(validateAmount(targetAmount));
   if (validateAmount(targetAmount)) {
     //if targetAmount is "." or "" return empty string as price
     if (targetAmount === "" || targetAmount === ".") {
@@ -138,7 +137,6 @@ export const newPriceFunc = (
   stockPrice
 ) => {
   //validate that targetPrice is a number, "." or ""
-  console.log(validateAmount(targetPrice));
   if (validateAmount(targetPrice)) {
     //if targetPrice is "." or "" return empty string as price
     if (targetPrice === "" || targetPrice === ".") {

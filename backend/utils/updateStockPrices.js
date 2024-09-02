@@ -10,7 +10,7 @@ let currentlyUpdating = false;
 
 const updateStockPrice = async (stock, resolve) => {
   finnhubClient.quote(stock.symbol, (error, data, response) => {
-    console.log(stock.symbol, data.o);
+    // console.log(stock.symbol, data.o);
     if (data === null) {
       setTimeout(() => updateStockPrice(stock, resolve), 1000);
     } else {
@@ -38,7 +38,7 @@ const updateStockPrices = async (req, res, next) => {
       }
       currentlyUpdating = false;
     } else {
-      console.log("\ncurrently updating...\n");
+      // console.log("\ncurrently updating...\n");
     }
   }
 };

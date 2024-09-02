@@ -9,7 +9,7 @@ import s from "./Order.module.css";
 import { roundPrice, roundAmount, priceFunc, amountFunc } from "../helper";
 
 function OrderModal({ stock, type, currentAmount }) {
-  console.log(currentAmount);
+  // console.log(currentAmount);
   const buttonText = type === "purchase" ? "Add to Cart" : "Update Order";
   const dispatch = useDispatch();
   const { closeModal } = useModal();

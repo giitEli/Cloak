@@ -43,7 +43,6 @@ const SpotForm = ({ formType, spotData }) => {
       setPrice(spotData.price || "");
       setPreviewImage(spotData.previewImage || "");
       const images = spotData.SpotImages.sort((a, b) => a.id - b.id)
-      console.log(images)
       if (images[1]) {
         setImg1(spotData.SpotImages[1].url || "");
       }

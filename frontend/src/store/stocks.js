@@ -21,7 +21,6 @@ const addStock = (stock) => {
 };
 
 const getSpecificStock = (stockId, data) => {
-  console.log(data);
   return {
     type: GET_SPECIFIC_STOCK,
     payload: { stockId, data },
@@ -63,7 +62,6 @@ export const getSpecificStockThunk = (stockId) => async (dispatch) => {
   const response = await raw.json();
 
   if (response.status === "success") {
-    console.log(response);
     dispatch(getSpecificStock(stockId, response.data));
   }
 

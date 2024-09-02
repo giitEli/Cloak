@@ -73,8 +73,6 @@ export const updatePortfolioThunk = (portfolioId, data) => async (dispatch) => {
   });
   const response = await raw.json();
 
-  console.log(response);
-
   if (response.status === "success") {
     dispatch(updatePortfolio(response.data));
     // dispatch(getPortfoliosThunk());
