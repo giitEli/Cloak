@@ -71,3 +71,7 @@
     background-color: rgb(38, 38, 38);
   }
 }
+
+.about_link {
+  text-decoration: none;
+}

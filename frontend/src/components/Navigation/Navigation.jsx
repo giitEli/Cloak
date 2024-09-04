@@ -44,6 +44,12 @@ function Navigation({ isLoaded }) {
         <span className={s.home_text}>Cloak</span>
       </div>
       <div className={s.nav_links}>
+        <a
+          className={`${s.nav_element} ${s.about_link}`}
+          href="https://github.com/giitEli/Cloak"
+        >
+          About
+        </a>
         {isLoaded && sessionUser && (
           <>
             <div
