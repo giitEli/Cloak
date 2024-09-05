@@ -52,7 +52,6 @@ const StocksDisplay = () => {
   }, [dispatch]);
 
   const submit = async (e) => {
-    console.log({ search }, { searchString });
     e.preventDefault();
     setIsLoading(true);
     setSearch(searchString);

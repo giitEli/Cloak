@@ -5,10 +5,12 @@ const { Stock } = require("../../db/models");
 
 router.get("/", async (req, res, next) => {
   const { page } = req.query;
-  const allStocks = await Stock.findAll({
-    limit: 31,
-    offset: 30 * (Number(page) - 1),
-  });
+  const allStocks = await Stock.findAll();
+
+  // const allStocks = await Stock.findAll({
+  //   limit: 31,
+  //   offset: 30 * (Number(page) - 1),
+  // });
 
   return res.status(200).json({ data: allStocks, status: "success" });
 });
