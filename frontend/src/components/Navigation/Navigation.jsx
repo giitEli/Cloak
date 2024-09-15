@@ -46,9 +46,19 @@ function Navigation({ isLoaded }) {
       <div className={s.nav_links}>
         <a
           className={`${s.nav_element} ${s.about_link}`}
-          href="https://github.com/giitEli/Cloak"
+          href="https://www.linkedin.com/in/eli-suffridge-04254b220/"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          About
+          LinkedIn
+        </a>
+        <a
+          className={`${s.nav_element} ${s.about_link}`}
+          href="https://github.com/giitEli/Cloak"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Github
         </a>
         {isLoaded && sessionUser && (
           <>
