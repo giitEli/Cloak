@@ -13,12 +13,15 @@ import { useCartDisplayContext } from "../../context/Cart";
 import { FaCartShopping } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import CreatePortfolioModal from "../Modal/CreatePortfolioModal";
+import { PulseLoader } from "react-spinners";
 
 /////////////////////////////////////////////
 
 const Cart = () => {
   const { setCartDisplay } = useCartDisplayContext();
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const cart = useSelector((state) => state.orders.userOrders);
   const portfolios = useSelector((state) => state.portfolios.userPortfolios);
@@ -193,16 +196,18 @@ const Cart = () => {
           <button
             className={`${s.checkout_button} green_button`}
             disabled={isSubmitted && Object.keys(errors).length}
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
               setIsSubmitted(true);
               if (!Object.keys(errors).length) {
                 setIsSubmitted(false);
-                dispatch(checkOutThunk(selectedPortfolio));
+                setIsLoading(true);
+                await dispatch(checkOutThunk(selectedPortfolio));
+                setIsLoading(false);
               }
             }}
           >
-            Check Out
+            {!isLoading ? "Check Out" : <PulseLoader color="grey" size="8px" />}
           </button>
         </div>
       </div>

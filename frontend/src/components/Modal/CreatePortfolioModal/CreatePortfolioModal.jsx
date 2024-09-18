@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { createPortfolioThunk } from "../../../store/portfolio";
+import { PulseLoader } from "react-spinners";
 import s from "./CreatePortfolio.module.css";
 
 function CreatePortfolioModal() {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const { closeModal } = useModal();
   const [name, setName] = useState("");
   const [balance, setBalance] = useState("");
@@ -39,7 +41,9 @@ function CreatePortfolioModal() {
     setIsSubmitted(true);
     if (!Object.keys(errors).length) {
       const portfolioData = { name, balance };
+      setIsLoading(true);
       const response = await dispatch(createPortfolioThunk(portfolioData));
+      setIsLoading(false);
       if (response.status === "success") {
         closeModal();
       }
@@ -87,7 +91,11 @@ function CreatePortfolioModal() {
         type="submit"
         disabled={isSubmitted && Object.keys(errors).length}
       >
-        Create portfolio
+        {!isLoading ? (
+          "Create Portfolio"
+        ) : (
+          <PulseLoader color="grey" size="8px" />
+        )}
       </button>
     </form>
   );
