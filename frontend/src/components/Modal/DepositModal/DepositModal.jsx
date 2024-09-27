@@ -12,10 +12,6 @@ function DepositModal({ currentPortfolio }) {
   const [balance, setBalance] = useState("");
   const [isLoading, setIsLoading] = useState();
 
-  // useEffect(() => {
-  //   console.log(balance, !isNaN(balance), Number(balance));
-  // }, [balance]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);

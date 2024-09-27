@@ -59,9 +59,31 @@ const updateStockPrices = async (req, res, next) => {
 loading buttons
 
 One thing I focused on in my project was creating an extremely responsive website. One of the main ways I did this was by creating loading symbols on all of my buttons so when you click them you know something is happening and your click is being processed.
-```javascript
 
+```jsx
+//create a state variable so button knows when to show loading symbol
+const [isLoading, setIsLoading] = useState();
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  //when a user submits a form activate the leading bar
+  setIsLoading(true);
+
+  const response = await dispatch(
+    updatePortfolioThunk(currentPortfolio.id, { balance })
+  );
+  if (response.status === "success") {
+    closeModal();
+  }
+  //after response is received deactivate the loading bar
+  setIsLoading(false);
+
+  //when button is loading display the PulseLoader, otherwise display the button text
+  <button type="submit">
+    {isLoading ? <PulseLoader color="grey" size="12px" /> : "Deposit"}
+  </button>;
+};
 ```
-
 
 search feature
