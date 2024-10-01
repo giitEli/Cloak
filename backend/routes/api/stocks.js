@@ -40,9 +40,9 @@ router.post("/", async (req, res, next) => {
     });
   }
 
-  const new_stock = await Stock.create(stockData);
+  const newStock = await Stock.create(stockData);
 
-  res.status(201).json({ data: new_stock, status: "success" });
+  res.status(201).json({ data: newStock, status: "success" });
 });
 
 //get specific stock data

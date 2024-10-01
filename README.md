@@ -4,8 +4,9 @@ Link to live site: [Cloak](https://cloak-aqko.onrender.com/)
 
 Cloak is a stock trading website based on RobinHood. It has an express and sequelize backend, with a react frontend and redux managing state.
 
+### Updating Stocks
+
 I wanted to create a site that could show off many stock prices at once, whether its the main page or a persons portfolio. Unfortunately I am limited by the amount of API calls I can make so instead of pulling API data every time I want to get stock data, I just save the stock data on my backend, and update it once per day to have the most recent closing prices of the stock. This allows users to pull a lot of stock data at once while reducing the amount of API calls I need to make to Finnhub API at the cost of only having daily price updates.
-daily stock update
 
 ```javascript
 const finnhubClient = new finnhub.DefaultApi();
@@ -56,7 +57,7 @@ const updateStockPrices = async (req, res, next) => {
 };
 ```
 
-loading buttons
+### Loading Buttons
 
 One thing I focused on in my project was creating an extremely responsive website. One of the main ways I did this was by creating loading symbols on all of my buttons so when you click them you know something is happening and your click is being processed.
 
@@ -80,10 +81,10 @@ const handleSubmit = async (e) => {
   setIsLoading(false);
 
   //when button is loading display the PulseLoader, otherwise display the button text
-  <button type="submit">
-    {isLoading ? <PulseLoader color="grey" size="12px" /> : "Deposit"}
-  </button>;
+  <button type="submit">{isLoading ? <PulseLoader /> : "Deposit"}</button>;
 };
 ```
 
-search feature
+### Search Feature
+
+The Search Feature on the home screen allows users to look up specific stocks. When a user initiates a search, the program first checks to see if the users search is a stock symbol. If it is a stock symbol that the database hasn't seen yet it will pull data via API from finnhub and twelvedata. The database can then display the stock to the user and allow them to interact with it. This allows users to quickly interact with any available stocks while reducing the amount of data that needs to be stored and updated by the server by only storing data for stocks that have been searched for.
