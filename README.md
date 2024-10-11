@@ -2,11 +2,33 @@
 
 Link to live site: [Cloak](https://cloak-aqko.onrender.com/)
 
-Cloak is a stock trading website based on RobinHood. It has an express and sequelize backend, with a react frontend and redux managing state.
+Cloak is a full-stack stock trading platform inspired by Robinhood, allowing users to view real-time stock data, simulate trades, and track their portfolio. This app provides an intuitive user experience for users to manage their investments, utilizing real-world stock market data.
 
-### Updating Stocks
+### Features Overview
 
-I wanted to create a site that could show off many stock prices at once, whether its the main page or a persons portfolio. Unfortunately I am limited by the amount of API calls I can make so instead of pulling API data every time I want to get stock data, I just save the stock data on my backend, and update it once per day to have the most recent closing prices of the stock. This allows users to pull a lot of stock data at once while reducing the amount of API calls I need to make to Finnhub API at the cost of only having daily price updates.
+| Feature                    | Description                                                                                                                |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Stock Data Management**  | Efficiently manages stock data with a hybrid approach, balancing API usage and backend storage.                            |
+| **Real-Time Stock Prices** | Updates stock prices daily using the Finnhub API for relatively up-to-date information without excessive API calls.        |
+| **Search Functionality**   | A powerful search bar for finding stocks by symbol, company name, or industry, with on-demand API fetching for new stocks. |
+| **Individual Stock Pages** | Detailed pages for each stock, including key information and historical price graphs for performance insights.             |
+| **Loading Indicators**     | Responsive loading symbols on actionable buttons for immediate visual feedback during user interactions.                   |
+| **Watchlist**              | Allows users to track specific stocks of interest without adding them to their portfolios.                                 |
+| **Portfolios**             | Manage multiple portfolios with functionalities to create, delete, and monitor virtual investments.                        |
+| **Cart Feature**           | Enables users to add stocks for purchase and stores cart data on the backend for persistent access.                        |
+| **Transaction History**    | Provides a detailed overview of all transactions, including buying/selling stocks and deposits/withdrawals.                |
+
+### Stock Data Management
+
+The app employs a hybrid approach to manage stock data efficiently, balancing API usage and backend storage. This design helps reduce unnecessary API calls and optimizes performance.
+
+**Backend Stock Data Storage:** Stock data is stored locally in the app's backend database, allowing the app to serve users quickly without fetching data repeatedly from external APIs. This includes storing basic stock information like company name and ticker symbol, and Logo.
+
+**Daily Price Updates:** The system updates stock prices once per day using the Finnhub API. This ensures that users have relatively up-to-date data for their portfolio without burdening the API or increasing response times unnecessarily.
+
+**On-Demand Data Fetching:** When a user requests data for a stock that the backend hasn't encountered before, the app retrieves the information in real-time from the API and then caches the stock data in the database for future requests. This prevents repeated API calls for stocks already viewed by other users, while still allowing new stocks to be accessed immediately.
+
+#### Updating Stocks
 
 ```javascript
 const finnhubClient = new finnhub.DefaultApi();
@@ -57,9 +79,25 @@ const updateStockPrices = async (req, res, next) => {
 };
 ```
 
+### Stock Search Functionality
+
+The app features a powerful, user-friendly search bar that allows users to easily find stock information based on various criteria. The search system is designed to provide accurate, relevant results with a mix of local data lookup and on-demand API querying for new stocks.
+
+**Search Bar:** The search bar accepts text input from users, which could be a stock symbol, company name, or industry keyword. The search is designed to be flexible, so users can input partial matches or fragments of the symbol or name and still retrieve relevant results.
+
+**Stock Symbol Lookup:** When the input text is detected as a potential stock symbol that hasn’t been previously seen by the backend, the app makes an API call to verify if the stock exists. If the stock is found via the API, the app will pull the relevant data, store it in the backend for future requests, and display it to the user.
+
+### Individual Stock Pages
+
+Each individual stock page is designed to provide users with detailed information about a specific stock, including a visual representation of its historical price movements.
+
+**Stock Data Overview:** The page displays key information about the stock, such as the company name, symbol, industry, and current price. This gives users a quick summary of the stock's key details at a glance.
+
+**Historical Price Graph:** To give users better insight into the stock's performance over time, the page features a price chart. Using the TwelveData API, historical stock prices are pulled and displayed in a line graph created with ReCharts.
+
 ### Loading Buttons
 
-One thing I focused on in my project was creating an extremely responsive website. One of the main ways I did this was by creating loading symbols on all of my buttons so when you click them you know something is happening and your click is being processed.
+To ensure an exceptionally responsive and user-friendly experience, I implemented loading indicators on all actionable buttons throughout the app. This feature provides users with immediate visual feedback, indicating that their action is being processed
 
 ```jsx
 //create a state variable so button knows when to show loading symbol
@@ -85,6 +123,24 @@ const handleSubmit = async (e) => {
 };
 ```
 
-### Search Feature
+### Watchlist
 
-The Search Feature on the home screen allows users to look up specific stocks. When a user initiates a search, the program first checks to see if the users search is a stock symbol. If it is a stock symbol that the database hasn't seen yet it will pull data via API from finnhub and twelvedata. The database can then display the stock to the user and allow them to interact with it. This allows users to quickly interact with any available stocks while reducing the amount of data that needs to be stored and updated by the server by only storing data for stocks that have been searched for.
+The watchlist feature allows users to track specific stocks of interest without adding them to their portfolio. This provides users with a simple way to monitor stock performance and make informed decisions before initiating trades.
+
+### Portfolios
+
+The portfolio feature allows users to manage their virtual investments and perform a range of actions to control their trading experience. Users can create, manage, and monitor multiple portfolios with ease.
+
+### Cart
+
+The cart feature enables users to efficiently manage stock purchases before finalizing their transactions. This intuitive tool allows users to review and adjust their selected stocks, ensuring a seamless buying experience.
+
+**Add to Cart:** Users can easily add stocks to their cart with a single click from the stock search results or individual stock pages. This feature allows users to compile a list of stocks they wish to purchase without committing to a transaction immediately.
+
+**Persistent Storage:** The cart data is stored on the backend, ensuring that selections remain intact even if users navigate away from the page or log out of their account. This persistence allows users to return later and complete their purchases without losing their selections.
+
+### Transaction History
+
+The transaction history section on the user profile page provides a comprehensive overview of all trading activities, allowing users to track their investment actions and manage their portfolio effectively.
+
+**Detailed Transaction Records:** Users can view a chronological list of all their transactions, including buying and selling stocks, as well as deposits and withdrawals from their portfolios. Each entry includes essential details such as transaction type, stock symbol, quantity, price, and date, providing users with a clear understanding of their trading history.
