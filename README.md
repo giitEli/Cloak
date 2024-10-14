@@ -144,3 +144,43 @@ The cart feature enables users to efficiently manage stock purchases before fina
 The transaction history section on the user profile page provides a comprehensive overview of all trading activities, allowing users to track their investment actions and manage their portfolio effectively.
 
 **Detailed Transaction Records:** Users can view a chronological list of all their transactions, including buying and selling stocks, as well as deposits and withdrawals from their portfolios. Each entry includes essential details such as transaction type, stock symbol, quantity, price, and date, providing users with a clear understanding of their trading history.
+
+## Getting Started
+
+**To get started with your project, follow these steps:**
+
+**Clone the repository:**<br>
+`git clone https://github.com/giitEli/Cloak`
+
+**Navigate to the project directory:**<br>
+`cd Cloak`
+
+### **Set up the backend:**<br>
+
+`cd backend`<br>
+create .env file based on .env.example
+
+**Install the necessary dependencies:**<br>
+`npm install`
+
+**Run the migrations to set up the database:**<br>
+`npx dotenv sequelize db:migrate`
+
+**Seed the database (optional):**<br>
+`npx dotenv sequelize db:seed:all`
+
+**Start the backend server:**<br>
+`npm start`
+
+### **Set up the frontend:**<br>
+
+`cd ../frontend`
+
+**Install frontend dependencies:**<br>
+`npm install`
+
+**Run the development server:**<br>
+`npm run dev`
+
+**To create a production build (optional):**<br>
+`npm run build`
