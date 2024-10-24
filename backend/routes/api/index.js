@@ -14,13 +14,13 @@ const { updateStockPrices } = require("../../utils/updateStockPrices.js");
 // Connect restoreUser middleware to the API router
 // If current user session is valid, set req.user to the user in the database
 // If current user session is not valid, set req.user to null
-router.use(restoreUser);
-router.use(updateStockPrices);
-
 router.use((req, res, next) => {
   console.log(req.headers, req.body);
   next();
 });
+router.use(restoreUser);
+router.use(updateStockPrices);
+
 
 router.use("/session", sessionRouter);
 router.use("/users", usersRouter);
