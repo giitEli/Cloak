@@ -17,6 +17,11 @@ const { updateStockPrices } = require("../../utils/updateStockPrices.js");
 router.use(restoreUser);
 router.use(updateStockPrices);
 
+router.use((req, res, next) => {
+  console.log(req.headers, req.body);
+  next();
+});
+
 router.use("/session", sessionRouter);
 router.use("/users", usersRouter);
 router.use("/stocks", stocksRouter);
