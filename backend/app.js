@@ -13,7 +13,7 @@ const isProduction = environment === "production";
 const app = express();
 
 app.use((req, res, next) => {
-  console.log(req.headers, req.body);
+  console.log(req);
   next();
 });
 
